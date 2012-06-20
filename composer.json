@@ -1,0 +1,24 @@
+{
+    "name": "webignition/robots-txt-file",
+    "description": "Models a robots.txt file",
+    "keywords": ["robots.txt", "parser"],
+    "homepage": "https://github.com/webignition/robots-txt-file",
+    "type": "library",
+    "license": "WTFPL",
+    "authors": [
+        {
+            "name": "Jon Cram",
+            "email": "jon@webignition.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "webignition/disallowed-character-terminated-string": "*"           
+    },
+    "repositories": [
+        {
+            "type":"vcs",
+            "url": "https://github.com/webignition/disallowed-character-terminated-string"
+        }       
+    ]    
+}
