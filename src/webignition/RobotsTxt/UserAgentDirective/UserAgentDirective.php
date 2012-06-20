@@ -13,4 +13,12 @@ class UserAgentDirective extends \webignition\RobotsTxt\Directive\Directive {
         parent::setField(self::USER_AGENT_FIELD_VALUE);
     }
     
+    /**
+     *
+     * @param string $value 
+     */
+    public function setValue($value) {
+        parent::setValue(strtolower($value));
+    }
+    
 }

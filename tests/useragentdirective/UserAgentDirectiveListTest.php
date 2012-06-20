@@ -10,7 +10,7 @@ class UserAgentDirectiveListTest extends PHPUnit_Framework_TestCase {
         $record->userAgentDirectiveList()->add('googlebot');        
         $this->assertEquals(array('googlebot'), $record->userAgentDirectiveList()->get());
         
-        $record->userAgentDirectiveList()->add('slurp');
+        $record->userAgentDirectiveList()->add('slURp');
         $this->assertEquals(array('googlebot', 'slurp'), $record->userAgentDirectiveList()->get());
     }
     
