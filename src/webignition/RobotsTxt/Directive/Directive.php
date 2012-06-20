@@ -69,15 +69,16 @@ class Directive {
      * @param \webignition\RobotsTxt\Directive\Directive $directive
      * @return boolean 
      */
-    public function equals(\webignition\RobotsTxt\Directive\Directive $directive) {
-        if (!$this->getField() == $directive->getField()) {
+    public function equals(\webignition\RobotsTxt\Directive\Directive $directive) {        
+        if ((string)$this->getField() != (string)$directive->getField()) {
             return false;
         }
         
-        if (!$this->getValue() == $directive->getValue()) {
+        if ((string)$this->getValue() != (string)$directive->getValue()) {
             return false;
         }
         
         return true;
     }
 }
+
