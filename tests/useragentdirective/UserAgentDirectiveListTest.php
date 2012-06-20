@@ -22,7 +22,7 @@ class UserAgentDirectiveListTest extends PHPUnit_Framework_TestCase {
         $record->userAgentDirectiveList()->add('agent3');        
         $this->assertEquals(array('agent1', 'agent2', 'agent3'), $record->userAgentDirectiveList()->get());
         
-        $record->userAgentDirectiveList()->remove('agent1');
+        $record->userAgentDirectiveList()->remove('aGEnt1');
         $this->assertEquals(array('agent2', 'agent3'), $record->userAgentDirectiveList()->get());
         
         $record->userAgentDirectiveList()->remove('agent2');
@@ -37,7 +37,7 @@ class UserAgentDirectiveListTest extends PHPUnit_Framework_TestCase {
         
         $record->userAgentDirectiveList()->add('agent1');                
         $record->userAgentDirectiveList()->add('agent2');
-        $record->userAgentDirectiveList()->add('agent3');
+        $record->userAgentDirectiveList()->add('AGent3');
         
         $this->assertTrue($record->userAgentDirectiveList()->contains('agent1'));
         $this->assertTrue($record->userAgentDirectiveList()->contains('agent2'));

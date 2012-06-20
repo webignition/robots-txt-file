@@ -26,12 +26,15 @@ class UserAgentDirectiveList {
     
     /**
      *
-     * @param string $userAgent 
+     * @param string $userAgentString 
      */
-    public function remove($userAgent) {
+    public function remove($userAgentString) {
+        $userAgent = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
+        $userAgent->setValue($userAgentString);
+        
         $userAgentPosition = null;
         foreach ($this->userAgents as $userAgentIndex => $existingUserAgent) {            
-            if ($userAgent == (string)$existingUserAgent->getValue()) {
+            if ((string)$userAgent->getValue() == (string)$existingUserAgent->getValue()) {
                 $userAgentPosition = $userAgentIndex;
             }
         }
