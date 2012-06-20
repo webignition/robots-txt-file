@@ -11,74 +11,79 @@ namespace webignition\RobotsTxt\Record;
 class Record {
     
     /**
-     * Collection of UserAgentDirective objects
+     *
+     * @var \webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList
+     */
+    private $userAgentDirectiveList = null;
+    
+    /**
+     * Collection of Directive objects
      * 
      * @var array
      */
-    private $userAgents = array();
+    private $directives = array();
     
     
     /**
      *
-     * @param string $userAgentString 
+     * @return \webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList
      */
-    public function addUserAgent($userAgentString) {
-        if (!$this->containsUserAgent($userAgentString)) {
-            $userAgent = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
-            $userAgent->setValue($userAgentString);
+    public function userAgentDirectiveList() {
+        if (is_null($this->userAgentDirectiveList)) {
+            $this->userAgentDirectiveList = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList();
+        }
+        
+        return $this->userAgentDirectiveList;
+    }
+    
+    
+
+    
+    /**
+     *
+     * @param string $field
+     * @param string $value 
+     */
+    public function addDirective($field, $value) {
+        if (!$this->containsDirective($field, $value)) {
+            $directive = new \webignition\RobotsTxt\Directive\Directive();
+            $directive->setField($field);
+            $directive->setValue($value);            
             
-            $this->userAgents[] = $userAgent;
+            $this->directives[] = $directive;
         }
     }
+    
+    public function removeDirective($field, $value) {
+        $directivePosition = null;
+        foreach ($this->directives as $directiveIndex => $existingDirective) {            
+            
+            
+//            if ($userAgent == (string)$existingDirective->getValue()) {
+//                $directivePosition = $directiveIndex;
+//            }
+        }
+        
+//        if (!is_null($directivePosition)) {
+//            unset($this->directives[$directivePosition]);
+//        }        
+    }
+    
     
     
     /**
      *
-     * @param string $userAgent 
-     */
-    public function removeUserAgent($userAgent) {
-        $userAgentPosition = null;
-        foreach ($this->userAgents as $userAgentIndex => $existingUserAgent) {            
-            if ($userAgent == (string)$existingUserAgent->getValue()) {
-                $userAgentPosition = $userAgentIndex;
-            }
-        }
-        
-        if (!is_null($userAgentPosition)) {
-            unset($this->userAgents[$userAgentPosition]);
-        }
-    }
-    
-    
-    /**
-     *
-     * @return array
-     */
-    public function getUserAgentList() {        
-        $userAgents = array();
-        foreach ($this->userAgents as $userAgent) {
-            $userAgents[] = (string)$userAgent->getValue();
-        }
-        
-        if (count($userAgents) === 0) {
-            $userAgents[] = '*';
-        }
-        
-        return $userAgents;
-    }
-    
-    
-    /**
-     *
-     * @param string $userAgentString
+     * @param string $field
+     * @param string $value
      * @return boolean 
      */
-    public function containsUserAgent($userAgentString) {
-        $userAgent = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
-        $userAgent->setValue($userAgentString);
+    public function containsDirective($field, $value) {
+        $directive = new \webignition\RobotsTxt\Directive\Directive();
+        $directive->setField($field);
+        $directive->setValue($value);        
         
-        foreach ($this->userAgents as $existingUserAgent) {
-            if ((string)$userAgent->getValue() == (string)$existingUserAgent->getValue()) {
+        foreach ($this->directives as $existingDirective) {
+            if ((string)$existingDirective->getField() == (string)$directive->getField() && (string)$existingValue->getValue() == (string)$directive->getValue()) {
                 return true;
             }
         }
