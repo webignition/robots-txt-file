@@ -33,8 +33,8 @@ class UserAgentDirectiveList {
         $userAgent->setValue($userAgentString);
         
         $userAgentPosition = null;
-        foreach ($this->userAgents as $userAgentIndex => $existingUserAgent) {            
-            if ((string)$userAgent->getValue() == (string)$existingUserAgent->getValue()) {
+        foreach ($this->userAgents as $userAgentIndex => $existingUserAgent) {
+            if ($userAgent->equals($existingUserAgent)) {
                 $userAgentPosition = $userAgentIndex;
             }
         }
@@ -73,12 +73,12 @@ class UserAgentDirectiveList {
         $userAgent->setValue($userAgentString);
         
         foreach ($this->userAgents as $existingUserAgent) {
-            if ((string)$userAgent->getValue() == (string)$existingUserAgent->getValue()) {
+            if ($userAgent->equals($existingUserAgent)) {
                 return true;
             }
         }
         
         return false;
-    }    
+    }   
     
 }
