@@ -62,4 +62,22 @@ class Directive {
     public function __toString() {
         return $this->getField() . self::FIELD_VALUE_SEPARATOR . $this->getValue();
     }
+    
+    
+    /**
+     *
+     * @param \webignition\RobotsTxt\Directive\Directive $directive
+     * @return boolean 
+     */
+    public function equals(\webignition\RobotsTxt\Directive\Directive $directive) {
+        if (!$this->getField() == $directive->getField()) {
+            return false;
+        }
+        
+        if (!$this->getValue() == $directive->getValue()) {
+            return false;
+        }
+        
+        return true;
+    }
 }
