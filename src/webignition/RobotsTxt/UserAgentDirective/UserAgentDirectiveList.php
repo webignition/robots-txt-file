@@ -8,7 +8,7 @@ class UserAgentDirectiveList extends \webignition\RobotsTxt\Directive\DirectiveL
      * @param string $userAgentString 
      */
     public function add($userAgentString) {
-        parent::add('user-agent', $userAgentString);
+        parent::add('user-agent:'.strtolower($userAgentString));
     }
     
     
@@ -17,7 +17,7 @@ class UserAgentDirectiveList extends \webignition\RobotsTxt\Directive\DirectiveL
      * @param string $userAgentString 
      */
     public function remove($userAgentString) {
-        return parent::remove('user-agent', $userAgentString);
+        return parent::remove('user-agent:'.strtolower($userAgentString));
     }
     
     
@@ -46,7 +46,7 @@ class UserAgentDirectiveList extends \webignition\RobotsTxt\Directive\DirectiveL
         
         if (count($userAgents) === 0) {
             $defaultUserAgentDirective = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
-            $defaultUserAgentDirective->setValue('*');
+            $defaultUserAgentDirective->parse('user-agent:*');
             
             $userAgents[] = $defaultUserAgentDirective;
         }
@@ -61,19 +61,18 @@ class UserAgentDirectiveList extends \webignition\RobotsTxt\Directive\DirectiveL
      * @return boolean 
      */
     public function contains($userAgentString) {
-        return parent::contains('user-agent', $userAgentString);
+        return parent::contains('user-agent:'.$userAgentString);
     }
     
     
     /**
      *
-     * @param string $field
-     * @param string $value
+     * @param string $directiveString
      * @return \webignition\RobotsTxt\Directive\Directive 
      */
-    protected function getNewDirective($field, $value) {
+    protected function getNewDirective($directiveString) {
         $directive = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
-        $directive->setValue($value);
+        $directive->parse($directiveString);
         
         return $directive;
     }    

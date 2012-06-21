@@ -59,7 +59,7 @@ class Record {
         
         foreach ($directives as $directive) {
             $stringRepresentation .= $directive . "\n";
-        }        
+        }
         
         return trim($stringRepresentation);
     }

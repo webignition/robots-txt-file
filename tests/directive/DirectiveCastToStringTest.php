@@ -6,8 +6,7 @@ class DirectiveCastToStringTest extends PHPUnit_Framework_TestCase {
 
     public function testCastingToString() { 
         $directive = new \webignition\RobotsTxt\Directive\Directive();
-        $directive->setField('allow');
-        $directive->setValue('/allowed-path');
+        $directive->parse('allow:/allowed-path');
         
         $this->assertEquals('allow:/allowed-path', (string)$directive);        
     }
@@ -15,10 +14,10 @@ class DirectiveCastToStringTest extends PHPUnit_Framework_TestCase {
     public function testCastingListToString() {
         $list = new \webignition\RobotsTxt\Directive\DirectiveList();
         
-        $list->add('field1', 'value1');        
+        $list->add('field1:value1');        
         $this->assertEquals('field1:value1', (string)$list);
         
-        $list->add('field2', 'value2');
+        $list->add('field2:value2');
         $this->assertEquals('field1:value1'."\n".'field2:value2', (string)$list);        
     }
 }

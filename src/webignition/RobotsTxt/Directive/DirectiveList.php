@@ -13,22 +13,21 @@ class DirectiveList {
     
     /**
      *
-     * @param string $field
-     * @param string $value 
+     * @param string $directiveString
      */
-    public function add($field, $value) {
-        if (!$this->contains($field, $value)) {            
-            $this->directives[] = $this->getNewDirective($field, $value);
+    public function add($directiveString) {
+        if (!$this->contains($directiveString)) {            
+            $this->directives[] = $this->getNewDirective($directiveString);
         }
     }
     
     
     /**
      *
-     * @param string $userAgent 
+     * @param string $directiveString 
      */
-    public function remove($field, $value) {
-        $directive = $this->getNewDirective($field, $value);
+    public function remove($directiveString) {
+        $directive = $this->getNewDirective($directiveString);
         
         $directivePosition = null;
         foreach ($this->directives as $userAgentIndex => $existingUserAgent) {
@@ -71,8 +70,8 @@ class DirectiveList {
      * @param string $userAgentString
      * @return boolean 
      */
-    public function contains($field, $value) {
-        $directive = $this->getNewDirective($field, $value);
+    public function contains($directiveString) {
+        $directive = $this->getNewDirective($directiveString);
         
         foreach ($this->directives as $existingDirective) {
             if ($directive->equals($existingDirective)) {
@@ -86,14 +85,12 @@ class DirectiveList {
     
     /**
      *
-     * @param string $field
-     * @param string $value
+     * @param string $directiveString
      * @return \webignition\RobotsTxt\Directive\Directive 
      */
-    protected function getNewDirective($field, $value) {
+    protected function getNewDirective($directiveString) {
         $directive = new \webignition\RobotsTxt\Directive\Directive();
-        $directive->setField($field);
-        $directive->setValue($value);
+        $directive->parse($directiveString);
         
         return $directive;
     }

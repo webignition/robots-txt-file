@@ -16,16 +16,7 @@ class Directive {
      * 
      * @var \webignition\RobotsTxt\Directive\NonBreakingNonCommentEntity
      */
-    private $value = null;    
-    
-    /**
-     * Allow, Disallow or any extension such as crawl-delay or sitemap
-     * 
-     * @param string $field 
-     */
-    public function setField($field) {        
-        $this->field = new \webignition\RobotsTxt\Directive\Field($field);
-    }
+    private $value = null;
     
     /**
      *
@@ -35,23 +26,24 @@ class Directive {
         return $this->field === null ? '' : (string)$this->field;
     }
     
-    
-    /**
-     * Set directive value, stopping when encountering a new line or the start
-     * of a comment
-     * 
-     * @param string $value 
-     */
-    public function setValue($value) {
-        $this->value = new \webignition\RobotsTxt\Directive\Value($value);
-    }
-    
     /**
      *
      * @return string
      */
     public function getValue() {
         return $this->value === null ? '' : $this->value;
+    }
+    
+    /**
+     *
+     * @param string $directiveString 
+     */
+    public function parse($directiveString) {
+        $field = new \webignition\RobotsTxt\Directive\Field($directiveString);
+        $value = new \webignition\RobotsTxt\Directive\Value(substr($directiveString, strlen($field) + 1));
+        
+        $this->field = $field;
+        $this->value = $value;
     }
     
     

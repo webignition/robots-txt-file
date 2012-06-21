@@ -19,7 +19,8 @@ class UserAgentDirectiveListTest extends PHPUnit_Framework_TestCase {
         
         $userAgentDirectiveList->add('agent1');                
         $userAgentDirectiveList->add('agent2');
-        $userAgentDirectiveList->add('agent3');        
+        $userAgentDirectiveList->add('agent3');   
+        
         $this->assertEquals(array('agent1', 'agent2', 'agent3'), $userAgentDirectiveList->getValues());
         
         $userAgentDirectiveList->remove('aGEnt1');

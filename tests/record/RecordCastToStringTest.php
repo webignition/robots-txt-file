@@ -22,8 +22,8 @@ class RecordCastToStringTest extends PHPUnit_Framework_TestCase {
     public function testAllowDisallowOnly() {
         $record = new \webignition\RobotsTxt\Record\Record();
         
-        $record->directiveList()->add('allow', '/allowed-path');
-        $record->directiveList()->add('disallow', '/disallowed-path');
+        $record->directiveList()->add('allow:/allowed-path');
+        $record->directiveList()->add('disallow:/disallowed-path');
         
         $this->assertEquals('user-agent:*'."\n".'allow:/allowed-path'."\n".'disallow:/disallowed-path', (string)$record);
     }
@@ -34,8 +34,8 @@ class RecordCastToStringTest extends PHPUnit_Framework_TestCase {
         $record->userAgentDirectiveList()->add('googlebot');
         $record->userAgentDirectiveList()->add('slurp');
         
-        $record->directiveList()->add('allow', '/allowed-path');
-        $record->directiveList()->add('disallow', '/disallowed-path');
+        $record->directiveList()->add('allow:/allowed-path');
+        $record->directiveList()->add('disallow:/disallowed-path');
         
         $this->assertEquals('user-agent:googlebot'."\n".'user-agent:slurp'."\n".'allow:/allowed-path'."\n".'disallow:/disallowed-path', (string)$record);       
     }   
