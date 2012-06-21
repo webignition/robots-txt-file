@@ -47,4 +47,21 @@ class Record {
         return $this->directiveList;        
     }
     
+    
+    /**
+     *
+     * @return string 
+     */
+    public function __toString() {
+        $stringRepresentation = '';
+        
+        $directives = array_merge($this->userAgentDirectiveList()->get(), $this->directiveList()->get());
+        
+        foreach ($directives as $directive) {
+            $stringRepresentation .= $directive . "\n";
+        }        
+        
+        return trim($stringRepresentation);
+    }
+    
 }
