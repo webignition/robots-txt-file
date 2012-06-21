@@ -46,58 +46,5 @@ class Record {
         
         return $this->directiveList;        
     }
-
-    
-    /**
-     *
-     * @param string $field
-     * @param string $value 
-     */
-    public function addDirective($field, $value) {
-        if (!$this->containsDirective($field, $value)) {
-            $directive = new \webignition\RobotsTxt\Directive\Directive();
-            $directive->setField($field);
-            $directive->setValue($value);            
-            
-            $this->directives[] = $directive;
-        }
-    }
-    
-    public function removeDirective($field, $value) {
-        $directivePosition = null;
-        foreach ($this->directives as $directiveIndex => $existingDirective) {            
-            
-            
-//            if ($userAgent == (string)$existingDirective->getValue()) {
-//                $directivePosition = $directiveIndex;
-//            }
-        }
-        
-//        if (!is_null($directivePosition)) {
-//            unset($this->directives[$directivePosition]);
-//        }        
-    }
-    
-    
-    
-    /**
-     *
-     * @param string $field
-     * @param string $value
-     * @return boolean 
-     */
-    public function containsDirective($field, $value) {
-        $directive = new \webignition\RobotsTxt\Directive\Directive();
-        $directive->setField($field);
-        $directive->setValue($value);        
-        
-        foreach ($this->directives as $existingDirective) {
-            if ((string)$existingDirective->getField() == (string)$directive->getField() && (string)$existingValue->getValue() == (string)$directive->getValue()) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
     
 }
