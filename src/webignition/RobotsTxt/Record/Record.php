@@ -17,11 +17,10 @@ class Record {
     private $userAgentDirectiveList = null;
     
     /**
-     * Collection of Directive objects
-     * 
-     * @var array
+     *
+     * @var \webignition\RobotsTxt\Directive\DirectiveList
      */
-    private $directives = array();
+    private $directiveList = null;
     
     
     /**
@@ -36,7 +35,17 @@ class Record {
         return $this->userAgentDirectiveList;
     }
     
-    
+    /**
+     *
+     * @return \webignition\RobotsTxt\Directive\DirectiveList 
+     */
+    public function directiveList() {
+        if (is_null($this->directiveList)) {
+            $this->directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
+        }
+        
+        return $this->directiveList;        
+    }
 
     
     /**
