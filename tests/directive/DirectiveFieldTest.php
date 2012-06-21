@@ -27,4 +27,12 @@ class DirectiveFieldTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('allow', $directiveField->get());         
     }
     
+    public function testIs() {
+        $directiveField = new \webignition\RobotsTxt\Directive\Field();
+        $directiveField->set('allow');
+        
+        $this->assertTrue($directiveField->is('allow'));
+        $this->assertFalse($directiveField->is('sitemap'));
+    }
+    
 }

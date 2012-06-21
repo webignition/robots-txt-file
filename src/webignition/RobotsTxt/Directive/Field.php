@@ -17,4 +17,13 @@ class Field extends Value {
     public function set($value) {
         parent::set(strtolower($value));
     }
+    
+    /**
+     *
+     * @param string $value
+     * @return boolean
+     */
+    public function is($value) {
+        return parent::get() == trim(strtolower($value));
+    }
 }
