@@ -72,5 +72,14 @@ class Directive {
         
         return true;
     }
+    
+    /**
+     *
+     * @param string $value
+     * @return boolean
+     */
+    public function is($value) {
+        return $this->getField() == trim(strtolower($value));
+    }    
 }
 
