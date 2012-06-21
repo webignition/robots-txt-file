@@ -7,7 +7,7 @@ class RecordUserAgentTest extends PHPUnit_Framework_TestCase {
     public function testInclusionOfDefaultUserAgent() {         
         $record = new \webignition\RobotsTxt\Record\Record();
        
-        $this->assertEquals(array('*'), $record->getUserAgentList());
+        $this->assertEquals(array('*'), $record->userAgentDirectiveList()->get());
     }
     
 }

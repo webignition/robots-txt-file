@@ -15,11 +15,8 @@ class UserAgentDirectiveList {
      * @param string $userAgentString 
      */
     public function add($userAgentString) {
-        if (!$this->contains($userAgentString)) {
-            $userAgent = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
-            $userAgent->setValue($userAgentString);
-            
-            $this->userAgents[] = $userAgent;
+        if (!$this->contains($userAgentString)) {            
+            $this->userAgents[] = $this->getNewUserAgent($userAgentString);
         }
     }
     
@@ -29,8 +26,7 @@ class UserAgentDirectiveList {
      * @param string $userAgentString 
      */
     public function remove($userAgentString) {
-        $userAgent = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
-        $userAgent->setValue($userAgentString);
+        $userAgent = $this->getNewUserAgent($userAgentString);
         
         $userAgentPosition = null;
         foreach ($this->userAgents as $userAgentIndex => $existingUserAgent) {
@@ -69,8 +65,7 @@ class UserAgentDirectiveList {
      * @return boolean 
      */
     public function contains($userAgentString) {
-        $userAgent = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
-        $userAgent->setValue($userAgentString);
+        $userAgent = $this->getNewUserAgent($userAgentString);
         
         foreach ($this->userAgents as $existingUserAgent) {
             if ($userAgent->equals($existingUserAgent)) {
@@ -79,6 +74,19 @@ class UserAgentDirectiveList {
         }
         
         return false;
-    }   
+    }
+    
+    
+    /**
+     *
+     * @param type $userAgentString
+     * @return \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective 
+     */
+    private function getNewUserAgent($userAgentString) {
+        $userAgent = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
+        $userAgent->setValue($userAgentString);
+        
+        return $userAgent;
+    }
     
 }
