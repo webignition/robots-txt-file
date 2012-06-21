@@ -3,7 +3,8 @@ php:
   - 5.3
   - 5.4
   
-script: curl -s http://getcomposer.org/installer | php
-script: php composer.phar install
+before_script:
+  - wget http://getcomposer.org/composer.phar
+  - php composer.phar install
   
 script: phpunit tests
