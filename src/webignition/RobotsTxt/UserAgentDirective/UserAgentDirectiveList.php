@@ -1,23 +1,14 @@
 <?php
 namespace webignition\RobotsTxt\UserAgentDirective;
 
-class UserAgentDirectiveList {
-    
-    /**
-     * Collection of UserAgentDirective objects
-     * 
-     * @var array
-     */
-    private $userAgents = array();
-    
+class UserAgentDirectiveList extends \webignition\RobotsTxt\Directive\DirectiveList {   
+   
     /**
      *
      * @param string $userAgentString 
      */
     public function add($userAgentString) {
-        if (!$this->contains($userAgentString)) {            
-            $this->userAgents[] = $this->getNewUserAgent($userAgentString);
-        }
+        parent::add('user-agent', $userAgentString);
     }
     
     
@@ -26,18 +17,7 @@ class UserAgentDirectiveList {
      * @param string $userAgentString 
      */
     public function remove($userAgentString) {
-        $userAgent = $this->getNewUserAgent($userAgentString);
-        
-        $userAgentPosition = null;
-        foreach ($this->userAgents as $userAgentIndex => $existingUserAgent) {
-            if ($userAgent->equals($existingUserAgent)) {
-                $userAgentPosition = $userAgentIndex;
-            }
-        }
-        
-        if (!is_null($userAgentPosition)) {
-            unset($this->userAgents[$userAgentPosition]);
-        }
+        return parent::remove('user-agent', $userAgentString);
     }
     
     
@@ -45,14 +25,30 @@ class UserAgentDirectiveList {
      *
      * @return array
      */
-    public function get() {        
+    public function getValues() {        
         $userAgents = array();
-        foreach ($this->userAgents as $userAgent) {
+        $userAgentDirectives = $this->get();
+        
+        foreach ($userAgentDirectives as $userAgent) {
             $userAgents[] = (string)$userAgent->getValue();
         }
         
+        return $userAgents;
+    }
+    
+    
+    /**
+     *
+     * @return array
+     */
+    public function get() {
+        $userAgents = parent::get();
+        
         if (count($userAgents) === 0) {
-            $userAgents[] = '*';
+            $defaultUserAgentDirective = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
+            $defaultUserAgentDirective->setValue('*');
+            
+            $userAgents[] = $defaultUserAgentDirective;
         }
         
         return $userAgents;
@@ -65,28 +61,21 @@ class UserAgentDirectiveList {
      * @return boolean 
      */
     public function contains($userAgentString) {
-        $userAgent = $this->getNewUserAgent($userAgentString);
-        
-        foreach ($this->userAgents as $existingUserAgent) {
-            if ($userAgent->equals($existingUserAgent)) {
-                return true;
-            }
-        }
-        
-        return false;
+        return parent::contains('user-agent', $userAgentString);
     }
     
     
     /**
      *
-     * @param type $userAgentString
-     * @return \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective 
+     * @param string $field
+     * @param string $value
+     * @return \webignition\RobotsTxt\Directive\Directive 
      */
-    private function getNewUserAgent($userAgentString) {
-        $userAgent = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
-        $userAgent->setValue($userAgentString);
+    protected function getNewDirective($field, $value) {
+        $directive = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
+        $directive->setValue($value);
         
-        return $userAgent;
-    }
+        return $directive;
+    }    
     
 }

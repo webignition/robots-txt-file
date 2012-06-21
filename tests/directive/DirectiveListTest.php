@@ -8,10 +8,10 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
         $directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
         
         $directiveList->add('allow', '/allowed-path');        
-        $this->assertEquals(array('allow:/allowed-path'), $directiveList->get());
+        $this->assertEquals(array('allow:/allowed-path'), $directiveList->getValues());
         
         $directiveList->add('disallow', '/disallowed-path');
-        $this->assertEquals(array('allow:/allowed-path', 'disallow:/disallowed-path'), $directiveList->get());
+        $this->assertEquals(array('allow:/allowed-path', 'disallow:/disallowed-path'), $directiveList->getValues());
     }
     
     public function testRemove() {
@@ -20,16 +20,16 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
         $directiveList->add('field1', 'value1');                
         $directiveList->add('field2', 'value2');
         $directiveList->add('field3', 'value3');        
-        $this->assertEquals(array('field1:value1', 'field2:value2', 'field3:value3'), $directiveList->get());
+        $this->assertEquals(array('field1:value1', 'field2:value2', 'field3:value3'), $directiveList->getValues());
         
         $directiveList->remove('fieLD1', 'value1');
-        $this->assertEquals(array('field2:value2', 'field3:value3'), $directiveList->get());
+        $this->assertEquals(array('field2:value2', 'field3:value3'), $directiveList->getValues());
         
         $directiveList->remove('field2', 'value2');
-        $this->assertEquals(array('field3:value3'), $directiveList->get());
+        $this->assertEquals(array('field3:value3'), $directiveList->getValues());
         
         $directiveList->remove('fielD3', 'value3');
-        $this->assertEquals(array(), $directiveList->get());        
+        $this->assertEquals(array(), $directiveList->getValues());        
     }
     
     public function testContains() {

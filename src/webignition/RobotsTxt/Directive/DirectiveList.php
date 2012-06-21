@@ -47,13 +47,22 @@ class DirectiveList {
      *
      * @return array
      */
-    public function get() {        
+    public function getValues() {        
         $directives = array();
         foreach ($this->directives as $directive) {
             $directives[] = (string)$directive;
         }
         
         return $directives;
+    }
+    
+    
+    /**
+     *
+     * @return array
+     */
+    public function get() {
+        return $this->directives;
     }
     
     
@@ -81,7 +90,7 @@ class DirectiveList {
      * @param string $value
      * @return \webignition\RobotsTxt\Directive\Directive 
      */
-    private function getNewDirective($field, $value) {
+    protected function getNewDirective($field, $value) {
         $directive = new \webignition\RobotsTxt\Directive\Directive();
         $directive->setField($field);
         $directive->setValue($value);
