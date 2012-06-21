@@ -40,4 +40,11 @@ class FileCastToStringTest extends PHPUnit_Framework_TestCase {
         
         $this->assertEquals('user-agent:googlebot'."\n".'allow:/allowed-path'."\n\n".'user-agent:slurp'."\n".'disallow:/', (string)$file);        
     }
+    
+    public function testCastingWithDirectivesOnly() {        
+        $file = new \webignition\RobotsTxt\File\File();
+        $file->directiveList()->add('sitemap:http://www.example.com/sitemap.xml');
+        
+        $this->assertEquals('sitemap:http://www.example.com/sitemap.xml', (string)$file);
+    }
 }

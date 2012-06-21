@@ -9,17 +9,17 @@ namespace webignition\RobotsTxt\File;
  * 
  * Short format description:
  * 
- * A robots txt file contains one or more _records_
+ * A robots txt file contains one or more _records_ or independent
+ * _directives_
  * 
  * A record starts with one or more _user_agent_strings_ followed
  * by one or more directives applying to matching user agents
  * 
  * A directive can be an Allow or Disallow instruction applying to
- * a specified user agent
+ * a specified user agent. Such directives are collected in a record.
  * 
- * A directive can be Sitemap instruction identifying a URL to an
- * XML sitemap. A Sitempa instruction applies to all user agents.
- * Many Sitemap instructions can be present.
+ * A directive can be independent of any user agent. An example
+ * is a sitemap directive.
  * 
  */
 class File {
@@ -29,6 +29,25 @@ class File {
      * @var array
      */
     private $records = array();
+    
+    /**
+     *
+     * @var type 
+     */
+    private $directiveList = null;
+    
+    
+    /**
+     *
+     * @return \webignition\RobotsTxt\Directive\DirectiveList 
+     */
+    public function directiveList() {
+        if (is_null($this->directiveList)) {
+            $this->directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
+        }
+        
+        return $this->directiveList;        
+    }    
     
     
     /**
@@ -56,6 +75,8 @@ class File {
         foreach ($this->records as $record) {
             $string .= $record . "\n\n";
         }
+        
+        $string .= (string)$this->directiveList();
         
         return trim($string);
     }  
