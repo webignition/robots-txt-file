@@ -1,5 +1,5 @@
 <?php
-namespace webignition\RobotsTxt;
+namespace webignition\RobotsTxt\File;
 
 /**
  * Models a robots.txt file as derived from specifications at:
@@ -24,6 +24,39 @@ namespace webignition\RobotsTxt;
  */
 class File {
 
+    /**
+     *
+     * @var array
+     */
+    private $records = array();
     
     
+    /**
+     *
+     * @param \webignition\RobotsTxt\Record\Record $record 
+     */
+    public function addRecord(\webignition\RobotsTxt\Record\Record $record) {
+        $this->records[] = $record;        
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getRecords() {
+        return $this->records;
+    }
+    
+    /**
+     *
+     * @return string 
+     */
+    public function __toString() {
+        $string = '';
+        foreach ($this->records as $record) {
+            $string .= $record . "\n\n";
+        }
+        
+        return trim($string);
+    }  
 }
