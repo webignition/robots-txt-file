@@ -99,4 +99,19 @@ class DirectiveList {
     }
     
     
+    /**
+     *
+     * @return string
+     */
+    public function __toString() {
+        $string = '';
+        $directives = $this->get();
+        
+        foreach ($directives as $directive) {
+            $string .= $directive . "\n";
+        }
+        
+        return trim($string);
+    }
+    
 }
