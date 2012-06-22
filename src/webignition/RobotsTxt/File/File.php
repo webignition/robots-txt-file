@@ -66,6 +66,30 @@ class File {
         return $this->records;
     }
     
+    
+    /**
+     *
+     * @param string $userAgentString
+     * @return \webignition\RobotsTxt\Directive\DirectiveList 
+     */
+    public function getDirectivesFor($userAgentString) {        
+        foreach ($this->getRecords() as $record) {
+            /* @var $record \webignition\RobotsTxt\Record\Record */
+            if ($record->userAgentDirectiveList()->contains($userAgentString)) {
+                return $record->directiveList();
+            }
+        }
+        
+        foreach ($this->getRecords() as $record) {
+            /* @var $record \webignition\RobotsTxt\Record\Record */
+            if ($record->userAgentDirectiveList()->contains('*')) {
+                return $record->directiveList();
+            }
+        }
+        
+        return new \webignition\RobotsTxt\Directive\DirectiveList();
+    }
+    
     /**
      *
      * @return string 
