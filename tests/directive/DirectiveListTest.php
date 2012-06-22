@@ -5,7 +5,7 @@ require_once(__DIR__.'/../../lib/bootstrap.php');
 class DirectiveListTest extends PHPUnit_Framework_TestCase {
     
     public function testAdd() {
-        $directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
+        $directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
         
         $directiveList->add('allow:/allowed-path');        
         $this->assertEquals(array('allow:/allowed-path'), $directiveList->getValues());
@@ -15,7 +15,7 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
     }
     
     public function testRemove() {
-        $directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
+        $directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
         
         $directiveList->add('field1:value1');                
         $directiveList->add('field2:value2');
@@ -33,7 +33,7 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
     }
     
     public function testContains() {
-        $directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
+        $directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
         
         $directiveList->add('field1:value1');                
         $directiveList->add('field2:value2');
@@ -46,7 +46,7 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
     }
     
     public function testGetByField() {
-        $directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
+        $directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
         
         $directiveList->add('allow:/allow-path-1');                
         $directiveList->add('allow:/allow-path-2');
@@ -62,5 +62,7 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(array('disallow:/disallow-path-1', 'disallow:/disallow-path-2', 'disallow:/disallow-path-3'), $directiveList->getByField('disallow'));
         $this->assertEquals(array('sitemap:/one.xml', 'sitemap:/two.xml', 'sitemap:/three.xml'), $directiveList->getByField('sitemap'));
     }
+    
+    
     
 }

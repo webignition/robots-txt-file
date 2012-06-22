@@ -1,7 +1,7 @@
 <?php
 namespace webignition\RobotsTxt\UserAgentDirective;
 
-class UserAgentDirectiveList extends \webignition\RobotsTxt\Directive\DirectiveList {   
+class UserAgentDirectiveList extends \webignition\RobotsTxt\DirectiveList\DirectiveList {   
    
     /**
      *

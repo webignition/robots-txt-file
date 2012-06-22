@@ -39,11 +39,11 @@ class File {
     
     /**
      *
-     * @return \webignition\RobotsTxt\Directive\DirectiveList 
+     * @return \webignition\RobotsTxt\DirectiveList\DirectiveList 
      */
     public function directiveList() {
         if (is_null($this->directiveList)) {
-            $this->directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
+            $this->directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
         }
         
         return $this->directiveList;        
@@ -70,7 +70,7 @@ class File {
     /**
      *
      * @param string $userAgentString
-     * @return \webignition\RobotsTxt\Directive\DirectiveList 
+     * @return \webignition\RobotsTxt\DirectiveList\DirectiveList 
      */
     public function getDirectivesFor($userAgentString) {        
         foreach ($this->getRecords() as $record) {
@@ -87,7 +87,7 @@ class File {
             }
         }
         
-        return new \webignition\RobotsTxt\Directive\DirectiveList();
+        return new \webignition\RobotsTxt\DirectiveList\DirectiveList();
     }
     
     /**

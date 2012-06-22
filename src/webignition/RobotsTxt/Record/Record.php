@@ -18,7 +18,7 @@ class Record {
     
     /**
      *
-     * @var \webignition\RobotsTxt\Directive\DirectiveList
+     * @var \webignition\RobotsTxt\DirectiveList\DirectiveList
      */
     private $directiveList = null;
     
@@ -37,11 +37,11 @@ class Record {
     
     /**
      *
-     * @return \webignition\RobotsTxt\Directive\DirectiveList 
+     * @return \webignition\RobotsTxt\DirectiveList\DirectiveList 
      */
     public function directiveList() {
         if (is_null($this->directiveList)) {
-            $this->directiveList = new \webignition\RobotsTxt\Directive\DirectiveList();
+            $this->directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
         }
         
         return $this->directiveList;        

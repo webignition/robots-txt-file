@@ -12,7 +12,7 @@ class DirectiveCastToStringTest extends PHPUnit_Framework_TestCase {
     }
     
     public function testCastingListToString() {
-        $list = new \webignition\RobotsTxt\Directive\DirectiveList();
+        $list = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
         
         $list->add('field1:value1');        
         $this->assertEquals('field1:value1', (string)$list);

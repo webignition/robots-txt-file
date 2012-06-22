@@ -1,5 +1,5 @@
 <?php
-namespace webignition\RobotsTxt\Directive;
+namespace webignition\RobotsTxt\DirectiveList;
 
 class DirectiveList {
     
