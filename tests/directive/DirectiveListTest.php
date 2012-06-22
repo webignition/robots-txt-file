@@ -58,11 +58,9 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
         $directiveList->add('sitemap:/two.xml');
         $directiveList->add('sitemap:/three.xml');
         
-        $this->assertEquals(array('allow:/allow-path-1', 'allow:/allow-path-2', 'allow:/allow-path-3'), $directiveList->getByField('allow'));
-        $this->assertEquals(array('disallow:/disallow-path-1', 'disallow:/disallow-path-2', 'disallow:/disallow-path-3'), $directiveList->getByField('disallow'));
-        $this->assertEquals(array('sitemap:/one.xml', 'sitemap:/two.xml', 'sitemap:/three.xml'), $directiveList->getByField('sitemap'));
-    }
-    
-    
+        $this->assertEquals('allow:/allow-path-1'."\n".'allow:/allow-path-2'."\n".'allow:/allow-path-3', (string)$directiveList->filter(array('field' => 'allow')));
+        $this->assertEquals('disallow:/disallow-path-1'."\n".'disallow:/disallow-path-2'."\n".'disallow:/disallow-path-3', (string)$directiveList->filter(array('field' => 'disallow')));
+        $this->assertEquals('sitemap:/one.xml'."\n".'sitemap:/two.xml'."\n".'sitemap:/three.xml', (string)$directiveList->filter(array('field' => 'sitemap')));
+    }   
     
 }
