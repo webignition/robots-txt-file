@@ -58,6 +58,25 @@ class DirectiveList {
     
     /**
      *
+     * @param string $field
+     * @return array
+     */
+    public function getByField($field) {
+        $directives = array();
+
+        foreach ($this->directives as $directive) {
+            /* @var $directive \webignition\RobotsTxt\Directive\Directive */
+            if ($directive->is($field)) {
+                $directives[] = $directive;
+            }
+        }        
+        
+        return $directives;
+    }
+    
+    
+    /**
+     *
      * @return array
      */
     public function get() {
