@@ -22,13 +22,7 @@ and update your dependencies.
 
     "require": {
         "webignition/robots-txt-file": "*"      
-    },
-    "repositories": [
-        {
-            "type":"vcs",
-            "url": "https://github.com/webignition/robots-txt-file"
-        }
-    ]
+    }
 
 #### Developing
 
@@ -50,7 +44,7 @@ Have look at the [project on travis][4] for the latest build status, or give the
 a go yourself.
 
     cd ~/robots-txt-file
-    phpunit tests
+    phpunit
 
 
 [1]: http://www.robotstxt.org/
