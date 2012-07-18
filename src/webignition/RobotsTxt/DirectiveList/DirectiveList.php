@@ -69,7 +69,7 @@ class DirectiveList {
      * @return \webignition\RobotsTxt\Directive\Directive
      */
     public function first() {
-        $directives = &$this->get();
+        $directives = $this->get();
         return $directives[0];
     }
     
