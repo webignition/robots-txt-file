@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', 'On');
 
 class UserAgentDirectiveListTest extends PHPUnit_Framework_TestCase {
     

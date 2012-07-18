@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', 'On');
 
 class DirectiveValueTest extends PHPUnit_Framework_TestCase {
 
