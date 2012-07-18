@@ -43,16 +43,16 @@ A `\webignition\RobotsTxt\File\File` object, preferably populated via a [robots-
 
 ```php
 <?php
-    $parser = new \webignition\RobotsTxt\File\Parser();
-    $parser->setContent(file_get_contents('http://example.com/robots.txt'));
+$parser = new \webignition\RobotsTxt\File\Parser();
+$parser->setContent(file_get_contents('http://example.com/robots.txt'));
 
-    $robotsTxtFile = $parser->getFile();
+$robotsTxtFile = $parser->getFile();
  
-    # Get an array of records
-    $robotsTxtFile->getRecords();
+# Get an array of records
+$robotsTxtFile->getRecords();
 
-    # Get the list of record-independent directives (such as sitemap directives):
-    $robotsTxtFile->directiveList()->get();
+# Get the list of record-independent directives (such as sitemap directives):
+$robotsTxtFile->directiveList()->get();
 ```
 
 
