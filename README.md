@@ -22,7 +22,7 @@ Here's an example with two records:
     User-Agent: *
     Disallow: /private
 
-This instructs the user agent 'Slurp' that is is not allowed access to '/' (i.e. the whole site), and this instructs all other user agents that they are not allowed access to '/private'.
+This instructs the user agent 'Slurp' that it is not allowed access to '/' (i.e. the whole site), and this instructs all other user agents that they are not allowed access to '/private'.
 
 A robots.txt file can optionally contain directives that apply to all user agents irrespective of the specified records. These are included as a set of a directives that are not part of a record. A common use is the `sitemap` directive.
 
