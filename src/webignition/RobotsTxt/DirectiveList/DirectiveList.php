@@ -80,7 +80,26 @@ class DirectiveList {
         }
         
         return false;
-    }  
+    }
+    
+    
+    /**
+     *
+     * @param string $fieldName
+     * @return boolean 
+     */
+    public function containsField($fieldName) {        
+        $fieldName = strtolower(trim($fieldName));
+        
+        foreach ($this->directives as $directive) {
+            /* @var $directive \webignition\RobotsTxt\Directive\Directive */
+            if ($directive->getField() == $fieldName) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
     
     
     /**

@@ -60,6 +60,17 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('allow:/allow-path-1'."\n".'allow:/allow-path-2'."\n".'allow:/allow-path-3', (string)$directiveList->filter(array('field' => 'allow')));
         $this->assertEquals('disallow:/disallow-path-1'."\n".'disallow:/disallow-path-2'."\n".'disallow:/disallow-path-3', (string)$directiveList->filter(array('field' => 'disallow')));
         $this->assertEquals('sitemap:/one.xml'."\n".'sitemap:/two.xml'."\n".'sitemap:/three.xml', (string)$directiveList->filter(array('field' => 'sitemap')));
-    }   
+    }
+    
+    public function testContainsField() {
+        $directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
+        
+        $directiveList->add('field1:value1');                
+        $directiveList->add('field2:value2');
+        $directiveList->add('field3:value3'); 
+        
+        $this->assertTrue($directiveList->containsField('field1'));        
+        $this->assertFalse($directiveList->containsField('field4'));
+    }
     
 }

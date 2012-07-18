@@ -17,4 +17,13 @@ class Field extends Value {
     public function set($value) {
         parent::set(strtolower($value));
     }
+    
+    /**
+     *
+     * @param string $value
+     * @return string 
+     */
+    public function equals($value) {
+        return (string)$this->get() == strtolower($value);
+    }
 }
