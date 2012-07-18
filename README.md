@@ -12,7 +12,7 @@ Robots.txt file format refresher
 
 Let's quickly go over the format of a robots.txt file so that you can understand what you can get out of a `\webignition\RobotsTxt\File\File` object.
 
-A robots.txt file contains a collection of **records**. A record provides a set of **directives** to a specified user agent. A directive instructs a user agent to do somethign (or not do something). A blank line is used to separate records.
+A robots.txt file contains a collection of **records**. A record provides a set of **directives** to a specified user agent. A directive instructs a user agent to do something (or not do something). A blank line is used to separate records.
 
 Here's an example with two records:
 
