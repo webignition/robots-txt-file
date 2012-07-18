@@ -78,7 +78,7 @@ Notice how the user agent string is case insensitive?
 
 Let's say we're an automated web frontend testing service and we need to find a site's sitemap.xml to find a list
 of URLs that need testing. We know the site's domain and we know where to look for the robots.txt file and we know
-that this might specify the location of the sitemap.file file.
+that this might specify the location of the sitemap.xml file.
 
 ```php
 <?php
