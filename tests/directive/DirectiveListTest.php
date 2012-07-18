@@ -73,4 +73,15 @@ class DirectiveListTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($directiveList->containsField('field4'));
     }
     
+    
+    public function testFirst() {
+        $directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
+        
+        $directiveList->add('field1:value1');                
+        $directiveList->add('field2:value2');
+        $directiveList->add('field3:value3'); 
+        
+        $this->assertEquals('field1:value1', (string)$directiveList->first());
+    }    
+    
 }
