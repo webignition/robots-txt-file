@@ -94,6 +94,17 @@ $sitemapUrl = (string)$sitemapDirectives[0]->getValue();
 Cool, we've found the URL for the first sitemap listed in the robots.txt file. There may be many, although just the one
 is most common.
 
+Did you spot the call to `DirectiveList->filter()`? That's a `DirectiveList\Filter` at work making it easy to trim down
+a given `DirectiveList` to something more relevant.  You just pass the filter an array of keys and values, the key is
+name of the thing you're filtering against, the value is the value you want to match.
+
+Let's get all the `disallow` directives for Slurp:
+
+```php
+<?php
+$slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesForUserAgent('slurp')->filter(array('field' => 'disallow'))->get();
+```
+
 Building
 --------
 
