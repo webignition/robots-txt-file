@@ -55,6 +55,44 @@ $robotsTxtFile->getRecords();
 $robotsTxtFile->directiveList()->get();
 ```
 
+This might not be too useful on it's own. You'd normally be retrieving information from a robots.txt file because
+you are a crawler and need to know what you are allowed to access (or disallowed) or because you're a tool or
+service that needs to locate a site's sitemap.xml file.
+
+Let's say we're the 'Slurp' user agent and we want to know what's been specified for us:
+
+```php
+<?php
+$parser = new \webignition\RobotsTxt\File\Parser();
+$parser->setContent(file_get_contents('http://example.com/robots.txt'));
+
+$robotsTxtFile = $parser->getFile();
+ 
+$slurpDirectiveList = $robotsTxtFile->getDirectivesForUserAgent('slurp');
+```
+
+Ok, now we have a [DirectiveList](https://github.com/webignition/robots-txt-file/blob/master/src/webignition/RobotsTxt/DirectiveList/DirectiveList.php)
+containing a collection of directives. We can call `$directiveList->get()` to get the directives applicable to us.
+
+Notice how the user agent string is case insensitive?
+
+Let's say we're an automated web frontend testing service and we need to find a site's sitemap.xml to find a list
+of URLs that need testing. We know the site's domain and we know where to look for the robots.txt file and we know
+that this might specify the location of the sitemap.file file.
+
+```php
+<?php
+$parser = new \webignition\RobotsTxt\File\Parser();
+$parser->setContent(file_get_contents('http://example.com/robots.txt'));
+
+$robotsTxtFile = $parser->getFile();
+
+$sitemapDirectives = $robotsTxtFile->directiveList()->filter(array('field' => 'sitemap'))->get();
+$sitemapUrl = (string)$sitemapDirectives[0]->getValue();
+```
+
+Cool, we've found the URL for the first sitemap listed in the robots.txt file. There may be many, although just the one
+is most common.
 
 Building
 --------
