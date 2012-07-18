@@ -105,6 +105,15 @@ Let's get all the `disallow` directives for Slurp:
 $slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesForUserAgent('slurp')->filter(array('field' => 'disallow'))->get();
 ```
 
+A directive has a field (disallow, allow, sitemap) and a value. We can filter against values too, although the value of
+this is somewhat academic:
+
+```php
+<?php
+$slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesForUserAgent('slurp')->filter(array('value' => '/'))->get();
+$sitemapDirectivesByUrl = $robotsTxtFile->directiveList()->filter(array('value' => 'http://example.com/sitemap.xml'))->get();
+```
+
 Building
 --------
 
