@@ -1,21 +1,23 @@
 <?php
 
-class DirectiveValueTest extends PHPUnit_Framework_TestCase {
-
-    public function testSetGetValidValues() {        
+class DirectiveValueTest extends PHPUnit_Framework_TestCase
+{
+    public function testSetGetValidValues()
+    {
         $directiveValue = new \webignition\RobotsTxt\Directive\Value();
-        
-        $directiveValue->set('value1');        
+
+        $directiveValue->set('value1');
         $this->assertEquals('value1', $directiveValue->get());
-        
+
         $directiveValue->set('value2');
-        $this->assertEquals('value2', $directiveValue->get());        
+        $this->assertEquals('value2', $directiveValue->get());
     }
-    
-    public function testCommentIsIgnored() {
+
+    public function testCommentIsIgnored()
+    {
         $directiveField = new \webignition\RobotsTxt\Directive\Field();
-        
-        $directiveField->set('value2 # this comment should be ignored');        
-        $this->assertEquals('value2', $directiveField->get());       
-    }    
+
+        $directiveField->set('value2 # this comment should be ignored');
+        $this->assertEquals('value2', $directiveField->get());
+    }
 }
