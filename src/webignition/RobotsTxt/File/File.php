@@ -72,7 +72,9 @@ class File {
      * @param string $userAgentString
      * @return \webignition\RobotsTxt\DirectiveList\DirectiveList 
      */
-    public function getDirectivesFor($userAgentString) {        
+    public function getDirectivesFor($userAgentString) {
+        $userAgentString = strtolower($userAgentString);
+
         foreach ($this->getRecords() as $record) {
             /* @var $record \webignition\RobotsTxt\Record\Record */
             if ($record->userAgentDirectiveList()->contains($userAgentString)) {
