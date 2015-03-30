@@ -2,7 +2,7 @@
 
 namespace webignition\Tests\RobotsTxt\File;
 
-class GeneralTest extends FileTest {
+class GetDirectivesForTest extends FileTest {
 
     public function testGetDirectivesFor() {
         
