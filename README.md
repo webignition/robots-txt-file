@@ -68,7 +68,7 @@ $parser->setContent(file_get_contents('http://example.com/robots.txt'));
 
 $robotsTxtFile = $parser->getFile();
  
-$slurpDirectiveList = $robotsTxtFile->getDirectivesForUserAgent('slurp');
+$slurpDirectiveList = $robotsTxtFile->getDirectivesFor('slurp');
 ```
 
 Ok, now we have a [DirectiveList](https://github.com/webignition/robots-txt-file/blob/master/src/webignition/RobotsTxt/DirectiveList/DirectiveList.php)
@@ -102,7 +102,7 @@ Let's get all the `disallow` directives for Slurp:
 
 ```php
 <?php
-$slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesForUserAgent('slurp')->filter(array('field' => 'disallow'))->get();
+$slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesFor('slurp')->filter(array('field' => 'disallow'))->get();
 ```
 
 A directive has a field (disallow, allow, sitemap) and a value. We can filter against values too, although the value of
@@ -110,7 +110,7 @@ this is somewhat academic:
 
 ```php
 <?php
-$slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesForUserAgent('slurp')->filter(array('value' => '/'))->get();
+$slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesFor('slurp')->filter(array('value' => '/'))->get();
 $sitemapDirectivesByUrl = $robotsTxtFile->directiveList()->filter(array('value' => 'http://example.com/sitemap.xml'))->get();
 ```
 
