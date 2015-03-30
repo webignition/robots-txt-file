@@ -1,6 +1,8 @@
 <?php
 
-class FileGenerlTest extends PHPUnit_Framework_TestCase {    
+namespace webignition\Tests\RobotsTxt\File;
+
+class GeneralTest extends FileTest {
 
     public function testGetDirectivesFor() {
         
@@ -14,13 +16,11 @@ class FileGenerlTest extends PHPUnit_Framework_TestCase {
         $record2->directiveList()->add('allow:/allowed-path-for-googlebot');
         $record2->directiveList()->add('disallow:/disallowed-path-for-googlebot');        
         
+        $this->file->addRecord($record1);
+        $this->file->addRecord($record2);
         
-        $file = new \webignition\RobotsTxt\File\File();
-        $file->addRecord($record1);
-        $file->addRecord($record2);
-        
-        $this->assertEquals('allow:/allowed-path-for-googlebot'."\n".'disallow:/disallowed-path-for-googlebot', (string)$file->getDirectivesFor('googlebot'));
-        $this->assertEquals('allow:/allowed-path-for-*'."\n".'disallow:/disallowed-path-for-*', (string)$file->getDirectivesFor('*'));
-        $this->assertEquals('allow:/allowed-path-for-*'."\n".'disallow:/disallowed-path-for-*', (string)$file->getDirectivesFor('slurp'));
+        $this->assertEquals('allow:/allowed-path-for-googlebot'."\n".'disallow:/disallowed-path-for-googlebot', (string)$this->file->getDirectivesFor('googlebot'));
+        $this->assertEquals('allow:/allowed-path-for-*'."\n".'disallow:/disallowed-path-for-*', (string)$this->file->getDirectivesFor('*'));
+        $this->assertEquals('allow:/allowed-path-for-*'."\n".'disallow:/disallowed-path-for-*', (string)$this->file->getDirectivesFor('slurp'));
     }
 }

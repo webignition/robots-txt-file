@@ -1,9 +1,13 @@
 <?php
 
-class DirectiveParseFromStringTest extends PHPUnit_Framework_TestCase {
+namespace webignition\Tests\RobotsTxt\Directive;
+
+use webignition\RobotsTxt\Directive\Directive;
+
+class ParseFromStringTest extends DirectiveTest {
 
     public function testParseVaildDirectiveFromString() { 
-        $directive = new \webignition\RobotsTxt\Directive\Directive();
+        $directive = new Directive();
         $directive->parse('allow:/allowed-path');
         
         $this->assertTrue($directive->isValid());
@@ -12,7 +16,7 @@ class DirectiveParseFromStringTest extends PHPUnit_Framework_TestCase {
     }
     
     public function testParseInvaildDirectiveFromString() {
-        $directive = new \webignition\RobotsTxt\Directive\Directive();
+        $directive = new Directive();
         $directive->parse('no-field-value-separator');
         
         $this->assertFalse($directive->isValid());

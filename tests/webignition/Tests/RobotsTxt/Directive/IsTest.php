@@ -1,12 +1,16 @@
 <?php
 
-class DirectiveIsTest extends PHPUnit_Framework_TestCase {
+namespace webignition\Tests\RobotsTxt\Directive;
+
+use webignition\RobotsTxt\Directive\Directive;
+
+class DirectiveIsTest extends DirectiveTest {
 
     public function testIs() {
-        $directive1 = new \webignition\RobotsTxt\Directive\Directive();
+        $directive1 = new Directive();
         $directive1->parse('field1:value1');
 
-        $directive2 = new \webignition\RobotsTxt\Directive\Directive();
+        $directive2 = new Directive();
         $directive2->parse('field2:value2');
         
         $this->assertTrue($directive1->is('field1'));
