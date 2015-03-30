@@ -12,7 +12,9 @@ class AddRecordTest extends FileTest {
         
         $this->file->addRecord($record);
 
-        $this->assertEquals(1, count($this->file->getRecords()));
-        $this->assertTrue($this->file->getRecords()[0] instanceof Record);
+        $fileRecords = $this->file->getRecords();
+
+        $this->assertEquals(1, count($fileRecords));
+        $this->assertTrue($fileRecords[0] instanceof Record);
     }
 }
