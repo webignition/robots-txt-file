@@ -12,22 +12,22 @@ class DirectiveList
 
     /**
      *
-     * @param string $directiveString
+     * @param string $directiveIdentifier
      */
-    public function add($directiveString)
+    public function add($directiveIdentifier)
     {
-        if (!$this->contains($directiveString)) {
-            $this->directives[] = $this->createNewDirective($directiveString);
+        if (!$this->contains($directiveIdentifier)) {
+            $this->directives[] = $this->createNewDirective($directiveIdentifier);
         }
     }
 
     /**
      *
-     * @param string $directiveString
+     * @param string $directiveIdentifier
      */
-    public function remove($directiveString)
+    public function remove($directiveIdentifier)
     {
-        $directive = $this->createNewDirective($directiveString);
+        $directive = $this->createNewDirective($directiveIdentifier);
 
         $directivePosition = null;
         foreach ($this->directives as $userAgentIndex => $existingUserAgent) {
@@ -77,13 +77,13 @@ class DirectiveList
 
     /**
      *
-     * @param string $directiveString
+     * @param string $directiveIdentifier
      *
      * @return boolean
      */
-    public function contains($directiveString)
+    public function contains($directiveIdentifier)
     {
-        $directive = $this->createNewDirective($directiveString);
+        $directive = $this->createNewDirective($directiveIdentifier);
 
         foreach ($this->directives as $existingDirective) {
             if ($directive->equals($existingDirective)) {

@@ -3,26 +3,33 @@ namespace webignition\RobotsTxt\UserAgentDirective;
 
 use webignition\RobotsTxt\Directive\Directive;
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
-use webignition\RobotsTxt\UserAgentDirective\UserAgentDirective;
 
 class UserAgentDirectiveList extends DirectiveList
 {
     /**
      *
-     * @param string $userAgentString
+     * @param string $userAgentIdentifier
      */
-    public function add($userAgentString)
+    public function add($userAgentIdentifier)
     {
-        parent::add('user-agent:'.strtolower($userAgentString));
+        parent::add(
+            UserAgentDirective::USER_AGENT_FIELD_VALUE .
+            Directive::FIELD_VALUE_SEPARATOR .
+            strtolower($userAgentIdentifier)
+        );
     }
 
     /**
      *
-     * @param string $userAgentString
+     * @param string $userAgentIdentifier
      */
-    public function remove($userAgentString)
+    public function remove($userAgentIdentifier)
     {
-        parent::remove('user-agent:'.strtolower($userAgentString));
+        parent::remove(
+            UserAgentDirective::USER_AGENT_FIELD_VALUE .
+            Directive::FIELD_VALUE_SEPARATOR .
+            strtolower($userAgentIdentifier)
+        );
     }
 
     /**
@@ -51,7 +58,11 @@ class UserAgentDirectiveList extends DirectiveList
 
         if (count($userAgents) === 0) {
             $defaultUserAgentDirective = new UserAgentDirective();
-            $defaultUserAgentDirective->parse('user-agent:*');
+            $defaultUserAgentDirective->parse(
+                UserAgentDirective::USER_AGENT_FIELD_VALUE .
+                Directive::FIELD_VALUE_SEPARATOR .
+                '*'
+            );
 
             $userAgents[] = $defaultUserAgentDirective;
         }
@@ -61,13 +72,37 @@ class UserAgentDirectiveList extends DirectiveList
 
     /**
      *
-     * @param string $userAgentString
+     * @param string $userAgentIdentifier
      *
      * @return boolean
      */
-    public function contains($userAgentString)
+    public function contains($userAgentIdentifier)
     {
-        return parent::contains('user-agent:'.$userAgentString);
+        return parent::contains(
+            UserAgentDirective::USER_AGENT_FIELD_VALUE .
+            Directive::FIELD_VALUE_SEPARATOR .
+            strtolower($userAgentIdentifier)
+        );
+    }
+
+    /**
+     * @param string $userAgentString
+     *
+     * @return bool
+     */
+    public function match($userAgentString)
+    {
+        foreach ($this->getValues() as $userAgentIdentifier) {
+            if ($userAgentIdentifier === UserAgentDirective::DEFAULT_USER_AGENT) {
+                continue;
+            }
+
+            if (substr_count($userAgentString, $userAgentIdentifier)) {
+                return $userAgentIdentifier;
+            }
+        }
+
+        return null;
     }
 
     /**
