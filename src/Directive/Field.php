@@ -13,9 +13,11 @@ class Field extends Value
      */
     public function __construct($field = null)
     {
+        $field = (is_null($field)) ? '' : trim($field);
+
         parent::__construct();
         $this->addDisallowedCharacterCode(ord(':'));
-        $this->set((is_null($field)) ? '' : $field);
+        $this->set($field);
     }
 
     /**

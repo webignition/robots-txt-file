@@ -25,11 +25,4 @@ class ParseFromStringTest extends DirectiveTest
         $this->assertEquals('allow', (string)$this->directive->getField());
         $this->assertEquals('/allowed-path', (string)$this->directive->getValue());
     }
-
-    public function testParseInvalidDirectiveFromString()
-    {
-        $this->directive->parse('no-field-value-separator');
-
-        $this->assertFalse($this->directive->isValid());
-    }
 }
