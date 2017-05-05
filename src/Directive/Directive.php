@@ -4,7 +4,6 @@ namespace webignition\RobotsTxt\Directive;
 class Directive
 {
     const FIELD_VALUE_SEPARATOR = ':';
-    const VALID_DIRECTIVE_PATTERN = '/[^:]+\s?:\s?.+/';
 
     /**
      *
@@ -43,11 +42,15 @@ class Directive
      */
     public function parse($directiveString)
     {
-        $field = new Field($directiveString);
-        $value = new Value(substr($directiveString, strlen($field) + 1));
+        $directiveString = trim($directiveString);
 
+        $field = new Field($directiveString);
         $this->field = $field;
-        $this->value = $value;
+        $fieldString = (string)$field;
+
+        if ($directiveString !== $fieldString) {
+            $this->value = new Value(substr($directiveString, strlen($fieldString) + 1));
+        }
     }
 
     /**
@@ -56,7 +59,7 @@ class Directive
      */
     public function isValid()
     {
-        return preg_match(self::VALID_DIRECTIVE_PATTERN, (string)$this) > 0;
+        return !is_null($this->value);
     }
 
     /**
