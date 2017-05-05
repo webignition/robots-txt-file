@@ -12,10 +12,10 @@
         }
     ],
     "autoload": {
-      "psr-0": {
-        "webignition\\Tests": "tests/",
-        "": "src/"
-      }
+        "psr-4": {
+            "webignition\\RobotsTxt\\": "src/",
+            "webignition\\Tests\\RobotsTxt\\": "tests/"
+        }
     },
     "scripts": {
         "test": "./vendor/bin/phpunit --colors=always",
