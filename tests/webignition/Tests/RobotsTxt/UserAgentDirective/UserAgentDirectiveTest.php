@@ -5,15 +5,16 @@ namespace webignition\Tests\RobotsTxt\UserAgentDirective;
 use webignition\Tests\RobotsTxt\BaseTest;
 use webignition\RobotsTxt\UserAgentDirective\UserAgentDirective;
 
-abstract class UserAgentDirectiveTest extends BaseTest {
+abstract class UserAgentDirectiveTest extends BaseTest
+{
 
     /**
      * @var UserAgentDirective
      */
     protected $userAgentDirective;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->userAgentDirective = new UserAgentDirective();
     }
-    
 }

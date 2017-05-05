@@ -2,9 +2,10 @@
 
 namespace webignition\Tests\RobotsTxt\UserAgentDirectiveList;
 
-class RemoveTest extends UserAgentDirectiveListTest {
-
-    public function testRemove() {
+class RemoveTest extends UserAgentDirectiveListTest
+{
+    public function testRemove()
+    {
         $this->userAgentDirectiveList->add('agent1');
         $this->userAgentDirectiveList->add('agent2');
         $this->userAgentDirectiveList->add('agent3');
@@ -20,5 +21,4 @@ class RemoveTest extends UserAgentDirectiveListTest {
         $this->userAgentDirectiveList->remove('agent3');
         $this->assertEquals(array('*'), $this->userAgentDirectiveList->getValues());
     }
-    
 }

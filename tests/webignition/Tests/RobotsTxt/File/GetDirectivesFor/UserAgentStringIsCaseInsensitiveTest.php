@@ -4,9 +4,10 @@ namespace webignition\Tests\RobotsTxt\File\GetDirectivesFor;
 
 use webignition\RobotsTxt\Record\Record;
 
-class UserAgentStringIsCaseInsensitiveTest extends GetDirectivesForTest {
-
-    public function setUp() {
+class UserAgentStringIsCaseInsensitiveTest extends GetDirectivesForTest
+{
+    public function setUp()
+    {
         parent::setUp();
 
         $record1 = new Record();
@@ -23,9 +24,21 @@ class UserAgentStringIsCaseInsensitiveTest extends GetDirectivesForTest {
         $this->file->addRecord($record2);
     }
 
-    public function testUserAgentArgumentIsCaseInsensitive() {
-        $this->assertEquals('allow:/allowed-path-for-googlebot'."\n".'disallow:/disallowed-path-for-googlebot', (string)$this->file->getDirectivesFor('googlebot'));
-        $this->assertEquals('allow:/allowed-path-for-googlebot'."\n".'disallow:/disallowed-path-for-googlebot', (string)$this->file->getDirectivesFor('googleBOT'));
-        $this->assertEquals('allow:/allowed-path-for-googlebot'."\n".'disallow:/disallowed-path-for-googlebot', (string)$this->file->getDirectivesFor('GOOglebot'));
+    public function testUserAgentArgumentIsCaseInsensitive()
+    {
+        $this->assertEquals(
+            'allow:/allowed-path-for-googlebot'."\n".'disallow:/disallowed-path-for-googlebot',
+            (string)$this->file->getDirectivesFor('googlebot')
+        );
+
+        $this->assertEquals(
+            'allow:/allowed-path-for-googlebot'."\n".'disallow:/disallowed-path-for-googlebot',
+            (string)$this->file->getDirectivesFor('googleBOT')
+        );
+
+        $this->assertEquals(
+            'allow:/allowed-path-for-googlebot'."\n".'disallow:/disallowed-path-for-googlebot',
+            (string)$this->file->getDirectivesFor('GOOglebot')
+        );
     }
 }
