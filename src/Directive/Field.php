@@ -8,6 +8,9 @@ namespace webignition\RobotsTxt\Directive;
  */
 class Field extends Value
 {
+    /**
+     * @param string|null $field
+     */
     public function __construct($field = null)
     {
         parent::__construct();
@@ -15,6 +18,9 @@ class Field extends Value
         $this->set((is_null($field)) ? '' : $field);
     }
 
+    /**
+     * @param string $value
+     */
     public function set($value)
     {
         parent::set(strtolower($value));
@@ -23,6 +29,7 @@ class Field extends Value
     /**
      *
      * @param string $value
+     *
      * @return string
      */
     public function equals($value)

@@ -1,7 +1,11 @@
 <?php
 namespace webignition\RobotsTxt\UserAgentDirective;
 
-class UserAgentDirectiveList extends \webignition\RobotsTxt\DirectiveList\DirectiveList
+use webignition\RobotsTxt\Directive\Directive;
+use webignition\RobotsTxt\DirectiveList\DirectiveList;
+use webignition\RobotsTxt\UserAgentDirective\UserAgentDirective;
+
+class UserAgentDirectiveList extends DirectiveList
 {
     /**
      *
@@ -18,12 +22,12 @@ class UserAgentDirectiveList extends \webignition\RobotsTxt\DirectiveList\Direct
      */
     public function remove($userAgentString)
     {
-        return parent::remove('user-agent:'.strtolower($userAgentString));
+        parent::remove('user-agent:'.strtolower($userAgentString));
     }
 
     /**
      *
-     * @return array
+     * @return string[]
      */
     public function getValues()
     {
@@ -39,14 +43,14 @@ class UserAgentDirectiveList extends \webignition\RobotsTxt\DirectiveList\Direct
 
     /**
      *
-     * @return array
+     * @return UserAgentDirective[]
      */
     public function get()
     {
         $userAgents = parent::get();
 
         if (count($userAgents) === 0) {
-            $defaultUserAgentDirective = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
+            $defaultUserAgentDirective = new UserAgentDirective();
             $defaultUserAgentDirective->parse('user-agent:*');
 
             $userAgents[] = $defaultUserAgentDirective;
@@ -58,6 +62,7 @@ class UserAgentDirectiveList extends \webignition\RobotsTxt\DirectiveList\Direct
     /**
      *
      * @param string $userAgentString
+     *
      * @return boolean
      */
     public function contains($userAgentString)
@@ -68,11 +73,12 @@ class UserAgentDirectiveList extends \webignition\RobotsTxt\DirectiveList\Direct
     /**
      *
      * @param string $directiveString
-     * @return \webignition\RobotsTxt\Directive\Directive
+     *
+     * @return Directive
      */
-    protected function getNewDirective($directiveString)
+    protected function createNewDirective($directiveString)
     {
-        $directive = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirective();
+        $directive = new UserAgentDirective();
         $directive->parse($directiveString);
 
         return $directive;

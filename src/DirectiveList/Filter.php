@@ -7,33 +7,26 @@ namespace webignition\RobotsTxt\DirectiveList;
 class Filter
 {
     /**
-     * Options by which to filter directives
-     *
-     * @var array
-     */
-    private $options = array();
-
-    /**
      * Directive list to be filtered
      *
-     * @var \webignition\RobotsTxt\DirectiveList\DirectiveList
+     * @var DirectiveList
      */
     private $sourceDirectiveList = null;
 
     /**
      *
-     * @param \webignition\RobotsTxt\DirectiveList\DirectiveList $sourceDirectiveList
+     * @param DirectiveList $sourceDirectiveList
      */
-    public function __construct(\webignition\RobotsTxt\DirectiveList\DirectiveList $sourceDirectiveList)
+    public function __construct(DirectiveList $sourceDirectiveList)
     {
         $this->setSourceDirectiveList($sourceDirectiveList);
     }
 
     /**
      *
-     * @param \webignition\RobotsTxt\DirectiveList\DirectiveList $directiveList
+     * @param DirectiveList $directiveList
      */
-    public function setSourceDirectiveList(\webignition\RobotsTxt\DirectiveList\DirectiveList $directiveList)
+    public function setSourceDirectiveList(DirectiveList $directiveList)
     {
         $this->sourceDirectiveList = $directiveList;
     }
@@ -41,7 +34,8 @@ class Filter
     /**
      *
      * @param array $options
-     * @return \webignition\RobotsTxt\DirectiveList\DirectiveList
+     *
+     * @return DirectiveList
      */
     public function getDirectiveList($options = array())
     {
@@ -49,7 +43,6 @@ class Filter
 
         if (isset($options['field'])) {
             foreach ($directives as $directiveIndex => $directive) {
-                /* @var $directive \webignition\RobotsTxt\Directive\Directive */
                 if (!$directive->is($options['field'])) {
                     unset($directives[$directiveIndex]);
                 }
@@ -58,14 +51,13 @@ class Filter
 
         if (isset($options['value'])) {
             foreach ($directives as $directiveIndex => $directive) {
-                /* @var $directive \webignition\RobotsTxt\Directive\Directive */
                 if ((string)$directive->getValue() != $options['value']) {
                     unset($directives[$directiveIndex]);
                 }
             }
         }
 
-        $directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
+        $directiveList = new DirectiveList();
         foreach ($directives as $directive) {
             $directiveList->add((string)$directive);
         }

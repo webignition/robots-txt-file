@@ -8,14 +8,14 @@ class Directive
 
     /**
      *
-     * @var \webignition\RobotsTxt\Directive\Field
+     * @var Field
      */
     private $field = null;
 
     /**
      * String containing "<any CHAR except CR or LF or "#">"
      *
-     * @var \webignition\RobotsTxt\Directive\NonBreakingNonCommentEntity
+     * @var Value
      */
     private $value = null;
 
@@ -43,8 +43,8 @@ class Directive
      */
     public function parse($directiveString)
     {
-        $field = new \webignition\RobotsTxt\Directive\Field($directiveString);
-        $value = new \webignition\RobotsTxt\Directive\Value(substr($directiveString, strlen($field) + 1));
+        $field = new Field($directiveString);
+        $value = new Value(substr($directiveString, strlen($field) + 1));
 
         $this->field = $field;
         $this->value = $value;
@@ -70,10 +70,11 @@ class Directive
 
     /**
      *
-     * @param \webignition\RobotsTxt\Directive\Directive $directive
+     * @param Directive $directive
+     *
      * @return boolean
      */
-    public function equals(\webignition\RobotsTxt\Directive\Directive $directive)
+    public function equals(Directive $directive)
     {
         if ((string)$this->getField() != (string)$directive->getField()) {
             return false;
@@ -89,6 +90,7 @@ class Directive
     /**
      *
      * @param string $value
+     *
      * @return boolean
      */
     public function is($value)

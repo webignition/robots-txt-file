@@ -1,7 +1,9 @@
 <?php
 namespace webignition\RobotsTxt\UserAgentDirective;
 
-class UserAgentDirective extends \webignition\RobotsTxt\Directive\Directive
+use webignition\RobotsTxt\Directive\Directive;
+
+class UserAgentDirective extends Directive
 {
     const USER_AGENT_FIELD_VALUE = 'user-agent';
     const DEFAULT_USER_AGENT = '*';

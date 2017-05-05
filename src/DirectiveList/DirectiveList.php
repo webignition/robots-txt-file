@@ -1,12 +1,12 @@
 <?php
 namespace webignition\RobotsTxt\DirectiveList;
 
+use webignition\RobotsTxt\Directive\Directive;
+
 class DirectiveList
 {
     /**
-     * Collection of UserAgentDirective objects
-     *
-     * @var array
+     * @var Directive[]
      */
     private $directives = array();
 
@@ -17,7 +17,7 @@ class DirectiveList
     public function add($directiveString)
     {
         if (!$this->contains($directiveString)) {
-            $this->directives[] = $this->getNewDirective($directiveString);
+            $this->directives[] = $this->createNewDirective($directiveString);
         }
     }
 
@@ -27,7 +27,7 @@ class DirectiveList
      */
     public function remove($directiveString)
     {
-        $directive = $this->getNewDirective($directiveString);
+        $directive = $this->createNewDirective($directiveString);
 
         $directivePosition = null;
         foreach ($this->directives as $userAgentIndex => $existingUserAgent) {
@@ -43,7 +43,7 @@ class DirectiveList
 
     /**
      *
-     * @return array
+     * @return string[]
      */
     public function getValues()
     {
@@ -57,7 +57,7 @@ class DirectiveList
 
     /**
      *
-     * @return array
+     * @return Directive[]
      */
     public function get()
     {
@@ -66,22 +66,24 @@ class DirectiveList
 
     /**
      *
-     * @return \webignition\RobotsTxt\Directive\Directive
+     * @return Directive
      */
     public function first()
     {
         $directives = $this->get();
+
         return $directives[0];
     }
 
     /**
      *
-     * @param string $userAgentString
+     * @param string $directiveString
+     *
      * @return boolean
      */
     public function contains($directiveString)
     {
-        $directive = $this->getNewDirective($directiveString);
+        $directive = $this->createNewDirective($directiveString);
 
         foreach ($this->directives as $existingDirective) {
             if ($directive->equals($existingDirective)) {
@@ -95,6 +97,7 @@ class DirectiveList
     /**
      *
      * @param string $fieldName
+     *
      * @return boolean
      */
     public function containsField($fieldName)
@@ -102,7 +105,6 @@ class DirectiveList
         $fieldName = strtolower(trim($fieldName));
 
         foreach ($this->directives as $directive) {
-            /* @var $directive \webignition\RobotsTxt\Directive\Directive */
             if ($directive->getField() == $fieldName) {
                 return true;
             }
@@ -114,11 +116,12 @@ class DirectiveList
     /**
      *
      * @param string $directiveString
-     * @return \webignition\RobotsTxt\Directive\Directive
+     *
+     * @return Directive
      */
-    protected function getNewDirective($directiveString)
+    protected function createNewDirective($directiveString)
     {
-        $directive = new \webignition\RobotsTxt\Directive\Directive();
+        $directive = new Directive();
         $directive->parse($directiveString);
 
         return $directive;
@@ -143,11 +146,13 @@ class DirectiveList
     /**
      *
      * @param array $options
-     * @return \webignition\RobotsTxt\DirectiveList\DirectiveList
+     *
+     * @return DirectiveList
      */
     public function filter($options)
     {
-        $filter = new \webignition\RobotsTxt\DirectiveList\Filter($this);
+        $filter = new Filter($this);
+
         return $filter->getDirectiveList($options);
     }
 }

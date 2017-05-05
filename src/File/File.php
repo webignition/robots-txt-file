@@ -1,6 +1,9 @@
 <?php
 namespace webignition\RobotsTxt\File;
 
+use webignition\RobotsTxt\DirectiveList\DirectiveList;
+use webignition\RobotsTxt\Record\Record;
+
 /**
  * Models a robots.txt file as derived from specifications at:
  * http://www.robotstxt.org/norobots-rfc.txt
@@ -25,42 +28,37 @@ namespace webignition\RobotsTxt\File;
 class File
 {
     /**
-     *
-     * @var array
+     * @var Record[]
      */
     private $records = array();
 
     /**
-     *
-     * @var type
+     * @var DirectiveList|null
      */
     private $directiveList = null;
 
     /**
-     *
-     * @return \webignition\RobotsTxt\DirectiveList\DirectiveList
+     * @return DirectiveList
      */
     public function directiveList()
     {
         if (is_null($this->directiveList)) {
-            $this->directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
+            $this->directiveList = new DirectiveList();
         }
 
         return $this->directiveList;
     }
 
     /**
-     *
-     * @param \webignition\RobotsTxt\Record\Record $record
+     * @param Record $record
      */
-    public function addRecord(\webignition\RobotsTxt\Record\Record $record)
+    public function addRecord(Record $record)
     {
         $this->records[] = $record;
     }
 
     /**
-     *
-     * @return array
+     * @return Record[]
      */
     public function getRecords()
     {
@@ -68,33 +66,30 @@ class File
     }
 
     /**
-     *
      * @param string $userAgentString
-     * @return \webignition\RobotsTxt\DirectiveList\DirectiveList
+     *
+     * @return DirectiveList
      */
     public function getDirectivesFor($userAgentString)
     {
         $userAgentString = strtolower($userAgentString);
 
         foreach ($this->getRecords() as $record) {
-            /* @var $record \webignition\RobotsTxt\Record\Record */
             if ($record->userAgentDirectiveList()->contains($userAgentString)) {
                 return $record->directiveList();
             }
         }
 
         foreach ($this->getRecords() as $record) {
-            /* @var $record \webignition\RobotsTxt\Record\Record */
             if ($record->userAgentDirectiveList()->contains('*')) {
                 return $record->directiveList();
             }
         }
 
-        return new \webignition\RobotsTxt\DirectiveList\DirectiveList();
+        return new DirectiveList();
     }
 
     /**
-     *
      * @return string
      */
     public function __toString()

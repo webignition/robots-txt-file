@@ -1,6 +1,9 @@
 <?php
 namespace webignition\RobotsTxt\Record;
 
+use webignition\RobotsTxt\DirectiveList\DirectiveList;
+use webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList;
+
 /**
  * From http://www.robotstxt.org/norobots-rfc.txt:
  *
@@ -11,25 +14,24 @@ namespace webignition\RobotsTxt\Record;
 class Record
 {
     /**
-     *
-     * @var \webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList
+     * @var UserAgentDirectiveList
      */
     private $userAgentDirectiveList = null;
 
     /**
      *
-     * @var \webignition\RobotsTxt\DirectiveList\DirectiveList
+     * @var DirectiveList
      */
     private $directiveList = null;
 
     /**
      *
-     * @return \webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList
+     * @return UserAgentDirectiveList
      */
     public function userAgentDirectiveList()
     {
         if (is_null($this->userAgentDirectiveList)) {
-            $this->userAgentDirectiveList = new \webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList();
+            $this->userAgentDirectiveList = new UserAgentDirectiveList();
         }
 
         return $this->userAgentDirectiveList;
@@ -37,12 +39,12 @@ class Record
 
     /**
      *
-     * @return \webignition\RobotsTxt\DirectiveList\DirectiveList
+     * @return DirectiveList
      */
     public function directiveList()
     {
         if (is_null($this->directiveList)) {
-            $this->directiveList = new \webignition\RobotsTxt\DirectiveList\DirectiveList();
+            $this->directiveList = new DirectiveList();
         }
 
         return $this->directiveList;
