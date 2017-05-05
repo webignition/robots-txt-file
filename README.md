@@ -44,7 +44,7 @@ A `\webignition\RobotsTxt\File\File` object, preferably populated via a [robots-
 ```php
 <?php
 $parser = new \webignition\RobotsTxt\File\Parser();
-$parser->setContent(file_get_contents('http://example.com/robots.txt'));
+$parser->setSource(file_get_contents('http://example.com/robots.txt'));
 
 $robotsTxtFile = $parser->getFile();
  
@@ -64,7 +64,7 @@ Let's say we're the 'Slurp' user agent and we want to know what's been specified
 ```php
 <?php
 $parser = new \webignition\RobotsTxt\File\Parser();
-$parser->setContent(file_get_contents('http://example.com/robots.txt'));
+$parser->setSource(file_get_contents('http://example.com/robots.txt'));
 
 $robotsTxtFile = $parser->getFile();
  
@@ -83,7 +83,7 @@ that this might specify the location of the sitemap.xml file.
 ```php
 <?php
 $parser = new \webignition\RobotsTxt\File\Parser();
-$parser->setContent(file_get_contents('http://example.com/robots.txt'));
+$parser->setSource(file_get_contents('http://example.com/robots.txt'));
 
 $robotsTxtFile = $parser->getFile();
 
