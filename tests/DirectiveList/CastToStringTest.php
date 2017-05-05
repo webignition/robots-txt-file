@@ -1,6 +1,6 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\DirectiveList\CastToString;
+namespace webignition\Tests\RobotsTxt\DirectiveList;
 
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
 use webignition\Tests\RobotsTxt\Directive\DirectiveTest;

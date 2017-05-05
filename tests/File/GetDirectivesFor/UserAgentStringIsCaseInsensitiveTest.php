@@ -6,7 +6,7 @@ use webignition\RobotsTxt\Record\Record;
 
 class UserAgentStringIsCaseInsensitiveTest extends GetDirectivesForTest
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

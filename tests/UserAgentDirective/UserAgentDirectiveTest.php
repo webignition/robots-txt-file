@@ -13,7 +13,7 @@ abstract class UserAgentDirectiveTest extends BaseTest
      */
     protected $userAgentDirective;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->userAgentDirective = new UserAgentDirective();
     }

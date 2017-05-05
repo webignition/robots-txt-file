@@ -6,21 +6,30 @@ use webignition\RobotsTxt\Directive\Directive;
 
 class ParseFromStringTest extends DirectiveTest
 {
-    public function testParseVaildDirectiveFromString()
-    {
-        $directive = new Directive();
-        $directive->parse('allow:/allowed-path');
+    /**
+     * @var Directive
+     */
+    private $directive;
 
-        $this->assertTrue($directive->isValid());
-        $this->assertEquals('allow', (string)$directive->getField());
-        $this->assertEquals('/allowed-path', (string)$directive->getValue());
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->directive = new Directive();
     }
 
-    public function testParseInvaildDirectiveFromString()
+    public function testParseValidDirectiveFromString()
     {
-        $directive = new Directive();
-        $directive->parse('no-field-value-separator');
+        $this->directive->parse('allow:/allowed-path');
 
-        $this->assertFalse($directive->isValid());
+        $this->assertTrue($this->directive->isValid());
+        $this->assertEquals('allow', (string)$this->directive->getField());
+        $this->assertEquals('/allowed-path', (string)$this->directive->getValue());
+    }
+
+    public function testParseInvalidDirectiveFromString()
+    {
+        $this->directive->parse('no-field-value-separator');
+
+        $this->assertFalse($this->directive->isValid());
     }
 }

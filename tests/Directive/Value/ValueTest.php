@@ -7,14 +7,25 @@ use webignition\Tests\RobotsTxt\Directive\DirectiveTest;
 
 class ValueTest extends DirectiveTest
 {
-    public function testSetGetValidValues()
+    /**
+     * @dataProvider directiveStringValueDataProvider
+     */
+    public function testSetGetValidValues($directiveStringValue)
     {
         $directiveValue = new Value();
 
-        $directiveValue->set('value1');
-        $this->assertEquals('value1', $directiveValue->get());
+        $directiveValue->set($directiveStringValue);
+        $this->assertEquals($directiveStringValue, $directiveValue->get());
+    }
 
-        $directiveValue->set('value2');
-        $this->assertEquals('value2', $directiveValue->get());
+    /**
+     * @return array
+     */
+    public function directiveStringValueDataProvider()
+    {
+        return [
+            ['value1'],
+            ['value2'],
+        ];
     }
 }

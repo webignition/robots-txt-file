@@ -12,7 +12,7 @@ abstract class RecordTest extends BaseTest
      */
     protected $record;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->record = new Record();
     }

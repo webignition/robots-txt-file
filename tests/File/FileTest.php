@@ -12,7 +12,7 @@ abstract class FileTest extends BaseTest
      */
     protected $file;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->file = new File();
     }

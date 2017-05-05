@@ -8,7 +8,6 @@ class DefaultTest extends GetDirectivesForTest
 {
     public function testGetDirectivesFor()
     {
-
         $record1 = new Record();
         $record1->userAgentDirectiveList()->add('*');
         $record1->directiveList()->add('allow:/allowed-path-for-*');

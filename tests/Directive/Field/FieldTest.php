@@ -12,8 +12,21 @@ abstract class FieldTest extends DirectiveTest
      */
     protected $field;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->field = new Field();
+    }
+
+    /**
+     * @return array
+     */
+    public function mixedCaseFieldNameProvider()
+    {
+        return [
+            ['allow'],
+            ['ALLOW'],
+            ['aLLow'],
+            ['allOW'],
+        ];
     }
 }

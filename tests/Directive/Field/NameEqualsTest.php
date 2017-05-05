@@ -4,11 +4,14 @@ namespace webignition\Tests\RobotsTxt\Directive\Field;
 
 class NameEqualsTest extends FieldTest
 {
-    public function testFieldNameEquals()
+    /**
+     * @dataProvider mixedCaseFieldNameProvider
+     *
+     * @param string $fieldName
+     */
+    public function testFieldNameEquals($fieldName)
     {
         $this->field->set('allow');
-        $this->assertTrue($this->field->equals('allow'));
-        $this->assertTrue($this->field->equals('allOw'));
-        $this->assertTrue($this->field->equals('aLloW'));
+        $this->assertTrue($this->field->equals($fieldName));
     }
 }

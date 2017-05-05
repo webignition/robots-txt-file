@@ -4,18 +4,14 @@ namespace webignition\Tests\RobotsTxt\Directive\Field;
 
 class NameIsCaseInsensitiveTest extends FieldTest
 {
-    public function testFieldNameIsCaseInsensitive()
+    /**
+     * @dataProvider mixedCaseFieldNameProvider
+     *
+     * @param string $fieldName
+     */
+    public function testFieldNameIsCaseInsensitive($fieldName)
     {
-        $this->field->set('allow');
-        $this->assertEquals('allow', $this->field->get());
-
-        $this->field->set('ALLOW');
-        $this->assertEquals('allow', $this->field->get());
-
-        $this->field->set('aLLow');
-        $this->assertEquals('allow', $this->field->get());
-
-        $this->field->set('allOW');
+        $this->field->set($fieldName);
         $this->assertEquals('allow', $this->field->get());
     }
 }

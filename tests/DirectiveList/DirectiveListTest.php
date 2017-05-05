@@ -12,7 +12,7 @@ abstract class DirectiveListTest extends BaseTest
      */
     protected $directiveList;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->directiveList = new DirectiveList();
     }
