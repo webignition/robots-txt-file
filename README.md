@@ -123,15 +123,15 @@ If used as a dependency by another project, update that project's composer.json
 and update your dependencies.
 
     "require": {
-        "webignition/robots-txt-file": "dev-master"      
+        "webignition/robots-txt-file": "*"      
     }
     
 If you want to be doing any parsing of robots.txt files (which you quote often would),
 you need to get the parser too:
 
     "require": {
-        "webignition/robots-txt-file": "dev-master",
-        "webignition/robots-txt-parser": "dev-master" 
+        "webignition/robots-txt-file": "*",
+        "webignition/robots-txt-parser": "*" 
     }
 
 #### Developing
@@ -154,7 +154,7 @@ Have look at the [project on travis][4] for the latest build status, or give the
 a go yourself.
 
     cd ~/robots-txt-file
-    phpunit
+    composer test
 
 
 [1]: http://www.robotstxt.org/
