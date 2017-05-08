@@ -1,34 +1,30 @@
 <?php
 namespace webignition\RobotsTxt\DirectiveList;
 
-use webignition\RobotsTxt\Directive\Directive;
+use webignition\RobotsTxt\Directive\DirectiveInterface;
 
 class DirectiveList
 {
     /**
-     * @var Directive[]
+     * @var DirectiveInterface[]
      */
     private $directives = array();
 
     /**
-     *
-     * @param string $directiveIdentifier
+     * @param DirectiveInterface $directive
      */
-    public function add($directiveIdentifier)
+    public function add(DirectiveInterface $directive)
     {
-        if (!$this->contains($directiveIdentifier)) {
-            $this->directives[] = $this->createNewDirective($directiveIdentifier);
+        if (!$this->contains($directive)) {
+            $this->directives[] = $directive;
         }
     }
 
     /**
-     *
-     * @param string $directiveIdentifier
+     * @param DirectiveInterface $directive
      */
-    public function remove($directiveIdentifier)
+    public function remove(DirectiveInterface $directive)
     {
-        $directive = $this->createNewDirective($directiveIdentifier);
-
         $directivePosition = null;
         foreach ($this->directives as $userAgentIndex => $existingUserAgent) {
             if ($directive->equals($existingUserAgent)) {
@@ -57,7 +53,7 @@ class DirectiveList
 
     /**
      *
-     * @return Directive[]
+     * @return DirectiveInterface[]
      */
     public function get()
     {
@@ -66,7 +62,7 @@ class DirectiveList
 
     /**
      *
-     * @return Directive
+     * @return DirectiveInterface
      */
     public function first()
     {
@@ -76,15 +72,12 @@ class DirectiveList
     }
 
     /**
+     * @param DirectiveInterface $directive
      *
-     * @param string $directiveIdentifier
-     *
-     * @return boolean
+     * @return bool
      */
-    public function contains($directiveIdentifier)
+    public function contains(DirectiveInterface $directive)
     {
-        $directive = $this->createNewDirective($directiveIdentifier);
-
         foreach ($this->directives as $existingDirective) {
             if ($directive->equals($existingDirective)) {
                 return true;
@@ -115,20 +108,6 @@ class DirectiveList
 
     /**
      *
-     * @param string $directiveString
-     *
-     * @return Directive
-     */
-    protected function createNewDirective($directiveString)
-    {
-        $directive = new Directive();
-        $directive->parse($directiveString);
-
-        return $directive;
-    }
-
-    /**
-     *
      * @return string
      */
     public function __toString()
@@ -154,5 +133,13 @@ class DirectiveList
         $filter = new Filter($this);
 
         return $filter->getDirectiveList($options);
+    }
+
+    /**
+     * @return int
+     */
+    public function getLength()
+    {
+        return count($this->directives);
     }
 }

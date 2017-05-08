@@ -3,7 +3,6 @@ namespace webignition\RobotsTxt\File;
 
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
 use webignition\RobotsTxt\Record\Record;
-use webignition\RobotsTxt\UserAgentDirective\UserAgentDirective;
 
 /**
  * Models a robots.txt file as derived from specifications at:
@@ -64,102 +63,6 @@ class File
     public function getRecords()
     {
         return $this->records;
-    }
-
-    /**
-     * @param string $userAgentString
-     *
-     * @return DirectiveList
-     */
-    public function getDirectivesFor($userAgentString)
-    {
-        $userAgentString = trim(mb_strtolower($userAgentString));
-        $isDefaultUserAgent = $userAgentString === UserAgentDirective::DEFAULT_USER_AGENT;
-        $defaultUserAgentDirectives = $this->getDirectivesForDefaultUserAgent();
-
-        $records = $this->getRecords();
-
-        if ($isDefaultUserAgent) {
-            return $defaultUserAgentDirectives;
-        }
-
-        $matchedDirectiveLists = [];
-
-        foreach ($records as $record) {
-            $userAgentDirectiveListMatch = $record->userAgentDirectiveList()->match($userAgentString);
-
-            if (!is_null($userAgentDirectiveListMatch)) {
-                $matchedDirectiveLists[$userAgentDirectiveListMatch] = $record->directiveList();
-            }
-        }
-
-        $matchCount = count($matchedDirectiveLists);
-
-        if ($matchCount === 0) {
-            return $defaultUserAgentDirectives;
-        }
-
-        if ($matchCount === 1) {
-            return reset($matchedDirectiveLists);
-        }
-
-        return $matchedDirectiveLists[
-            $this->findBestUserAgentStringToUserAgentIdentifierMatch(
-                $userAgentString,
-                array_keys($matchedDirectiveLists)
-            )
-        ];
-    }
-
-    /**
-     * @param string $userAgentString
-     * @param string[] $userAgentIdentifiers
-     *
-     * @return string
-     */
-    private function findBestUserAgentStringToUserAgentIdentifierMatch($userAgentString, $userAgentIdentifiers)
-    {
-        $scores = array();
-        $longestUserAgentIdentifier = '';
-        $highestScore = 0;
-        $highestScoringUserAgentIdentifier = '';
-
-        foreach ($userAgentIdentifiers as $userAgentIdentifier) {
-            $scores[$userAgentIdentifier] = 0;
-
-            if ($userAgentString === $userAgentIdentifier) {
-                $scores[$userAgentIdentifier]++;
-            }
-
-            if (mb_strlen($userAgentIdentifier) > mb_strlen($longestUserAgentIdentifier)) {
-                $longestUserAgentIdentifier = $userAgentIdentifier;
-            }
-        }
-
-        $scores[$longestUserAgentIdentifier]++;
-
-        foreach ($scores as $userAgentIdentifier => $score) {
-            if ($score > $highestScore) {
-                $highestScore = $score;
-                $highestScoringUserAgentIdentifier = $userAgentIdentifier;
-            }
-        }
-
-        return $highestScoringUserAgentIdentifier;
-    }
-
-    /**
-     * @return DirectiveList|null
-     */
-    private function getDirectivesForDefaultUserAgent()
-    {
-        foreach ($this->getRecords() as $record) {
-            if ($record->userAgentDirectiveList()->contains(UserAgentDirective::DEFAULT_USER_AGENT)) {
-                return $record->directiveList();
-            }
-        }
-
-        return new DirectiveList();
     }
 
     /**

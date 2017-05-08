@@ -1,16 +1,17 @@
 <?php
-namespace webignition\RobotsTxt\UserAgentDirective;
-
-use webignition\RobotsTxt\Directive\Directive;
+namespace webignition\RobotsTxt\Directive;
 
 class UserAgentDirective extends Directive
 {
     const USER_AGENT_FIELD_VALUE = 'user-agent';
     const DEFAULT_USER_AGENT = '*';
 
-    public function __construct()
+    /**
+     * @param string $userAgentIdentifier
+     */
+    public function __construct($userAgentIdentifier)
     {
-        $this->parse(self::USER_AGENT_FIELD_VALUE.self::FIELD_VALUE_SEPARATOR);
+        parent::__construct(self::USER_AGENT_FIELD_VALUE, mb_strtolower($userAgentIdentifier));
     }
 
     /**

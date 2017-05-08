@@ -1,13 +1,11 @@
 <?php
 namespace webignition\RobotsTxt\Directive;
 
-class Directive
+class Directive implements DirectiveInterface
 {
-    const FIELD_VALUE_SEPARATOR = ':';
-
     /**
      *
-     * @var Field
+     * @var string
      */
     private $field = null;
 
@@ -19,52 +17,33 @@ class Directive
     private $value = null;
 
     /**
-     *
-     * @return string
+     * @param string $field
+     * @param string $value
+     */
+    public function __construct($field = '', $value = '')
+    {
+        $this->field = mb_strtolower($field);
+        $this->value = new Value($value);
+    }
+
+    /**
+     * @inheritdoc
      */
     public function getField()
     {
-        return $this->field === null ? '' : (string)$this->field;
+        return $this->field;
     }
 
     /**
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getValue()
     {
-        return $this->value === null ? '' : $this->value;
+        return $this->value;
     }
 
     /**
-     *
-     * @param string $directiveString
-     */
-    public function parse($directiveString)
-    {
-        $directiveString = trim($directiveString);
-
-        $field = new Field($directiveString);
-        $this->field = $field;
-        $fieldString = (string)$field;
-
-        if ($directiveString !== $fieldString) {
-            $this->value = new Value(substr($directiveString, strlen($fieldString) + 1));
-        }
-    }
-
-    /**
-     *
-     * @return boolean
-     */
-    public function isValid()
-    {
-        return !is_null($this->value);
-    }
-
-    /**
-     *
-     * @return string
+     * @inheritdoc
      */
     public function __toString()
     {
@@ -72,18 +51,15 @@ class Directive
     }
 
     /**
-     *
-     * @param Directive $directive
-     *
-     * @return boolean
+     * @inheritdoc
      */
-    public function equals(Directive $directive)
+    public function equals(DirectiveInterface $comparator)
     {
-        if ((string)$this->getField() != (string)$directive->getField()) {
+        if ($this->getField() != $comparator->getField()) {
             return false;
         }
 
-        if ((string)$this->getValue() != (string)$directive->getValue()) {
+        if (!$this->getValue()->equals($comparator->getValue())) {
             return false;
         }
 
@@ -91,13 +67,10 @@ class Directive
     }
 
     /**
-     *
-     * @param string $value
-     *
-     * @return boolean
+     * @inheritdoc
      */
-    public function is($value)
+    public function isType($type)
     {
-        return $this->getField() == trim(strtolower($value));
+        return strtolower($this->getField()) == strtolower($type);
     }
 }

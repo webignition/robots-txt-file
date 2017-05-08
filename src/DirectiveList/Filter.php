@@ -43,7 +43,7 @@ class Filter
 
         if (isset($options['field'])) {
             foreach ($directives as $directiveIndex => $directive) {
-                if (!$directive->is($options['field'])) {
+                if (!$directive->isType($options['field'])) {
                     unset($directives[$directiveIndex]);
                 }
             }
@@ -59,7 +59,7 @@ class Filter
 
         $directiveList = new DirectiveList();
         foreach ($directives as $directive) {
-            $directiveList->add((string)$directive);
+            $directiveList->add($directive);
         }
 
         return $directiveList;

@@ -2,7 +2,7 @@
 namespace webignition\RobotsTxt\Record;
 
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
-use webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList;
+use webignition\RobotsTxt\DirectiveList\UserAgentDirectiveList;
 
 /**
  * From http://www.robotstxt.org/norobots-rfc.txt:

@@ -1,0 +1,5 @@
+﻿User-agent: *
+Disallow: /
+Allow: /humans.txt
+
+Sitemap: http://tsdme.nl/sitemap.txt
