@@ -1,10 +1,8 @@
 <?php
 namespace webignition\RobotsTxt\File;
 
-use webignition\RobotsTxt\Directive\Directive;
 use webignition\RobotsTxt\Directive\DirectiveInterface;
 use webignition\RobotsTxt\Directive\Factory as DirectiveFactory;
-use webignition\RobotsTxt\File\File;
 use webignition\RobotsTxt\Record\Record;
 
 class Parser
@@ -79,7 +77,7 @@ class Parser
      *
      * @var array
      */
-    private $recordlessDirectiveFieldNames = array(
+    private $nonGroupFieldNames = array(
         DirectiveInterface::TYPE_SITEMAP => true
     );
 
@@ -152,7 +150,7 @@ class Parser
                 break;
 
             case self::STATE_ADDING_TO_RECORD:
-                if ($this->isCurrentLineARecordlessDirective()) {
+                if ($this->isCurrentLineANonGroupDirective()) {
                     $this->currentState = self::STATE_ADDING_TO_FILE;
                     $this->previousState = self::STATE_ADDING_TO_RECORD;
                     return;
@@ -162,9 +160,9 @@ class Parser
                     $directive = DirectiveFactory::create($this->getCurrentLine());
 
                     if ($directive->isType(DirectiveInterface::TYPE_USER_AGENT)) {
-                        $this->currentRecord->userAgentDirectiveList()->add($directive);
+                        $this->currentRecord->getUserAgentDirectiveList()->add($directive);
                     } else {
-                        $this->currentRecord->directiveList()->add($directive);
+                        $this->currentRecord->getDirectiveList()->add($directive);
                     }
                 } else {
                     if ($this->isCurrentLineBlank()) {
@@ -183,7 +181,7 @@ class Parser
                 $directive = DirectiveFactory::create($this->getCurrentLine());
 
                 if (!is_null($directive)) {
-                    $this->file->directiveList()->add($directive);
+                    $this->file->getNonGroupDirectives()->add($directive);
                 }
 
                 $this->currentState = ($this->previousState == self::STATE_ADDING_TO_RECORD)
@@ -257,7 +255,7 @@ class Parser
      *
      * @return boolean
      */
-    private function isCurrentLineARecordlessDirective()
+    private function isCurrentLineANonGroupDirective()
     {
         if (!$this->isCurrentLineADirective()) {
             return false;
@@ -265,7 +263,7 @@ class Parser
 
         $directive = DirectiveFactory::create($this->getCurrentLine());
 
-        return array_key_exists($directive->getField(), $this->recordlessDirectiveFieldNames);
+        return array_key_exists($directive->getField(), $this->nonGroupFieldNames);
     }
 
     private function deriveStateFromCurrentLine()

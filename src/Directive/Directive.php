@@ -4,7 +4,6 @@ namespace webignition\RobotsTxt\Directive;
 class Directive implements DirectiveInterface
 {
     /**
-     *
      * @var string
      */
     private $field = null;

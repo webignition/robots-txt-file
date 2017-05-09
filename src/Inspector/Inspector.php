@@ -55,10 +55,10 @@ class Inspector
         $matchedDirectiveLists = [];
 
         foreach ($records as $record) {
-            $userAgentDirectiveListMatch = $record->userAgentDirectiveList()->match($this->userAgent);
+            $userAgentDirectiveListMatch = $record->getUserAgentDirectiveList()->match($this->userAgent);
 
             if (!is_null($userAgentDirectiveListMatch)) {
-                $matchedDirectiveLists[$userAgentDirectiveListMatch] = $record->directiveList();
+                $matchedDirectiveLists[$userAgentDirectiveListMatch] = $record->getDirectiveList();
             }
         }
 
@@ -179,8 +179,8 @@ class Inspector
         $defaultUserAgentDirective = new UserAgentDirective(UserAgentDirective::DEFAULT_USER_AGENT);
 
         foreach ($this->file->getRecords() as $record) {
-            if ($record->userAgentDirectiveList()->contains($defaultUserAgentDirective)) {
-                return $record->directiveList();
+            if ($record->getUserAgentDirectiveList()->contains($defaultUserAgentDirective)) {
+                return $record->getDirectiveList();
             }
         }
 
