@@ -1,5 +1,17 @@
 # robots-txt-file [![Build Status](https://secure.travis-ci.org/webignition/robots-txt-file.png?branch=master)](http://travis-ci.org/webignition/robots-txt-file)
 
+- [Overview](#overview)
+  - [Robots.txt file format refresher](#robots.txt-file-format-refresher)
+- [Usage](#usage)
+  - [Parsing a robots.txt file from a string into a model](#parsing-a-robots.txt-file-from-a-string-into-a-model)
+  - [Inspecting a model to get directives for a user agent](#inspecting-a-model-to-get-directives-for-a-user-agent)
+  - [Check if a user agent is allowed to access a url path](#check-if-a-user-agent-is-allowed-to-access-a-url-path)
+  - [Extract sitemap URLs](#extract-sitemap-urls)
+  - [Filtering directives for a user agent to a specific field type](#filtering-directives-for-a-user-agent-to-a-specific-field-type)
+- [Building](#building)
+  - [Using as a library in a project](#using-as-a-library-in-a-project)
+  - [Developing](#developing)
+  - [Testing](#testing)
 
 ## Overview
 
