@@ -77,20 +77,50 @@ class Inspector
     }
 
     /**
-     * @param string $relativeUrlPatternString
+     * @param string $urlPath
      *
      * @return bool
      */
-    public function isAllowed($relativeUrlPatternString)
+    public function isAllowed($urlPath)
     {
         /**
          * <star> and $ are special
          * <star> is a wildcard - Disallow: /private<star>
          * $ matches something ending in - Disallow: /<star>.asp$
          */
-        $directives = $this->getDirectives();
+
+        if ($this->isDisallowedByDirective($urlPath)) {
+            return false;
+        }
 
         return true;
+    }
+
+    /**
+     * @param string $urlPath
+     *
+     * @return bool
+     */
+    private function isDisallowedByDirective($urlPath)
+    {
+        $directives = $this->getDirectives();
+        $disallowDirectives = $directives->filter([
+            'field' => 'disallow'
+        ]);
+
+        if ($disallowDirectives->isEmpty()) {
+            return false;
+        }
+
+        $matcher = new UrlMatcher();
+
+        foreach ($disallowDirectives->get() as $disallowDirective) {
+            if ($matcher->matches($disallowDirective, $urlPath)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

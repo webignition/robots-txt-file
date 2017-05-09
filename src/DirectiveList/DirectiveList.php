@@ -142,4 +142,24 @@ class DirectiveList
     {
         return count($this->directives);
     }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        $isEmpty = true;
+
+        foreach ($this->get() as $directive) {
+            if (!$isEmpty) {
+                continue;
+            }
+
+            if (!empty((string)$directive->getValue())) {
+                $isEmpty = false;
+            }
+        }
+
+        return $isEmpty;
+    }
 }
