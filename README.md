@@ -1,6 +1,7 @@
 # robots-txt-file [![Build Status](https://secure.travis-ci.org/webignition/robots-txt-file.png?branch=master)](http://travis-ci.org/webignition/robots-txt-file)
 
-- [Overview](#overview)
+- [Introduction](#introduction)
+  - [Overview](#overview)
   - [Robots.txt file format refresher](#robots.txt-file-format-refresher)
 - [Usage](#usage)
   - [Parsing a robots.txt file from a string into a model](#parsing-a-robots.txt-file-from-a-string-into-a-model)
@@ -12,8 +13,10 @@
   - [Using as a library in a project](#using-as-a-library-in-a-project)
   - [Developing](#developing)
   - [Testing](#testing)
+  
+## Introduction  
 
-## Overview
+### Overview
 
 Handles [robots.txt][1] files:
 
@@ -23,7 +26,7 @@ Handles [robots.txt][1] files:
  - extract sitemap URLs
  - programmatically create a model and cast to a string
 
-## Robots.txt file format refresher
+### Robots.txt file format refresher
 
 Let's quickly go over the format of a robots.txt file so that you can understand what you can get out of a `\webignition\RobotsTxt\File\File` object.
 
