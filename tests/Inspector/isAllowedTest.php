@@ -146,10 +146,6 @@ class IsAllowedTest extends BaseTest
                 'directivePath' => '/fish*',
                 'urlPath' => '/?id=fish',
             ],
-            '/google-webmasters-7' => [
-                'directivePath' => '/fish/',
-                'urlPath' => '/fish',
-            ],
             '/google-webmasters-8' => [
                 'directivePath' => '/fish/',
                 'urlPath' => '/fish.html',
@@ -328,10 +324,6 @@ class IsAllowedTest extends BaseTest
                 'directivePath' => '/*',
                 'urlPath' => '/foo',
             ],
-            'google-webmasters-3' => [
-                'directivePath' => '/fish',
-                'urlPath' => '/fish',
-            ],
             'google-webmasters-4' => [
                 'directivePath' => '/fish',
                 'urlPath' => '/fish.html',
@@ -376,10 +368,6 @@ class IsAllowedTest extends BaseTest
                 'directivePath' => '/fish*',
                 'urlPath' => '/fish.php?id=anything',
             ],
-            'google-webmasters-15' => [
-                'directivePath' => '/fish/',
-                'urlPath' => '/fish/',
-            ],
             'google-webmasters-16' => [
                 'directivePath' => '/fish/',
                 'urlPath' => '/fish/?id=anything',
@@ -423,6 +411,91 @@ class IsAllowedTest extends BaseTest
             'google-webmasters-26' => [
                 'directivePath' => '/fish*.php',
                 'urlPath' => '/fishheads/catfish.php?parameters',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider allowDisallowDirectiveResolutionDataProvider
+     *
+     * @param string[] $directiveStrings
+     * @param string $urlPath
+     * @param bool $expectedAllowed
+     */
+    public function testMatchingAllowAndDisallowDirectiveResolution($directiveStrings, $urlPath, $expectedAllowed)
+    {
+        $parser = new Parser();
+        $parser->setSource('user-agent: *' . "\n" . implode("\n", $directiveStrings));
+
+        $file = $parser->getFile();
+        $inspector = new Inspector($file);
+
+        $this->assertEquals($expectedAllowed, $inspector->isAllowed($urlPath));
+    }
+
+    /**
+     * Data sets derived from:
+     * - https://developers.google.com/webmasters/control-crawl-index/docs/robots_txt#order-of-precedence-for-group-member-records
+     * - studying the behaviour of google webmasters robots txt checker
+     *
+     * @return array
+     */
+    public function allowDisallowDirectiveResolutionDataProvider()
+    {
+        return [
+            'longer patternless allow supercedes patternless disallow' => [
+                'directiveStrings' => [
+                    'allow: /folder/',
+                    'disallow: /folder',
+
+                ],
+                'urlPath' => '/folder/page',
+                'expectedAllowed' => true,
+            ],
+            'longer patternless disallow supercedes patternless allow' => [
+                'directiveStrings' => [
+                    'allow: /folder',
+                    'disallow: /folder/',
+
+                ],
+                'urlPath' => '/folder/page',
+                'expectedAllowed' => false,
+            ],
+            'allow supercedes disallow if both are identical' => [
+                'directiveStrings' => [
+                    'allow: /folder',
+                    'disallow: /folder',
+
+                ],
+                'urlPath' => '/folder/page',
+                'expectedAllowed' => true,
+            ],
+            'disallow supercedes allow if both are of the same length' => [
+                'directiveStrings' => [
+                    'allow: /folder',
+                    'disallow: /*/page',
+
+                ],
+                'urlPath' => '/folders/page',
+                'expectedAllowed' => false,
+            ],
+            'longer patterned allow supercedes shorter disallow' => [
+                'directiveStrings' => [
+                    'allow: /$',
+                    'disallow: /',
+
+                ],
+                'urlPath' => '/',
+                'expectedAllowed' => true,
+            ],
+            'only disallow matches' => [
+                'directiveStrings' => [
+                    'allow: /$',
+                    'disallow: /',
+
+                ],
+                'urlPath' => '/page.htm',
+                'expectedAllowed' => false,
             ],
         ];
     }

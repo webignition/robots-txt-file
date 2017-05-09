@@ -1,6 +1,7 @@
 <?php
 namespace webignition\RobotsTxt\Inspector;
 
+use webignition\RobotsTxt\Directive\DirectiveInterface;
 use webignition\RobotsTxt\Directive\UserAgentDirective;
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
 use webignition\RobotsTxt\File\File;
@@ -77,50 +78,97 @@ class Inspector
     }
 
     /**
+     * A urlPath is allowed if either:
+     * - there are no matching disallow directives
+     * - the longest matching allow path is greater in length than the longest matching disallow path
+     *
+     * Note: Google webmaster docs state that the allow/disallow precedence for paths containing wildcards
+     *       is undefined.
+     *       Many robots txt checking tools appear to use the 'longest rule wins' option regardless of
+     *       wildcards. It is this approach that is taken here.
+     *
      * @param string $urlPath
      *
      * @return bool
      */
     public function isAllowed($urlPath)
     {
-        /**
-         * <star> and $ are special
-         * <star> is a wildcard - Disallow: /private<star>
-         * $ matches something ending in - Disallow: /<star>.asp$
-         */
+        $matchingDisallowDirectives = $this->getMatchingAllowDisallowDirectivePaths(
+            $urlPath,
+            DirectiveInterface::TYPE_DISALLOW
+        );
 
-        if ($this->isDisallowedByDirective($urlPath)) {
+        $matchingAllowDirectives = $this->getMatchingAllowDisallowDirectivePaths(
+            $urlPath,
+            DirectiveInterface::TYPE_ALLOW
+        );
+
+        if (empty($matchingDisallowDirectives)) {
+            return true;
+        }
+
+        if (empty($matchingAllowDirectives)) {
             return false;
         }
 
-        return true;
+        $longestDisallowPath = $this->getLongestPath($matchingDisallowDirectives);
+        $longestAllowPath = $this->getLongestPath($matchingAllowDirectives);
+
+        if ($longestAllowPath === $longestDisallowPath) {
+            return true;
+        }
+
+        $disallowPathLength = strlen($longestDisallowPath);
+        $allowPathLength = strlen($longestAllowPath);
+
+        if ($disallowPathLength === $allowPathLength) {
+            return false;
+        }
+
+        return $allowPathLength > $disallowPathLength;
+    }
+
+    /**
+     * @param string[] $paths
+     *
+     * @return string
+     */
+    private function getLongestPath($paths)
+    {
+        return array_reduce($paths, function ($a, $b) {
+            return strlen($a) > strlen($b) ? $a : $b;
+        });
+
+//        return max(array_map('strlen', $paths));
     }
 
     /**
      * @param string $urlPath
+     * @param string $type
      *
-     * @return bool
+     * @return string[]
      */
-    private function isDisallowedByDirective($urlPath)
+    private function getMatchingAllowDisallowDirectivePaths($urlPath, $type)
     {
+        $matchingDirectives = [];
         $directives = $this->getDirectives();
         $disallowDirectives = $directives->filter([
-            'field' => 'disallow'
+            'field' => $type
         ]);
 
         if ($disallowDirectives->isEmpty()) {
-            return false;
+            return $matchingDirectives;
         }
 
         $matcher = new UrlMatcher();
 
         foreach ($disallowDirectives->get() as $disallowDirective) {
             if ($matcher->matches($disallowDirective, $urlPath)) {
-                return true;
+                $matchingDirectives[] = (string)$disallowDirective->getValue();
             }
         }
 
-        return false;
+        return $matchingDirectives;
     }
 
     /**
