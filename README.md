@@ -66,10 +66,10 @@ $parser->setSource(file_get_contents('http://example.com/robots.txt'));
 
 $robotsTxtFile = $parser->getFile();
  
-# Get an array of records
+// Get an array of records
 $robotsTxtFile->getRecords();
 
-# Get the list of record-independent directives (such as sitemap directives):
+// Get the list of record-independent directives (such as sitemap directives):
 $robotsTxtFile->getNonGroupDirectives()->get();
 ```
 
