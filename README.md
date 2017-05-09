@@ -1,7 +1,7 @@
-#robots-txt-file [![Build Status](https://secure.travis-ci.org/webignition/robots-txt-file.png?branch=master)](http://travis-ci.org/webignition/robots-txt-file)
+# robots-txt-file [![Build Status](https://secure.travis-ci.org/webignition/robots-txt-file.png?branch=master)](http://travis-ci.org/webignition/robots-txt-file)
 
 
-##Overview
+## Overview
 
 Handles [robots.txt][1] files:
 
@@ -11,7 +11,7 @@ Handles [robots.txt][1] files:
  - extract sitemap URLs
  - programmatically create a model and cast to a string
 
-##Robots.txt file format refresher
+## Robots.txt file format refresher
 
 Let's quickly go over the format of a robots.txt file so that you can understand what you can get out of a `\webignition\RobotsTxt\File\File` object.
 
@@ -39,7 +39,7 @@ Here's an example with directives that apply to everyone and everything:
 
     Sitemap: http://example.com/sitemap.xml
 
-##Usage
+## Usage
 
 ### Parsing a robots.txt file from a string into a model
 ```php
@@ -152,7 +152,7 @@ $inspector->setUserAgent('slurp');
 $slurpDisallowDirectiveList = $inspector->getDirectives()->getByField('disallow');
 ```
 
-##Building
+## Building
 
 ### Using as a library in a project
 If used as a dependency by another project, update that project's composer.json
