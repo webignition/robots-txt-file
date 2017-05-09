@@ -26,16 +26,16 @@ class RecordTest extends BaseTest
 
     public function testCastToStringWithMultipleUserAgents()
     {
-        $this->record->userAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
-        $this->record->userAgentDirectiveList()->add(new UserAgentDirective('slurp'));
+        $this->record->getUserAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
+        $this->record->getUserAgentDirectiveList()->add(new UserAgentDirective('slurp'));
 
         $this->assertEquals('user-agent:googlebot'."\n".'user-agent:slurp', (string)$this->record);
     }
 
     public function testCastToStringWithAllowDisallowOnly()
     {
-        $this->record->directiveList()->add(new Directive('allow', '/allowed-path'));
-        $this->record->directiveList()->add(new Directive('disallow', '/disallowed-path'));
+        $this->record->getDirectiveList()->add(new Directive('allow', '/allowed-path'));
+        $this->record->getDirectiveList()->add(new Directive('disallow', '/disallowed-path'));
 
         $this->assertEquals(
             'user-agent:*'."\n".'allow:/allowed-path'."\n".'disallow:/disallowed-path',
@@ -45,11 +45,11 @@ class RecordTest extends BaseTest
 
     public function testCastToStringWithMultipleUserAgentsAndAllowDisallow()
     {
-        $this->record->userAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
-        $this->record->userAgentDirectiveList()->add(new UserAgentDirective('slurp'));
+        $this->record->getUserAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
+        $this->record->getUserAgentDirectiveList()->add(new UserAgentDirective('slurp'));
 
-        $this->record->directiveList()->add(new Directive('allow', '/allowed-path'));
-        $this->record->directiveList()->add(new Directive('disallow', '/disallowed-path'));
+        $this->record->getDirectiveList()->add(new Directive('allow', '/allowed-path'));
+        $this->record->getDirectiveList()->add(new Directive('disallow', '/disallowed-path'));
 
         $this->assertEquals(
             'user-agent:googlebot'."\n".'user-agent:slurp'."\n".'allow:/allowed-path'."\n".'disallow:/disallowed-path',
@@ -59,23 +59,23 @@ class RecordTest extends BaseTest
 
     public function testInclusionOfDefaultUserAgent()
     {
-        $this->assertEquals(array('*'), $this->record->userAgentDirectiveList()->getValues());
+        $this->assertEquals(array('*'), $this->record->getUserAgentDirectiveList()->getValues());
     }
 
     public function testAddUserAgent()
     {
-        $this->record->userAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
+        $this->record->getUserAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
 
-        $this->assertEquals(array('googlebot'), $this->record->userAgentDirectiveList()->getValues());
+        $this->assertEquals(array('googlebot'), $this->record->getUserAgentDirectiveList()->getValues());
     }
 
     public function testRemoveUserAgent()
     {
         $googlebotDirective = new UserAgentDirective('googlebot');
 
-        $this->record->userAgentDirectiveList()->add($googlebotDirective);
-        $this->record->userAgentDirectiveList()->remove($googlebotDirective);
+        $this->record->getUserAgentDirectiveList()->add($googlebotDirective);
+        $this->record->getUserAgentDirectiveList()->remove($googlebotDirective);
 
-        $this->assertEquals(array('*'), $this->record->userAgentDirectiveList()->getValues());
+        $this->assertEquals(array('*'), $this->record->getUserAgentDirectiveList()->getValues());
     }
 }

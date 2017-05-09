@@ -113,46 +113,46 @@ class GetDirectivesTest extends BaseTest
     protected function createDefaultFile()
     {
         $defaultAgentRecord = new Record();
-        $defaultAgentRecord->userAgentDirectiveList()->add(new UserAgentDirective('*'));
-        $defaultAgentRecord->directiveList()->add(new Directive(
+        $defaultAgentRecord->getUserAgentDirectiveList()->add(new UserAgentDirective('*'));
+        $defaultAgentRecord->getDirectiveList()->add(new Directive(
             self::FIELD_ALLOW,
             self::VALUE_ALL_AGENTS_0
         ));
-        $defaultAgentRecord->directiveList()->add(new Directive(
+        $defaultAgentRecord->getDirectiveList()->add(new Directive(
             self::FIELD_DISALLOW,
             self::VALUE_ALL_AGENTS_1
         ));
 
         $googlebotRecord = new Record();
-        $googlebotRecord->userAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
-        $googlebotRecord->directiveList()->add(new Directive(
+        $googlebotRecord->getUserAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
+        $googlebotRecord->getDirectiveList()->add(new Directive(
             self::FIELD_ALLOW,
             self::VALUE_GOOGLEBOT_0
         ));
-        $googlebotRecord->directiveList()->add(new Directive(
+        $googlebotRecord->getDirectiveList()->add(new Directive(
             self::FIELD_DISALLOW,
             self::VALUE_GOOGLEBOT_1
         ));
 
         $googlebotNewsRecord = new Record();
-        $googlebotNewsRecord->userAgentDirectiveList()->add(new UserAgentDirective('googlebot-news'));
-        $googlebotNewsRecord->directiveList()->add(new Directive(
+        $googlebotNewsRecord->getUserAgentDirectiveList()->add(new UserAgentDirective('googlebot-news'));
+        $googlebotNewsRecord->getDirectiveList()->add(new Directive(
             self::FIELD_ALLOW,
             self::VALUE_GOOGLEBOT_NEWS_0
         ));
-        $googlebotNewsRecord->directiveList()->add(new Directive(
+        $googlebotNewsRecord->getDirectiveList()->add(new Directive(
             self::FIELD_DISALLOW,
             self::VALUE_GOOGLEBOT_NEWS_1
         ));
 
         $bingbotAndSlurpRecord = new Record();
-        $bingbotAndSlurpRecord->userAgentDirectiveList()->add(new UserAgentDirective('bingbot'));
-        $bingbotAndSlurpRecord->userAgentDirectiveList()->add(new UserAgentDirective('slurp'));
-        $bingbotAndSlurpRecord->directiveList()->add(new Directive(
+        $bingbotAndSlurpRecord->getUserAgentDirectiveList()->add(new UserAgentDirective('bingbot'));
+        $bingbotAndSlurpRecord->getUserAgentDirectiveList()->add(new UserAgentDirective('slurp'));
+        $bingbotAndSlurpRecord->getDirectiveList()->add(new Directive(
             self::FIELD_ALLOW,
             self::VALUE_BINGBOT_SLURP_0
         ));
-        $bingbotAndSlurpRecord->directiveList()->add(new Directive(
+        $bingbotAndSlurpRecord->getDirectiveList()->add(new Directive(
             self::FIELD_DISALLOW,
             self::VALUE_BINGBOT_SLURP_1
         ));

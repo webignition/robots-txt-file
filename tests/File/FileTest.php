@@ -11,7 +11,7 @@ class FileTest extends AbstractFileTest
     public function testAddRecord()
     {
         $record = new Record();
-        $record->directiveList()->add(new Directive('allow', '/allowed-path'));
+        $record->getDirectiveList()->add(new Directive('allow', '/allowed-path'));
 
         $this->file->addRecord($record);
 
@@ -24,7 +24,7 @@ class FileTest extends AbstractFileTest
     public function testCastToStringWithDefaultUserAgent()
     {
         $record = new Record();
-        $record->directiveList()->add(new Directive('allow', '/allowed-path'));
+        $record->getDirectiveList()->add(new Directive('allow', '/allowed-path'));
 
         $this->file->addRecord($record);
 
@@ -34,8 +34,8 @@ class FileTest extends AbstractFileTest
     public function testCastToStringWithSpecificUserAgent()
     {
         $record = new Record();
-        $record->directiveList()->add(new Directive('allow', '/allowed-path'));
-        $record->userAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
+        $record->getDirectiveList()->add(new Directive('allow', '/allowed-path'));
+        $record->getUserAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
 
         $this->file->addRecord($record);
 
@@ -45,12 +45,12 @@ class FileTest extends AbstractFileTest
     public function testCastToStringWithMultipleRecords()
     {
         $record1 = new Record();
-        $record1->directiveList()->add(new Directive('allow', '/allowed-path'));
-        $record1->userAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
+        $record1->getDirectiveList()->add(new Directive('allow', '/allowed-path'));
+        $record1->getUserAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
 
         $record2 = new Record();
-        $record2->directiveList()->add(new Directive('disallow', '/'));
-        $record2->userAgentDirectiveList()->add(new UserAgentDirective(('slurp')));
+        $record2->getDirectiveList()->add(new Directive('disallow', '/'));
+        $record2->getUserAgentDirectiveList()->add(new UserAgentDirective(('slurp')));
 
         $this->file->addRecord($record1);
         $this->file->addRecord($record2);
@@ -63,7 +63,7 @@ class FileTest extends AbstractFileTest
 
     public function testCastToStringWithDirectivesOnly()
     {
-        $this->file->directiveList()->add(new Directive('sitemap', 'http://www.example.com/sitemap.xml'));
+        $this->file->getNonGroupDirectives()->add(new Directive('sitemap', 'http://www.example.com/sitemap.xml'));
 
         $this->assertEquals('sitemap:http://www.example.com/sitemap.xml', (string)$this->file);
     }

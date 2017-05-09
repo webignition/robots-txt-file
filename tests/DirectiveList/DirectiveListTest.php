@@ -101,4 +101,83 @@ class DirectiveListTest extends BaseTest
         $this->directiveList->remove($directive3);
         $this->assertEquals(array(), $this->directiveList->getValues());
     }
+
+    /**
+     * @dataProvider getByFieldDataProvider
+     *
+     * @param array $directives
+     * @param string $field
+     * @param string $expectedDirectiveListString
+     */
+    public function testGetByField($directives, $field, $expectedDirectiveListString)
+    {
+        foreach ($directives as $directive) {
+            $this->directiveList->add(new Directive($directive['field'], $directive['value']));
+        }
+
+        $this->assertEquals(
+            $expectedDirectiveListString,
+            (string)$this->directiveList->getByField($field)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getByFieldDataProvider()
+    {
+        return [
+            'none for empty list' => [
+                'directives' => [],
+                'field' => 'foo',
+                'expectedDirectiveListString' => '',
+            ],
+            'none for no matches' => [
+                'directives' => [
+                    [
+                        'field' => 'allow',
+                        'value' => '/foo',
+                    ],
+                ],
+                'field' => 'foo',
+                'expectedDirectiveListString' => '',
+            ],
+            'one match' => [
+                'directives' => [
+                    [
+                        'field' => 'allow',
+                        'value' => '/foo',
+                    ],
+                ],
+                'field' => 'allow',
+                'expectedDirectiveListString' => 'allow:/foo',
+            ],
+            'many matches' => [
+                'directives' => [
+                    [
+                        'field' => 'allow',
+                        'value' => '/foo',
+                    ],
+                    [
+                        'field' => 'disallow',
+                        'value' => '/bar',
+                    ],
+                    [
+                        'field' => 'allow',
+                        'value' => '/foobar',
+                    ],
+                    [
+                        'field' => 'disallow',
+                        'value' => '/fizz',
+                    ],
+                    [
+                        'field' => 'allow',
+                        'value' => '/buzz',
+                    ],
+                ],
+                'field' => 'allow',
+                'expectedDirectiveListString' => 'allow:/foo' . "\n" . 'allow:/foobar' . "\n" . 'allow:/buzz',
+            ],
+        ];
+    }
 }

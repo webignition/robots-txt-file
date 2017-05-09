@@ -33,7 +33,7 @@ class UserAgentDirectiveList extends DirectiveList
     public function getValues()
     {
         $userAgents = array();
-        $userAgentDirectives = $this->get();
+        $userAgentDirectives = $this->getDirectives();
 
         foreach ($userAgentDirectives as $userAgent) {
             $userAgents[] = (string)$userAgent->getValue();
@@ -46,9 +46,9 @@ class UserAgentDirectiveList extends DirectiveList
      *
      * @return UserAgentDirective[]
      */
-    public function get()
+    public function getDirectives()
     {
-        $userAgents = parent::get();
+        $userAgents = parent::getDirectives();
 
         if (empty($userAgents)) {
             $userAgents[] = new UserAgentDirective(UserAgentDirective::DEFAULT_USER_AGENT);

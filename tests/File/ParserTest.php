@@ -40,9 +40,9 @@ class ParserTest extends BaseTest
 
         $record1 = $records[0];
 
-        $this->assertEquals(array('*'), $record1->userAgentDirectiveList()->getValues());
-        $this->assertCount(48, $record1->directiveList()->get());
-        $this->assertTrue($record1->directiveList()->contains(
+        $this->assertEquals(array('*'), $record1->getUserAgentDirectiveList()->getValues());
+        $this->assertCount(48, $record1->getDirectiveList()->getDirectives());
+        $this->assertTrue($record1->getDirectiveList()->contains(
             new Directive('disallow', '/users/login/global/request/'))
         );
 
@@ -53,7 +53,7 @@ class ParserTest extends BaseTest
         );
         $this->assertEquals(
             'sitemap:/sitemap.xml',
-            (string)$file->directiveList()->filter(array('field' => 'sitemap'))
+            (string)$file->getNonGroupDirectives()->getByField('sitemap')
         );
     }
 
@@ -64,11 +64,11 @@ class ParserTest extends BaseTest
         $file = $this->parser->getFile();
 
         $this->assertCount(1, $file->getRecords());
-        $this->assertCount(1, $file->directiveList()->getValues());
+        $this->assertCount(1, $file->getNonGroupDirectives()->getValues());
 
         $this->assertEquals(
             'sitemap:http://example.com/sitemap.xml',
-            (string)$file->directiveList()->filter(array('field' => 'sitemap'))
+            (string)$file->getNonGroupDirectives()->getByField( 'sitemap')
         );
     }
 
@@ -81,11 +81,11 @@ class ParserTest extends BaseTest
 
         $this->assertCount(1, $file->getRecords());
         $this->assertCount(2, $inspector->getDirectives()->getValues());
-        $this->assertCount(1, $file->directiveList()->getValues());
+        $this->assertCount(1, $file->getNonGroupDirectives()->getValues());
 
         $this->assertEquals(
             'sitemap:http://example.com/sitemap.xml',
-            (string)$file->directiveList()->filter(array('field' => 'sitemap'))
+            (string)$file->getNonGroupDirectives()->getByField('sitemap')
         );
     }
 
@@ -101,8 +101,8 @@ class ParserTest extends BaseTest
 
         $inspector->setUserAgent('zibber');
         $this->assertCount(6, $inspector->getDirectives()->getValues());
-        $this->assertCount(1, $file->directiveList()->getValues());
-        $this->assertCount(1, $file->directiveList()->filter(array('field' => 'sitemap'))->getValues());
+        $this->assertCount(1, $file->getNonGroupDirectives()->getValues());
+        $this->assertCount(1, $file->getNonGroupDirectives()->getByField('sitemap')->getValues());
     }
 
     public function testParsingWithStartingBOM()

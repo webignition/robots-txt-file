@@ -58,7 +58,10 @@ class Record
     {
         $stringRepresentation = '';
 
-        $directives = array_merge($this->getUserAgentDirectiveList()->get(), $this->getDirectiveList()->get());
+        $directives = array_merge(
+            $this->getUserAgentDirectiveList()->getDirectives(),
+            $this->getDirectiveList()->getDirectives()
+        );
 
         foreach ($directives as $directive) {
             $stringRepresentation .= $directive . "\n";

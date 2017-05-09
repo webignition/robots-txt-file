@@ -55,7 +55,7 @@ class DirectiveList
      *
      * @return DirectiveInterface[]
      */
-    public function get()
+    public function getDirectives()
     {
         return $this->directives;
     }
@@ -66,9 +66,7 @@ class DirectiveList
      */
     public function first()
     {
-        $directives = $this->get();
-
-        return $directives[0];
+        return $this->directives[0];
     }
 
     /**
@@ -113,7 +111,7 @@ class DirectiveList
     public function __toString()
     {
         $string = '';
-        $directives = $this->get();
+        $directives = $this->getDirectives();
 
         foreach ($directives as $directive) {
             $string .= $directive . "\n";
@@ -124,15 +122,26 @@ class DirectiveList
 
     /**
      *
-     * @param array $options
+     * @param string $field
      *
      * @return DirectiveList
      */
-    public function filter($options)
+    public function getByField($field)
     {
-        $filter = new Filter($this);
+        $directives = $this->getDirectives();
 
-        return $filter->getDirectiveList($options);
+        foreach ($directives as $directiveIndex => $directive) {
+            if (!$directive->isType($field)) {
+                unset($directives[$directiveIndex]);
+            }
+        }
+
+        $directiveList = new DirectiveList();
+        foreach ($directives as $directive) {
+            $directiveList->add($directive);
+        }
+
+        return $directiveList;
     }
 
     /**
@@ -150,7 +159,7 @@ class DirectiveList
     {
         $isEmpty = true;
 
-        foreach ($this->get() as $directive) {
+        foreach ($this->getDirectives() as $directive) {
             if (!$isEmpty) {
                 continue;
             }

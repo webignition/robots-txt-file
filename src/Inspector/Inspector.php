@@ -152,9 +152,7 @@ class Inspector
     {
         $matchingDirectives = [];
         $directives = $this->getDirectives();
-        $disallowDirectives = $directives->filter([
-            'field' => $type
-        ]);
+        $disallowDirectives = $directives->getByField($type);
 
         if ($disallowDirectives->isEmpty()) {
             return $matchingDirectives;
@@ -162,7 +160,7 @@ class Inspector
 
         $matcher = new UrlMatcher();
 
-        foreach ($disallowDirectives->get() as $disallowDirective) {
+        foreach ($disallowDirectives->getDirectives() as $disallowDirective) {
             if ($matcher->matches($disallowDirective, $urlPath)) {
                 $matchingDirectives[] = (string)$disallowDirective->getValue();
             }
