@@ -1,14 +1,32 @@
-robots-txt-file [![Build Status](https://secure.travis-ci.org/webignition/robots-txt-file.png?branch=master)](http://travis-ci.org/webignition/robots-txt-file)
-===============
+# robots-txt-file [![Build Status](https://secure.travis-ci.org/webignition/robots-txt-file.png?branch=master)](http://travis-ci.org/webignition/robots-txt-file)
 
-Overview
----------
-Models a [robots.txt][1] file. Can use be used to build a minimal (commentless)
-robots.txt file programmatically. Use with [robots-txt-parser][2] to extract
-details from live robots.txt files.
+- [Introduction](#introduction)
+  - [Overview](#overview)
+  - [Robots.txt file format refresher](#robots.txt-file-format-refresher)
+- [Usage](#usage)
+  - [Parsing a robots.txt file from a string into a model](#parsing-a-robots.txt-file-from-a-string-into-a-model)
+  - [Inspecting a model to get directives for a user agent](#inspecting-a-model-to-get-directives-for-a-user-agent)
+  - [Check if a user agent is allowed to access a url path](#check-if-a-user-agent-is-allowed-to-access-a-url-path)
+  - [Extract sitemap URLs](#extract-sitemap-urls)
+  - [Filtering directives for a user agent to a specific field type](#filtering-directives-for-a-user-agent-to-a-specific-field-type)
+- [Building](#building)
+  - [Using as a library in a project](#using-as-a-library-in-a-project)
+  - [Developing](#developing)
+  - [Testing](#testing)
+  
+## Introduction  
 
-Robots.txt file format refresher
---------------------------------
+### Overview
+
+Handles [robots.txt][1] files:
+
+ - parse a robots.txt file into a model
+ - get directives for a user agent
+ - check if a user agent is allowed to access a url path
+ - extract sitemap URLs
+ - programmatically create a model and cast to a string
+
+### Robots.txt file format refresher
 
 Let's quickly go over the format of a robots.txt file so that you can understand what you can get out of a `\webignition\RobotsTxt\File\File` object.
 
@@ -36,45 +54,78 @@ Here's an example with directives that apply to everyone and everything:
 
     Sitemap: http://example.com/sitemap.xml
 
-Usage
------
+## Usage
 
-A `\webignition\RobotsTxt\File\File` object, preferably populated via a [robots-txt-parser][2], provides immediate access to a robots.txt file's set of records and set of directives that don't belong to any records.
-
+### Parsing a robots.txt file from a string into a model
 ```php
 <?php
-$parser = new \webignition\RobotsTxt\File\Parser();
+use webignition\RobotsTxt\File\Parser;
+
+$parser = new Parser();
 $parser->setSource(file_get_contents('http://example.com/robots.txt'));
 
 $robotsTxtFile = $parser->getFile();
  
-# Get an array of records
+// Get an array of records
 $robotsTxtFile->getRecords();
 
-# Get the list of record-independent directives (such as sitemap directives):
-$robotsTxtFile->directiveList()->get();
+// Get the list of record-independent directives (such as sitemap directives):
+$robotsTxtFile->getNonGroupDirectives()->get();
 ```
 
 This might not be too useful on it's own. You'd normally be retrieving information from a robots.txt file because
 you are a crawler and need to know what you are allowed to access (or disallowed) or because you're a tool or
 service that needs to locate a site's sitemap.xml file.
 
+### Inspecting a model to get directives for a user agent
+
 Let's say we're the 'Slurp' user agent and we want to know what's been specified for us:
 
 ```php
 <?php
-$parser = new \webignition\RobotsTxt\File\Parser();
+use webignition\RobotsTxt\File\Parser;
+use webignition\RobotsTxt\Inspector\Inspector;
+
+$parser = new Parser();
 $parser->setSource(file_get_contents('http://example.com/robots.txt'));
 
-$robotsTxtFile = $parser->getFile();
- 
-$slurpDirectiveList = $robotsTxtFile->getDirectivesFor('slurp');
+$inspector = new Inspector($parser->getFile());
+$inspector->setUserAgent('slurp');
+
+$slurpDirectiveList = $inspector->getDirectives();
 ```
 
 Ok, now we have a [DirectiveList](https://github.com/webignition/robots-txt-file/blob/master/src/webignition/RobotsTxt/DirectiveList/DirectiveList.php)
 containing a collection of directives. We can call `$directiveList->get()` to get the directives applicable to us.
 
-Notice how the user agent string is case insensitive?
+This raw set of directives is available in the model because it is
+there in the source robots.txt file. Often this raw data isn't
+immediately useful as-is. Maybe we want to inspect it further?
+
+### Check if a user agent is allowed to access a url path
+
+That's more like it, let's inspect some of that data in the model.
+
+```php
+<?php
+use webignition\RobotsTxt\File\Parser;
+use webignition\RobotsTxt\Inspector\Inspector;
+
+$parser = new Parser();
+$parser->setSource(file_get_contents('http://example.com/robots.txt'));
+
+$inspector = new Inspector($parser->getFile());
+$inspector->setUserAgent('slurp');
+
+if ($inspector->isAllowed('/foo')) {
+    // Do whatever is needed access to /foo is allowed
+}
+```
+
+### Extract sitemap URLs
+
+A robots.txt file can list the URLs of all relevant sitemaps. These directives
+are not specific to a user agent.
 
 Let's say we're an automated web frontend testing service and we need to find a site's sitemap.xml to find a list
 of URLs that need testing. We know the site's domain and we know where to look for the robots.txt file and we know
@@ -82,43 +133,43 @@ that this might specify the location of the sitemap.xml file.
 
 ```php
 <?php
-$parser = new \webignition\RobotsTxt\File\Parser();
+use webignition\RobotsTxt\File\Parser;
+
+$parser = new Parser();
 $parser->setSource(file_get_contents('http://example.com/robots.txt'));
 
 $robotsTxtFile = $parser->getFile();
 
-$sitemapDirectives = $robotsTxtFile->directiveList()->filter(array('field' => 'sitemap'))->get();
-$sitemapUrl = (string)$sitemapDirectives[0]->getValue();
+$sitemapDirectives = $robotsTxtFile->getNonGroupDirectives()->getByField('sitemap');
+$sitemapUrl = (string)$sitemapDirectives->first()->getValue();
 ```
 
-Cool, we've found the URL for the first sitemap listed in the robots.txt file. There may be many, although just the one
-is most common.
+Cool, we've found the URL for the first sitemap listed in the robots.txt file. 
+There may be many, although just the one is most common.
 
-Did you spot the call to `DirectiveList->filter()`? That's a `DirectiveList\Filter` at work making it easy to trim down
-a given `DirectiveList` to something more relevant.  You just pass the filter an array of keys and values, the key is
-name of the thing you're filtering against, the value is the value you want to match.
+### Filtering directives for a user agent to a specific field type
 
 Let's get all the `disallow` directives for Slurp:
 
 ```php
 <?php
-$slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesFor('slurp')->filter(array('field' => 'disallow'))->get();
+use webignition\RobotsTxt\File\Parser;
+use webignition\RobotsTxt\Inspector\Inspector;
+
+$parser = new Parser();
+$parser->setSource(file_get_contents('http://example.com/robots.txt'));
+
+$robotsTxtFile = $parser->getFile();
+
+$inspector = new Inspector($robotsTxtFile);
+$inspector->setUserAgent('slurp');
+
+$slurpDisallowDirectiveList = $inspector->getDirectives()->getByField('disallow');
 ```
 
-A directive has a field (disallow, allow, sitemap) and a value. We can filter against values too, although the value of
-this is somewhat academic:
+## Building
 
-```php
-<?php
-$slurpDisallowDirectiveList = $robotsTxtFile->getDirectivesFor('slurp')->filter(array('value' => '/'))->get();
-$sitemapDirectivesByUrl = $robotsTxtFile->directiveList()->filter(array('value' => 'http://example.com/sitemap.xml'))->get();
-```
-
-Building
---------
-
-#### Using as a library in a project
-
+### Using as a library in a project
 If used as a dependency by another project, update that project's composer.json
 and update your dependencies.
 
@@ -126,16 +177,9 @@ and update your dependencies.
         "webignition/robots-txt-file": "*"      
     }
     
-If you want to be doing any parsing of robots.txt files (which you quote often would),
-you need to get the parser too:
+This will get you the latest version. Check the [list of releases](https://github.com/webignition/robots-txt-file/releases) for specific versions.    
 
-    "require": {
-        "webignition/robots-txt-file": "*",
-        "webignition/robots-txt-parser": "*" 
-    }
-
-#### Developing
-
+### Developing
 This project has external dependencies managed with [composer][3]. Get and install this first.
 
     # Make a suitable project directory
@@ -145,11 +189,13 @@ This project has external dependencies managed with [composer][3]. Get and insta
     git clone git@github.com:webignition/robots-txt-file.git.
 
     # Retrieve/update dependencies
-    composer.phar update
+    composer update
+    
+    # Run code sniffer and unit tests
+    composer cs
+    composer test
 
-Testing
--------
-
+## Testing
 Have look at the [project on travis][4] for the latest build status, or give the tests
 a go yourself.
 

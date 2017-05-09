@@ -28,4 +28,14 @@ class Value extends DisallowedCharacterTerminatedString
         parent::set($value);
         parent::set(trim(parent::get()));
     }
+
+    /**
+     * @param Value $comparator
+     *
+     * @return bool
+     */
+    public function equals(Value $comparator)
+    {
+        return $this->get() === $comparator->get();
+    }
 }

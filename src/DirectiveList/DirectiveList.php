@@ -1,34 +1,30 @@
 <?php
 namespace webignition\RobotsTxt\DirectiveList;
 
-use webignition\RobotsTxt\Directive\Directive;
+use webignition\RobotsTxt\Directive\DirectiveInterface;
 
 class DirectiveList
 {
     /**
-     * @var Directive[]
+     * @var DirectiveInterface[]
      */
     private $directives = array();
 
     /**
-     *
-     * @param string $directiveString
+     * @param DirectiveInterface $directive
      */
-    public function add($directiveString)
+    public function add(DirectiveInterface $directive)
     {
-        if (!$this->contains($directiveString)) {
-            $this->directives[] = $this->createNewDirective($directiveString);
+        if (!$this->contains($directive)) {
+            $this->directives[] = $directive;
         }
     }
 
     /**
-     *
-     * @param string $directiveString
+     * @param DirectiveInterface $directive
      */
-    public function remove($directiveString)
+    public function remove(DirectiveInterface $directive)
     {
-        $directive = $this->createNewDirective($directiveString);
-
         $directivePosition = null;
         foreach ($this->directives as $userAgentIndex => $existingUserAgent) {
             if ($directive->equals($existingUserAgent)) {
@@ -57,34 +53,29 @@ class DirectiveList
 
     /**
      *
-     * @return Directive[]
+     * @return DirectiveInterface[]
      */
-    public function get()
+    public function getDirectives()
     {
         return $this->directives;
     }
 
     /**
      *
-     * @return Directive
+     * @return DirectiveInterface
      */
     public function first()
     {
-        $directives = $this->get();
-
-        return $directives[0];
+        return $this->directives[0];
     }
 
     /**
+     * @param DirectiveInterface $directive
      *
-     * @param string $directiveString
-     *
-     * @return boolean
+     * @return bool
      */
-    public function contains($directiveString)
+    public function contains(DirectiveInterface $directive)
     {
-        $directive = $this->createNewDirective($directiveString);
-
         foreach ($this->directives as $existingDirective) {
             if ($directive->equals($existingDirective)) {
                 return true;
@@ -115,26 +106,12 @@ class DirectiveList
 
     /**
      *
-     * @param string $directiveString
-     *
-     * @return Directive
-     */
-    protected function createNewDirective($directiveString)
-    {
-        $directive = new Directive();
-        $directive->parse($directiveString);
-
-        return $directive;
-    }
-
-    /**
-     *
      * @return string
      */
     public function __toString()
     {
         $string = '';
-        $directives = $this->get();
+        $directives = $this->getDirectives();
 
         foreach ($directives as $directive) {
             $string .= $directive . "\n";
@@ -145,14 +122,53 @@ class DirectiveList
 
     /**
      *
-     * @param array $options
+     * @param string $field
      *
      * @return DirectiveList
      */
-    public function filter($options)
+    public function getByField($field)
     {
-        $filter = new Filter($this);
+        $directives = $this->getDirectives();
 
-        return $filter->getDirectiveList($options);
+        foreach ($directives as $directiveIndex => $directive) {
+            if (!$directive->isType($field)) {
+                unset($directives[$directiveIndex]);
+            }
+        }
+
+        $directiveList = new DirectiveList();
+        foreach ($directives as $directive) {
+            $directiveList->add($directive);
+        }
+
+        return $directiveList;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLength()
+    {
+        return count($this->directives);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        $isEmpty = true;
+
+        foreach ($this->getDirectives() as $directive) {
+            if (!$isEmpty) {
+                continue;
+            }
+
+            if (!empty((string)$directive->getValue())) {
+                $isEmpty = false;
+            }
+        }
+
+        return $isEmpty;
     }
 }

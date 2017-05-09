@@ -16,13 +16,13 @@ use webignition\RobotsTxt\Record\Record;
  * _directives_
  *
  * A record starts with one or more _user_agent_strings_ followed
- * by one or more directives applying to matching user agents
+ * by one or more directives applying to matching user agents.
  *
  * A directive can be an Allow or Disallow instruction applying to
  * a specified user agent. Such directives are collected in a record.
  *
  * A directive can be independent of any user agent. An example
- * is a sitemap directive.
+ * is a sitemap directive. This is termed a non-group directive.
  *
  */
 class File
@@ -35,18 +35,18 @@ class File
     /**
      * @var DirectiveList|null
      */
-    private $directiveList = null;
+    private $nonGroupDirectives = null;
 
     /**
      * @return DirectiveList
      */
-    public function directiveList()
+    public function getNonGroupDirectives()
     {
-        if (is_null($this->directiveList)) {
-            $this->directiveList = new DirectiveList();
+        if (is_null($this->nonGroupDirectives)) {
+            $this->nonGroupDirectives = new DirectiveList();
         }
 
-        return $this->directiveList;
+        return $this->nonGroupDirectives;
     }
 
     /**
@@ -66,30 +66,6 @@ class File
     }
 
     /**
-     * @param string $userAgentString
-     *
-     * @return DirectiveList
-     */
-    public function getDirectivesFor($userAgentString)
-    {
-        $userAgentString = strtolower($userAgentString);
-
-        foreach ($this->getRecords() as $record) {
-            if ($record->userAgentDirectiveList()->contains($userAgentString)) {
-                return $record->directiveList();
-            }
-        }
-
-        foreach ($this->getRecords() as $record) {
-            if ($record->userAgentDirectiveList()->contains('*')) {
-                return $record->directiveList();
-            }
-        }
-
-        return new DirectiveList();
-    }
-
-    /**
      * @return string
      */
     public function __toString()
@@ -99,7 +75,7 @@ class File
             $string .= $record . "\n\n";
         }
 
-        $string .= (string)$this->directiveList();
+        $string .= (string)$this->getNonGroupDirectives();
 
         return trim($string);
     }

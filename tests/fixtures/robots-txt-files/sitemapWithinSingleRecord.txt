@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /pathone
+Sitemap: http://example.com/sitemap.xml
+Disallow: /pathtwo

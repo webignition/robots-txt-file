@@ -2,7 +2,7 @@
 namespace webignition\RobotsTxt\Record;
 
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
-use webignition\RobotsTxt\UserAgentDirective\UserAgentDirectiveList;
+use webignition\RobotsTxt\DirectiveList\UserAgentDirectiveList;
 
 /**
  * From http://www.robotstxt.org/norobots-rfc.txt:
@@ -28,7 +28,7 @@ class Record
      *
      * @return UserAgentDirectiveList
      */
-    public function userAgentDirectiveList()
+    public function getUserAgentDirectiveList()
     {
         if (is_null($this->userAgentDirectiveList)) {
             $this->userAgentDirectiveList = new UserAgentDirectiveList();
@@ -41,7 +41,7 @@ class Record
      *
      * @return DirectiveList
      */
-    public function directiveList()
+    public function getDirectiveList()
     {
         if (is_null($this->directiveList)) {
             $this->directiveList = new DirectiveList();
@@ -58,7 +58,10 @@ class Record
     {
         $stringRepresentation = '';
 
-        $directives = array_merge($this->userAgentDirectiveList()->get(), $this->directiveList()->get());
+        $directives = array_merge(
+            $this->getUserAgentDirectiveList()->getDirectives(),
+            $this->getDirectiveList()->getDirectives()
+        );
 
         foreach ($directives as $directive) {
             $stringRepresentation .= $directive . "\n";
