@@ -43,8 +43,8 @@ class ParserTest extends BaseTest
         $this->assertEquals(array('*'), $record1->getUserAgentDirectiveList()->getValues());
         $this->assertCount(48, $record1->getDirectiveList()->getDirectives());
         $this->assertTrue($record1->getDirectiveList()->contains(
-            new Directive('disallow', '/users/login/global/request/'))
-        );
+            new Directive('disallow', '/users/login/global/request/')
+        ));
 
         $inspector->setUserAgent('googlebot-image');
         $this->assertEquals(
@@ -68,7 +68,7 @@ class ParserTest extends BaseTest
 
         $this->assertEquals(
             'sitemap:http://example.com/sitemap.xml',
-            (string)$file->getNonGroupDirectives()->getByField( 'sitemap')
+            (string)$file->getNonGroupDirectives()->getByField('sitemap')
         );
     }
 
