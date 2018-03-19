@@ -43,8 +43,8 @@ class ParserTest extends BaseTest
         $this->assertEquals(array('*'), $record1->getUserAgentDirectiveList()->getValues());
         $this->assertCount(48, $record1->getDirectiveList()->getDirectives());
         $this->assertTrue($record1->getDirectiveList()->contains(
-            new Directive('disallow', '/users/login/global/request/'))
-        );
+            new Directive('disallow', '/users/login/global/request/')
+        ));
 
         $inspector->setUserAgent('googlebot-image');
         $this->assertEquals(
@@ -68,7 +68,7 @@ class ParserTest extends BaseTest
 
         $this->assertEquals(
             'sitemap:http://example.com/sitemap.xml',
-            (string)$file->getNonGroupDirectives()->getByField( 'sitemap')
+            (string)$file->getNonGroupDirectives()->getByField('sitemap')
         );
     }
 
@@ -119,6 +119,38 @@ class ParserTest extends BaseTest
             'disallow:/',
             'allow:/humans.txt'
         ), $inspector->getDirectives()->getValues());
+    }
+
+    public function testParsingInvalidLines()
+    {
+        $this->setParserSourceFromDataFile('contains-invalid-lines.txt');
+
+        $file = $this->parser->getFile();
+        $inspector = new Inspector($file);
+
+        $this->assertCount(3, $file->getRecords());
+
+        $inspector->setUserAgent('*');
+        $this->assertCount(1, $inspector->getDirectives()->getValues());
+        $this->assertEquals([
+            'allow:/',
+        ], $inspector->getDirectives()->getValues());
+
+        $inspector->setUserAgent('foo');
+        $this->assertCount(1, $inspector->getDirectives()->getValues());
+        $this->assertEquals([
+            'allow:/foo',
+        ], $inspector->getDirectives()->getValues());
+
+        $inspector->setUserAgent('bar');
+        $this->assertCount(1, $inspector->getDirectives()->getValues());
+        $this->assertEquals([
+            'allow:/bar',
+        ], $inspector->getDirectives()->getValues());
+
+        $sitemapDirective = $file->getNonGroupDirectives()->getDirectives()[0];
+        $this->assertEquals('sitemap', $sitemapDirective->getField());
+        $this->assertEquals('/sitemap.xml', $sitemapDirective->getValue());
     }
 
     /**
