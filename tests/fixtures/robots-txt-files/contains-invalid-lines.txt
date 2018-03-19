@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+foo
+
+User-agent: bar
+Allow: /bar
+#bar
+
+User-agent: foo
+Allow: /foo
+
+# comment preceding sitemap directive
+Sitemap: /sitemap.xml

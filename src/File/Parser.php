@@ -153,6 +153,7 @@ class Parser
                 if ($this->isCurrentLineANonGroupDirective()) {
                     $this->currentState = self::STATE_ADDING_TO_FILE;
                     $this->previousState = self::STATE_ADDING_TO_RECORD;
+
                     return;
                 }
 
@@ -165,7 +166,7 @@ class Parser
                         $this->currentRecord->getDirectiveList()->add($directive);
                     }
                 } else {
-                    if ($this->isCurrentLineBlank()) {
+                    if (!empty($this->currentRecord)) {
                         $this->file->addRecord($this->currentRecord);
                         $this->currentRecord = null;
                     }
@@ -248,6 +249,12 @@ class Parser
             return false;
         }
 
+        $directive = DirectiveFactory::create($this->getCurrentLine());
+
+        if (empty($directive)) {
+            return false;
+        }
+
         return true;
     }
 
@@ -263,6 +270,10 @@ class Parser
 
         $directive = DirectiveFactory::create($this->getCurrentLine());
 
+        if (empty($directive)) {
+            return false;
+        }
+
         return array_key_exists($directive->getField(), $this->nonGroupFieldNames);
     }
 
@@ -271,6 +282,7 @@ class Parser
         if (!$this->isCurrentLineADirective()) {
             $this->sourceLineIndex++;
             $this->currentState = self::STATE_UNKNOWN;
+
             return null;
         }
 
@@ -278,10 +290,12 @@ class Parser
 
         if (!is_null($directive) && $directive->isType(DirectiveInterface::TYPE_USER_AGENT)) {
             $this->currentState = self::STATE_STARTING_RECORD;
+
             return null;
         }
 
         $this->currentState = self::STATE_ADDING_TO_FILE;
+
         return null;
     }
 }

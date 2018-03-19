@@ -121,6 +121,38 @@ class ParserTest extends BaseTest
         ), $inspector->getDirectives()->getValues());
     }
 
+    public function testParsingInvalidLines()
+    {
+        $this->setParserSourceFromDataFile('contains-invalid-lines.txt');
+
+        $file = $this->parser->getFile();
+        $inspector = new Inspector($file);
+
+        $this->assertCount(3, $file->getRecords());
+
+        $inspector->setUserAgent('*');
+        $this->assertCount(1, $inspector->getDirectives()->getValues());
+        $this->assertEquals([
+            'allow:/',
+        ], $inspector->getDirectives()->getValues());
+
+        $inspector->setUserAgent('foo');
+        $this->assertCount(1, $inspector->getDirectives()->getValues());
+        $this->assertEquals([
+            'allow:/foo',
+        ], $inspector->getDirectives()->getValues());
+
+        $inspector->setUserAgent('bar');
+        $this->assertCount(1, $inspector->getDirectives()->getValues());
+        $this->assertEquals([
+            'allow:/bar',
+        ], $inspector->getDirectives()->getValues());
+
+        $sitemapDirective = $file->getNonGroupDirectives()->getDirectives()[0];
+        $this->assertEquals('sitemap', $sitemapDirective->getField());
+        $this->assertEquals('/sitemap.xml', $sitemapDirective->getValue());
+    }
+
     /**
      * @param string $relativePath
      */
