@@ -17,13 +17,13 @@ use webignition\RobotsTxt\DirectiveList\UserAgentDirectiveList;
 class Record
 {
     /**
-     * @var UserAgentDirectiveList
+     * @var UserAgentDirectiveList|null
      */
     private $userAgentDirectiveList = null;
 
     /**
      *
-     * @var DirectiveList
+     * @var DirectiveList|null
      */
     private $directiveList = null;
 

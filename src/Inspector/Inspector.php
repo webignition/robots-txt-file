@@ -62,7 +62,9 @@ class Inspector
         }
 
         if ($matchCount === 1) {
-            return reset($matchedDirectiveLists);
+            $directiveList = reset($matchedDirectiveLists);
+
+            return $directiveList instanceof DirectiveList ? $directiveList : new DirectiveList();
         }
 
         return $matchedDirectiveLists[
