@@ -1,11 +1,10 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\Factory;
+namespace webignition\RobotsTxt\Tests\Factory;
 
 use webignition\RobotsTxt\Directive\Validator;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class ValidatorTest extends BaseTest
+class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider validDirectiveDataProvider

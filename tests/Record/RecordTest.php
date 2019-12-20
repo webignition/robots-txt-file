@@ -1,20 +1,19 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\Record;
+namespace webignition\RobotsTxt\Tests\Record;
 
 use webignition\RobotsTxt\Directive\Directive;
 use webignition\RobotsTxt\Directive\UserAgentDirective;
-use webignition\Tests\RobotsTxt\BaseTest;
 use webignition\RobotsTxt\Record\Record;
 
-class RecordTest extends BaseTest
+class RecordTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Record
      */
     private $record;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->record = new Record();
     }

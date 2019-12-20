@@ -1,11 +1,10 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\Directive;
+namespace webignition\RobotsTxt\Tests\Directive;
 
 use webignition\RobotsTxt\Directive\Value;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class ValueTest extends BaseTest
+class ValueTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider directiveStringValueDataProvider
@@ -17,7 +16,7 @@ class ValueTest extends BaseTest
     {
         $directiveValue = new Value($directiveStringValue);
 
-        $this->assertEquals((string)$directiveValue, $expectedStringValue);
+        $this->assertEquals($expectedStringValue, (string) $directiveValue);
     }
 
     /**

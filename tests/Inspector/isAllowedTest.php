@@ -1,12 +1,11 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\File;
+namespace webignition\RobotsTxt\Tests\File;
 
 use webignition\RobotsTxt\File\Parser;
 use webignition\RobotsTxt\Inspector\Inspector;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class IsAllowedTest extends BaseTest
+class IsAllowedTest extends \PHPUnit\Framework\TestCase
 {
     public function testIsAllowedWhenNoDisallowDirectivesArePresent()
     {

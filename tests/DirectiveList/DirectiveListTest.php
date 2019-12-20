@@ -1,19 +1,18 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\DirectiveList;
+namespace webignition\RobotsTxt\Tests\DirectiveList;
 
 use webignition\RobotsTxt\Directive\Directive;
-use webignition\Tests\RobotsTxt\BaseTest;
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
 
-class DirectiveListTest extends BaseTest
+class DirectiveListTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var DirectiveList
      */
     private $directiveList;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->directiveList = new DirectiveList();
     }

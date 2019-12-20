@@ -1,6 +1,6 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\File;
+namespace webignition\RobotsTxt\Tests\File;
 
 use webignition\RobotsTxt\Directive\Directive;
 use webignition\RobotsTxt\Record\Record;

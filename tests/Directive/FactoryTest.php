@@ -1,12 +1,11 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\Factory;
+namespace webignition\RobotsTxt\Tests\Directive;
 
 use webignition\RobotsTxt\Directive\Factory;
 use webignition\RobotsTxt\Directive\UserAgentDirective;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class FactoryTest extends BaseTest
+class FactoryTest extends \PHPUnit\Framework\TestCase
 {
     const FIELD_USER_AGENT_DIRECTIVE = 'user-agent';
     const FIELD_DISALLOW_DIRECTIVE = 'disallow';
@@ -81,6 +80,8 @@ class FactoryTest extends BaseTest
     public function testCreateDisallowDirective($directiveString, $expectedValue)
     {
         $directive = Factory::create($directiveString);
+
+        $this->assertSame($expectedValue, $directive->getValue()->get());
     }
 
     /**

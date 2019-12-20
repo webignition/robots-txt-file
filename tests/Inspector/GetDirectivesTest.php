@@ -1,15 +1,14 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\File;
+namespace webignition\RobotsTxt\Tests\File;
 
 use webignition\RobotsTxt\Directive\Directive;
 use webignition\RobotsTxt\File\File;
 use webignition\RobotsTxt\Inspector\Inspector;
 use webignition\RobotsTxt\Record\Record;
 use webignition\RobotsTxt\Directive\UserAgentDirective;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class GetDirectivesTest extends BaseTest
+class GetDirectivesTest extends \PHPUnit\Framework\TestCase
 {
     const FIELD_ALLOW = 'allow';
     const FIELD_DISALLOW = 'disallow';
@@ -30,13 +29,13 @@ class GetDirectivesTest extends BaseTest
      */
     protected $file;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->file = new File();
     }
 
     /**
-     * @dataProvider testGetDirectivesForDefaultFileDataProvider
+     * @dataProvider getDirectivesForDefaultFileDataProvider
      *
      * @param $userAgentString
      * @param $expectedDirectives
@@ -49,14 +48,14 @@ class GetDirectivesTest extends BaseTest
 
         $this->assertEquals(
             $expectedDirectives,
-            (string)$inspector->getDirectives($userAgentString)
+            (string) $inspector->getDirectives()
         );
     }
 
     /**
      * @return array
      */
-    public function testGetDirectivesForDefaultFileDataProvider()
+    public function getDirectivesForDefaultFileDataProvider()
     {
         return [
             'googlebot-lowercase' => [

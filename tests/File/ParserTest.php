@@ -1,13 +1,12 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\File;
+namespace webignition\RobotsTxt\Tests\File;
 
 use webignition\RobotsTxt\Directive\Directive;
 use webignition\RobotsTxt\File\Parser;
 use webignition\RobotsTxt\Inspector\Inspector;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class ParserTest extends BaseTest
+class ParserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Parser
@@ -19,7 +18,7 @@ class ParserTest extends BaseTest
      */
     private $dataSourceBasePath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->parser = new Parser();

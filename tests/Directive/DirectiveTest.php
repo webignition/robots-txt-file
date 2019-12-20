@@ -1,11 +1,10 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\Directive;
+namespace webignition\RobotsTxt\Tests\Directive;
 
 use webignition\RobotsTxt\Directive\Directive;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class DirectiveTest extends BaseTest
+class DirectiveTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider castToStringDataProvider
