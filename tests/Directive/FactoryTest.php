@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Tests\Directive;
 
 use webignition\RobotsTxt\Directive\Factory;
@@ -12,10 +14,8 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider invalidDirectiveStringDataProvider
-     *
-     * @param string $directiveString
      */
-    public function testCreateFromInvalidDirectiveString($directiveString)
+    public function testCreateFromInvalidDirectiveString(string $directiveString)
     {
         $this->assertNull(Factory::create($directiveString));
     }
@@ -40,11 +40,8 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider userAgentDirectiveDataProvider
-     *
-     * @param string $directiveString
-     * @param string $expectedValue
      */
-    public function testCreateUserAgentDirective($directiveString, $expectedValue)
+    public function testCreateUserAgentDirective(string $directiveString, string $expectedValue)
     {
         $directive = Factory::create($directiveString);
         $this->assertInstanceOf(UserAgentDirective::class, $directive);
@@ -53,10 +50,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedValue, (string)$directive->getValue());
     }
 
-    /**
-     * @return array
-     */
-    public function userAgentDirectiveDataProvider()
+    public function userAgentDirectiveDataProvider(): array
     {
         return [
             [
@@ -73,21 +67,15 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider disallowDirectiveDataProvider
-     *
-     * @param string $directiveString
-     * @param string $expectedValue
      */
-    public function testCreateDisallowDirective($directiveString, $expectedValue)
+    public function testCreateDisallowDirective(string $directiveString, string $expectedValue)
     {
         $directive = Factory::create($directiveString);
 
         $this->assertSame($expectedValue, $directive->getValue()->get());
     }
 
-    /**
-     * @return array
-     */
-    public function disallowDirectiveDataProvider()
+    public function disallowDirectiveDataProvider(): array
     {
         return [
             [

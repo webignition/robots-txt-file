@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Tests\DirectiveList;
 
 use webignition\RobotsTxt\Directive\UserAgentDirective;

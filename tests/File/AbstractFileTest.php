@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Tests\File;
 
 use webignition\RobotsTxt\File\File;

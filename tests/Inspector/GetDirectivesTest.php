@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Tests\File;
 
 use webignition\RobotsTxt\Directive\Directive;
@@ -36,11 +38,8 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getDirectivesForDefaultFileDataProvider
-     *
-     * @param $userAgentString
-     * @param $expectedDirectives
      */
-    public function testGetDirectivesForDefaultFile($userAgentString, $expectedDirectives)
+    public function testGetDirectivesForDefaultFile(string $userAgentString, string $expectedDirectives)
     {
         $this->createDefaultFile();
         $inspector = new Inspector($this->file);
@@ -52,10 +51,7 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getDirectivesForDefaultFileDataProvider()
+    public function getDirectivesForDefaultFileDataProvider(): array
     {
         return [
             'googlebot-lowercase' => [
@@ -165,7 +161,7 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return string[]
      */
-    private function getExpectedAllAgentsDirectives()
+    private function getExpectedAllAgentsDirectives(): array
     {
         $expectedDirectives = [];
 
@@ -178,7 +174,7 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return string[]
      */
-    private function getExpectedGooglebotDirectives()
+    private function getExpectedGooglebotDirectives(): array
     {
         $expectedDirectives = [];
 
@@ -191,7 +187,7 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return string[]
      */
-    private function getExpectedGooglebotNewsDirectives()
+    private function getExpectedGooglebotNewsDirectives(): array
     {
         $expectedDirectives = [];
 
@@ -204,7 +200,7 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return string[]
      */
-    private function getExpectedBingbotSlurpDirectives()
+    private function getExpectedBingbotSlurpDirectives(): array
     {
         $expectedDirectives = [];
 
@@ -214,12 +210,7 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
         return $expectedDirectives;
     }
 
-    /**
-     * @param string $fixtureIdentifier
-     *
-     * @return string
-     */
-    private function getUserAgentStringFixture($fixtureIdentifier)
+    private function getUserAgentStringFixture(string $fixtureIdentifier): string
     {
         if (empty($this->userAgentStringFixtures)) {
             $path = __DIR__ . '/../fixtures/user-agent-strings.json';

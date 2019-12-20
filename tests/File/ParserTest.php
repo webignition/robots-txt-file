@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Tests\File;
 
 use webignition\RobotsTxt\Directive\Directive;
@@ -152,10 +154,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('/sitemap.xml', $sitemapDirective->getValue());
     }
 
-    /**
-     * @param string $relativePath
-     */
-    private function setParserSourceFromDataFile($relativePath)
+    private function setParserSourceFromDataFile(string $relativePath): void
     {
         $this->parser->setSource(file_get_contents($this->dataSourceBasePath . '/' . $relativePath));
     }

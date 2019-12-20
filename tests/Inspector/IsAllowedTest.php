@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Tests\Inspector;
 
 use webignition\RobotsTxt\File\Parser;
@@ -23,7 +25,7 @@ class IsAllowedTest extends \PHPUnit\Framework\TestCase
      *
      * @param string[] $emptyDisallowDirectiveStrings
      */
-    public function testIsAllowedWhenOnlyEmptyDisallowIsPresent($emptyDisallowDirectiveStrings)
+    public function testIsAllowedWhenOnlyEmptyDisallowIsPresent(array $emptyDisallowDirectiveStrings)
     {
         $parser = new Parser();
         $parser->setSource('user-agent: *' . "\n" . implode("\n", $emptyDisallowDirectiveStrings));
@@ -34,10 +36,7 @@ class IsAllowedTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($inspector->isAllowed('/foo'));
     }
 
-    /**
-     * @return array
-     */
-    public function emptyDisallowDirectiveDataProvider()
+    public function emptyDisallowDirectiveDataProvider(): array
     {
         return [
             [
@@ -54,11 +53,8 @@ class IsAllowedTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider noMatchesDataProvider
-     *
-     * @param $directivePath
-     * @param $urlPath
      */
-    public function testIsAllowedWithNoMatchingDisallowDirectives($directivePath, $urlPath)
+    public function testIsAllowedWithNoMatchingDisallowDirectives(string $directivePath, string $urlPath)
     {
         $parser = new Parser();
         $parser->setSource('user-agent: *' . "\n" . 'disallow: ' . $directivePath);
@@ -106,7 +102,7 @@ class IsAllowedTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function noMatchesDataProvider()
+    public function noMatchesDataProvider(): array
     {
         return [
             'robots-txt-rfc-draft-1' => [
@@ -186,11 +182,8 @@ class IsAllowedTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider matchesDataProvider
-     *
-     * @param $directivePath
-     * @param $urlPath
      */
-    public function testIsNotAllowedWithMatchingDisallowDirectives($directivePath, $urlPath)
+    public function testIsNotAllowedWithMatchingDisallowDirectives(string $directivePath, string $urlPath)
     {
         $parser = new Parser();
         $parser->setSource('user-agent: *' . "\n" . 'disallow: ' . $directivePath);
@@ -260,7 +253,7 @@ class IsAllowedTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function matchesDataProvider()
+    public function matchesDataProvider(): array
     {
         return [
             'robots-txt-rfc-draft-1' => [
@@ -421,8 +414,11 @@ class IsAllowedTest extends \PHPUnit\Framework\TestCase
      * @param string $urlPath
      * @param bool $expectedAllowed
      */
-    public function testMatchingAllowAndDisallowDirectiveResolution($directiveStrings, $urlPath, $expectedAllowed)
-    {
+    public function testMatchingAllowAndDisallowDirectiveResolution(
+        array $directiveStrings,
+        string $urlPath,
+        bool $expectedAllowed
+    ) {
         $parser = new Parser();
         $parser->setSource('user-agent: *' . "\n" . implode("\n", $directiveStrings));
 
@@ -439,7 +435,7 @@ class IsAllowedTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function allowDisallowDirectiveResolutionDataProvider()
+    public function allowDisallowDirectiveResolutionDataProvider(): array
     {
         return [
             'longer patternless allow supercedes patternless disallow' => [

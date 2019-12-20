@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Tests\Record;
 
 use webignition\RobotsTxt\Directive\Directive;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Tests\Directive;
 
 use webignition\RobotsTxt\Directive\Value;
@@ -8,21 +10,15 @@ class ValueTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider directiveStringValueDataProvider
-     *
-     * @param string $directiveStringValue
-     * @param string $expectedStringValue
      */
-    public function testSetGetValidValues($directiveStringValue, $expectedStringValue)
+    public function testSetGetValidValues(string $directiveStringValue, string $expectedStringValue)
     {
         $directiveValue = new Value($directiveStringValue);
 
         $this->assertEquals($expectedStringValue, (string) $directiveValue);
     }
 
-    /**
-     * @return array
-     */
-    public function directiveStringValueDataProvider()
+    public function directiveStringValueDataProvider(): array
     {
         return [
             'generic value 1' => [
