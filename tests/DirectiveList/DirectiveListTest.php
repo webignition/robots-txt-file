@@ -106,7 +106,7 @@ class DirectiveListTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getByFieldDataProvider
      *
-     * @param array<string, string> $directives
+     * @param array<string, array<string, string>> $directives
      * @param string $field
      * @param string $expectedDirectiveListString
      */

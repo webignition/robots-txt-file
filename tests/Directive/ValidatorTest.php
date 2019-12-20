@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\RobotsTxt\Tests\Factory;
+namespace webignition\RobotsTxt\Tests\Directive;
 
 use webignition\RobotsTxt\Directive\Validator;
 

@@ -156,6 +156,6 @@ class ParserTest extends \PHPUnit\Framework\TestCase
 
     private function setParserSourceFromDataFile(string $relativePath): void
     {
-        $this->parser->setSource(file_get_contents($this->dataSourceBasePath . '/' . $relativePath));
+        $this->parser->setSource((string) file_get_contents($this->dataSourceBasePath . '/' . $relativePath));
     }
 }
