@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\RobotsTxt\Tests\File;
+namespace webignition\RobotsTxt\Tests\Inspector;
 
 use webignition\RobotsTxt\Directive\Directive;
 use webignition\RobotsTxt\File\File;
@@ -23,6 +23,9 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
     private const VALUE_BINGBOT_SLURP_0 = '/allowed-path-for-bingbot-slurp';
     private const VALUE_BINGBOT_SLURP_1 = '/disallowed-path-for-bingbot-slurp';
 
+    /**
+     * @var array<string, string>
+     */
     private $userAgentStringFixtures = [];
 
     /**
@@ -104,7 +107,7 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    protected function createDefaultFile()
+    protected function createDefaultFile(): void
     {
         $defaultAgentRecord = new Record();
         $defaultAgentRecord->getUserAgentDirectiveList()->add(new UserAgentDirective('*'));
@@ -213,7 +216,7 @@ class GetDirectivesTest extends \PHPUnit\Framework\TestCase
     {
         if (empty($this->userAgentStringFixtures)) {
             $path = __DIR__ . '/../fixtures/user-agent-strings.json';
-            $this->userAgentStringFixtures = json_decode(file_get_contents($path), true);
+            $this->userAgentStringFixtures = json_decode((string) file_get_contents($path), true);
         }
 
         return $this->userAgentStringFixtures[$fixtureIdentifier];

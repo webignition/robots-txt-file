@@ -39,7 +39,7 @@ class UserAgentDirectiveList extends DirectiveList
     }
 
     /**
-     * @return UserAgentDirective[]
+     * @return DirectiveInterface[]|UserAgentDirective[]
      */
     public function getDirectives(): array
     {
