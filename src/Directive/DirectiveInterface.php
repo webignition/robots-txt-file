@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Directive;
 
 interface DirectiveInterface
@@ -11,37 +14,9 @@ interface DirectiveInterface
     const TYPE_ALLOW = 'allow';
     const TYPE_SITEMAP = 'sitemap';
 
-    /**
-     *
-     * @return string
-     */
-    public function getField();
-
-    /**
-     *
-     * @return Value
-     */
-    public function getValue();
-
-    /**
-     *
-     * @return string
-     */
-    public function __toString();
-
-    /**
-     *
-     * @param DirectiveInterface $comparator
-     *
-     * @return boolean
-     */
-    public function equals(DirectiveInterface $comparator);
-
-    /**
-     *
-     * @param string $type
-     *
-     * @return boolean
-     */
-    public function isType($type);
+    public function getField(): string;
+    public function getValue(): Value;
+    public function isType(string $type): bool;
+    public function equals(DirectiveInterface $comparator): bool;
+    public function __toString(): string;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace webignition\RobotsTxt\Tests\File;
+namespace webignition\RobotsTxt\Tests\Inspector;
 
 use webignition\RobotsTxt\File\Parser;
 use webignition\RobotsTxt\Inspector\Inspector;

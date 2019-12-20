@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\DirectiveList;
 
 use webignition\RobotsTxt\Directive\DirectiveInterface;
@@ -8,22 +11,16 @@ class DirectiveList
     /**
      * @var DirectiveInterface[]
      */
-    private $directives = array();
+    private $directives = [];
 
-    /**
-     * @param DirectiveInterface $directive
-     */
-    public function add(DirectiveInterface $directive)
+    public function add(DirectiveInterface $directive): void
     {
         if (!$this->contains($directive)) {
             $this->directives[] = $directive;
         }
     }
 
-    /**
-     * @param DirectiveInterface $directive
-     */
-    public function remove(DirectiveInterface $directive)
+    public function remove(DirectiveInterface $directive): void
     {
         $directivePosition = null;
         foreach ($this->directives as $userAgentIndex => $existingUserAgent) {
@@ -38,10 +35,9 @@ class DirectiveList
     }
 
     /**
-     *
      * @return string[]
      */
-    public function getValues()
+    public function getValues(): array
     {
         $directives = array();
         foreach ($this->directives as $directive) {
@@ -52,29 +48,19 @@ class DirectiveList
     }
 
     /**
-     *
      * @return DirectiveInterface[]
      */
-    public function getDirectives()
+    public function getDirectives(): array
     {
         return $this->directives;
     }
 
-    /**
-     *
-     * @return DirectiveInterface
-     */
-    public function first()
+    public function first(): ?DirectiveInterface
     {
-        return $this->directives[0];
+        return $this->directives[0] ?? null;
     }
 
-    /**
-     * @param DirectiveInterface $directive
-     *
-     * @return bool
-     */
-    public function contains(DirectiveInterface $directive)
+    public function contains(DirectiveInterface $directive): bool
     {
         foreach ($this->directives as $existingDirective) {
             if ($directive->equals($existingDirective)) {
@@ -85,13 +71,7 @@ class DirectiveList
         return false;
     }
 
-    /**
-     *
-     * @param string $fieldName
-     *
-     * @return boolean
-     */
-    public function containsField($fieldName)
+    public function containsField(string $fieldName): bool
     {
         $fieldName = strtolower(trim($fieldName));
 
@@ -104,11 +84,7 @@ class DirectiveList
         return false;
     }
 
-    /**
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $string = '';
         $directives = $this->getDirectives();
@@ -120,13 +96,7 @@ class DirectiveList
         return trim($string);
     }
 
-    /**
-     *
-     * @param string $field
-     *
-     * @return DirectiveList
-     */
-    public function getByField($field)
+    public function getByField(string $field): DirectiveList
     {
         $directives = $this->getDirectives();
 
@@ -144,18 +114,12 @@ class DirectiveList
         return $directiveList;
     }
 
-    /**
-     * @return int
-     */
-    public function getLength()
+    public function getLength(): int
     {
         return count($this->directives);
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         $isEmpty = true;
 

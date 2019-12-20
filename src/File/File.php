@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\File;
 
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
@@ -30,17 +33,14 @@ class File
     /**
      * @var Record[]
      */
-    private $records = array();
+    private $records = [];
 
     /**
      * @var DirectiveList|null
      */
     private $nonGroupDirectives = null;
 
-    /**
-     * @return DirectiveList
-     */
-    public function getNonGroupDirectives()
+    public function getNonGroupDirectives(): DirectiveList
     {
         if (is_null($this->nonGroupDirectives)) {
             $this->nonGroupDirectives = new DirectiveList();
@@ -49,10 +49,7 @@ class File
         return $this->nonGroupDirectives;
     }
 
-    /**
-     * @param Record $record
-     */
-    public function addRecord(Record $record)
+    public function addRecord(Record $record): void
     {
         $this->records[] = $record;
     }
@@ -60,15 +57,12 @@ class File
     /**
      * @return Record[]
      */
-    public function getRecords()
+    public function getRecords(): array
     {
         return $this->records;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $string = '';
         foreach ($this->records as $record) {

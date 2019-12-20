@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Directive;
 
 use webignition\DisallowedCharacterTerminatedString\TerminatedString;

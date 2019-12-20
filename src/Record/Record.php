@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Record;
 
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
@@ -24,11 +27,7 @@ class Record
      */
     private $directiveList = null;
 
-    /**
-     *
-     * @return UserAgentDirectiveList
-     */
-    public function getUserAgentDirectiveList()
+    public function getUserAgentDirectiveList(): UserAgentDirectiveList
     {
         if (is_null($this->userAgentDirectiveList)) {
             $this->userAgentDirectiveList = new UserAgentDirectiveList();
@@ -37,11 +36,7 @@ class Record
         return $this->userAgentDirectiveList;
     }
 
-    /**
-     *
-     * @return DirectiveList
-     */
-    public function getDirectiveList()
+    public function getDirectiveList(): DirectiveList
     {
         if (is_null($this->directiveList)) {
             $this->directiveList = new DirectiveList();
@@ -50,11 +45,7 @@ class Record
         return $this->directiveList;
     }
 
-    /**
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $stringRepresentation = '';
 
