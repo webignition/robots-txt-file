@@ -30,7 +30,7 @@ class FileTest extends AbstractFileTest
 
         $this->file->addRecord($record);
 
-        $this->assertEquals('user-agent:*'."\n".'allow:/allowed-path', (string)$this->file);
+        $this->assertEquals('user-agent:*' . "\n" . 'allow:/allowed-path', (string)$this->file);
     }
 
     public function testCastToStringWithSpecificUserAgent()
@@ -41,7 +41,7 @@ class FileTest extends AbstractFileTest
 
         $this->file->addRecord($record);
 
-        $this->assertEquals('user-agent:googlebot'."\n".'allow:/allowed-path', (string)$this->file);
+        $this->assertEquals('user-agent:googlebot' . "\n" . 'allow:/allowed-path', (string)$this->file);
     }
 
     public function testCastToStringWithMultipleRecords()
@@ -58,7 +58,7 @@ class FileTest extends AbstractFileTest
         $this->file->addRecord($record2);
 
         $this->assertEquals(
-            'user-agent:googlebot'."\n".'allow:/allowed-path'."\n\n".'user-agent:slurp'."\n".'disallow:/',
+            'user-agent:googlebot' . "\n" . 'allow:/allowed-path' . "\n\n" . 'user-agent:slurp' . "\n" . 'disallow:/',
             (string)$this->file
         );
     }

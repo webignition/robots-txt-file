@@ -12,17 +12,16 @@ use webignition\RobotsTxt\Directive\UserAgentDirective;
 
 class GetDirectivesTest extends \PHPUnit\Framework\TestCase
 {
-    const FIELD_ALLOW = 'allow';
-    const FIELD_DISALLOW = 'disallow';
-
-    const VALUE_ALL_AGENTS_0 = '/allowed-path-for-*';
-    const VALUE_ALL_AGENTS_1 = '/disallowed-path-for-*';
-    const VALUE_GOOGLEBOT_0 = '/allowed-path-for-googlebot';
-    const VALUE_GOOGLEBOT_1 = '/disallowed-path-for-googlebot';
-    const VALUE_GOOGLEBOT_NEWS_0 = '/allowed-path-for-googlebot-news';
-    const VALUE_GOOGLEBOT_NEWS_1 = '/disallowed-path-for-googlebot-news';
-    const VALUE_BINGBOT_SLURP_0 = '/allowed-path-for-bingbot-slurp';
-    const VALUE_BINGBOT_SLURP_1 = '/disallowed-path-for-bingbot-slurp';
+    private const FIELD_ALLOW = 'allow';
+    private const FIELD_DISALLOW = 'disallow';
+    private const VALUE_ALL_AGENTS_0 = '/allowed-path-for-*';
+    private const VALUE_ALL_AGENTS_1 = '/disallowed-path-for-*';
+    private const VALUE_GOOGLEBOT_0 = '/allowed-path-for-googlebot';
+    private const VALUE_GOOGLEBOT_1 = '/disallowed-path-for-googlebot';
+    private const VALUE_GOOGLEBOT_NEWS_0 = '/allowed-path-for-googlebot-news';
+    private const VALUE_GOOGLEBOT_NEWS_1 = '/disallowed-path-for-googlebot-news';
+    private const VALUE_BINGBOT_SLURP_0 = '/allowed-path-for-bingbot-slurp';
+    private const VALUE_BINGBOT_SLURP_1 = '/disallowed-path-for-bingbot-slurp';
 
     private $userAgentStringFixtures = [];
 

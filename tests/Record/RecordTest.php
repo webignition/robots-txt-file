@@ -30,7 +30,7 @@ class RecordTest extends \PHPUnit\Framework\TestCase
         $this->record->getUserAgentDirectiveList()->add(new UserAgentDirective('googlebot'));
         $this->record->getUserAgentDirectiveList()->add(new UserAgentDirective('slurp'));
 
-        $this->assertEquals('user-agent:googlebot'."\n".'user-agent:slurp', (string)$this->record);
+        $this->assertEquals('user-agent:googlebot' . "\n" . 'user-agent:slurp', (string)$this->record);
     }
 
     public function testCastToStringWithAllowDisallowOnly()
@@ -39,7 +39,7 @@ class RecordTest extends \PHPUnit\Framework\TestCase
         $this->record->getDirectiveList()->add(new Directive('disallow', '/disallowed-path'));
 
         $this->assertEquals(
-            'user-agent:*'."\n".'allow:/allowed-path'."\n".'disallow:/disallowed-path',
+            'user-agent:*' . "\n" . 'allow:/allowed-path' . "\n" . 'disallow:/disallowed-path',
             (string)$this->record
         );
     }
@@ -53,7 +53,10 @@ class RecordTest extends \PHPUnit\Framework\TestCase
         $this->record->getDirectiveList()->add(new Directive('disallow', '/disallowed-path'));
 
         $this->assertEquals(
-            'user-agent:googlebot'."\n".'user-agent:slurp'."\n".'allow:/allowed-path'."\n".'disallow:/disallowed-path',
+            'user-agent:googlebot' . "\n" .
+            'user-agent:slurp' . "\n" .
+            'allow:/allowed-path' . "\n" .
+            'disallow:/disallowed-path',
             (string)$this->record
         );
     }

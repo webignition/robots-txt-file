@@ -15,9 +15,9 @@ use webignition\RobotsTxt\Directive\DirectiveInterface;
  */
 class UrlMatcher
 {
-    const ANY_CHARACTER_WILDCARD = '*';
-    const MUST_END_WITH_WILDCARD = '$';
-    const URL_ENCODED_SLASH = '%2f';
+    public const ANY_CHARACTER_WILDCARD = '*';
+    public const MUST_END_WITH_WILDCARD = '$';
+    public const URL_ENCODED_SLASH = '%2f';
 
     public function matches(DirectiveInterface $directive, string $urlPath): bool
     {

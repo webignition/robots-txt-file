@@ -10,17 +10,13 @@ use webignition\RobotsTxt\Record\Record;
 
 class Parser
 {
-    const STATE_UNKNOWN = 0;
-    const STATE_ADDING_TO_RECORD = 1;
-    const STATE_ADDING_TO_FILE = 2;
-    const STATE_STARTING_RECORD = 3;
-    const STARTING_STATE = self::STATE_UNKNOWN;
-
-    const USER_AGENT_FIELD_NAME = 'user-agent';
-    const SITEMAP_DIRECTIVE_FIELD_MAME = 'sitemap';
-    const COMMENT_START_CHARACTER = '#';
-
-    const UTF8_BOM = "\xef\xbb\xbf";
+    private const STATE_UNKNOWN = 0;
+    private const STATE_ADDING_TO_RECORD = 1;
+    private const STATE_ADDING_TO_FILE = 2;
+    private const STATE_STARTING_RECORD = 3;
+    private const STARTING_STATE = self::STATE_UNKNOWN;
+    private const COMMENT_START_CHARACTER = '#';
+    private const UTF8_BOM = "\xef\xbb\xbf";
 
     /**
      * Unmodified source of given robots.txt file

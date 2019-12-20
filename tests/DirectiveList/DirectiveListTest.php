@@ -58,7 +58,7 @@ class DirectiveListTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('field1:value1', (string)$this->directiveList);
 
         $this->directiveList->add(new Directive('field2', 'value2'));
-        $this->assertEquals('field1:value1'."\n".'field2:value2', (string)$this->directiveList);
+        $this->assertEquals('field1:value1' . "\n" . 'field2:value2', (string)$this->directiveList);
     }
 
     public function testContainsField()

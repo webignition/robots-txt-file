@@ -9,8 +9,8 @@ use webignition\RobotsTxt\Directive\UserAgentDirective;
 
 class FactoryTest extends \PHPUnit\Framework\TestCase
 {
-    const FIELD_USER_AGENT_DIRECTIVE = 'user-agent';
-    const FIELD_DISALLOW_DIRECTIVE = 'disallow';
+    private const FIELD_USER_AGENT_DIRECTIVE = 'user-agent';
+    private const FIELD_DISALLOW_DIRECTIVE = 'disallow';
 
     /**
      * @dataProvider invalidDirectiveStringDataProvider

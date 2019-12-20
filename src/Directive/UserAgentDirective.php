@@ -6,8 +6,8 @@ namespace webignition\RobotsTxt\Directive;
 
 class UserAgentDirective extends Directive
 {
-    const USER_AGENT_FIELD_VALUE = 'user-agent';
-    const DEFAULT_USER_AGENT = '*';
+    public const USER_AGENT_FIELD_VALUE = 'user-agent';
+    public const DEFAULT_USER_AGENT = '*';
 
     public function __construct(string $userAgentIdentifier)
     {

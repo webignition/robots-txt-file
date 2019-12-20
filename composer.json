@@ -19,7 +19,7 @@
     },
     "scripts": {
         "test": "./vendor/bin/phpunit --colors=always",
-        "cs": "./vendor/bin/phpcs src tests --colors --standard=PSR2",
+        "cs": "./vendor/bin/phpcs src tests --colors --standard=PSR12",
         "ci": [
             "@composer cs",
             "@composer test"
