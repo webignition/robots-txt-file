@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f20a32fa7adc5d9e282e80aec372a43c",
+    "content-hash": "eacc5e4d6fdf5c206b2b0606ff6b67e9",
     "packages": [
         {
             "name": "webignition/disallowed-character-terminated-string",
