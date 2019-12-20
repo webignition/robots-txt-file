@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Directive;
 
 /**
@@ -9,7 +12,7 @@ class Factory
     const FIELD_DISALLOW = 'disallow';
     const FIELD_USER_AGENT = 'user-agent';
 
-    public static function create($directiveString)
+    public static function create(string $directiveString): ?DirectiveInterface
     {
         if (!Validator::isDirectiveStringValid($directiveString)) {
             return null;

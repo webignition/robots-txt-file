@@ -1,26 +1,22 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\Factory;
+declare(strict_types=1);
+
+namespace webignition\RobotsTxt\Tests\Factory;
 
 use webignition\RobotsTxt\Directive\Validator;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class ValidatorTest extends BaseTest
+class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider validDirectiveDataProvider
-     *
-     * @param string $directiveString
      */
-    public function testIsValid($directiveString)
+    public function testIsValid(string $directiveString)
     {
         $this->assertTrue(Validator::isDirectiveStringValid($directiveString));
     }
 
-    /**
-     * @return array
-     */
-    public function validDirectiveDataProvider()
+    public function validDirectiveDataProvider(): array
     {
         return [
             'generic field only' => [
@@ -40,18 +36,13 @@ class ValidatorTest extends BaseTest
 
     /**
      * @dataProvider invalidDirectiveDataProvider
-     *
-     * @param string $directiveString
      */
-    public function testIsNotValid($directiveString)
+    public function testIsNotValid(string $directiveString)
     {
         $this->assertFalse(Validator::isDirectiveStringValid($directiveString));
     }
 
-    /**
-     * @return array
-     */
-    public function invalidDirectiveDataProvider()
+    public function invalidDirectiveDataProvider(): array
     {
         return [
             'empty' => [

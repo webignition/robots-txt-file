@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Directive;
 
 /**
@@ -6,16 +9,11 @@ namespace webignition\RobotsTxt\Directive;
  */
 class Validator
 {
-    /**
-     * @param string $directiveString
-     *
-     * @return bool
-     */
-    public static function isDirectiveStringValid($directiveString)
+    public static function isDirectiveStringValid(string $directiveString): bool
     {
         $directiveString = trim($directiveString);
 
-        if ($directiveString === '') {
+        if ('' === $directiveString) {
             return false;
         }
 
@@ -30,22 +28,12 @@ class Validator
         return true;
     }
 
-    /**
-     * @param string $directiveString
-     *
-     * @return bool
-     */
-    private static function doesDirectiveStringContainFieldValueSeparator($directiveString)
+    private static function doesDirectiveStringContainFieldValueSeparator(string $directiveString): bool
     {
         return substr_count($directiveString, Directive::FIELD_VALUE_SEPARATOR) > 0;
     }
 
-    /**
-     * @param string $directiveString
-     *
-     * @return bool
-     */
-    private static function doesDirectiveStringContainSeparatorBetweenFieldAndValue($directiveString)
+    private static function doesDirectiveStringContainSeparatorBetweenFieldAndValue(string $directiveString): bool
     {
         return substr($directiveString, 0, 1) != Directive::FIELD_VALUE_SEPARATOR;
     }

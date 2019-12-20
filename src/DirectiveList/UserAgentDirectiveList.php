@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\DirectiveList;
 
 use webignition\RobotsTxt\Directive\DirectiveInterface;
@@ -6,20 +9,14 @@ use webignition\RobotsTxt\Directive\UserAgentDirective;
 
 class UserAgentDirectiveList extends DirectiveList
 {
-    /**
-     * @param DirectiveInterface $directive
-     */
-    public function add(DirectiveInterface $directive)
+    public function add(DirectiveInterface $directive): void
     {
         if ($directive instanceof UserAgentDirective) {
             parent::add($directive);
         }
     }
 
-    /**
-     * @param DirectiveInterface $directive
-     */
-    public function remove(DirectiveInterface $directive)
+    public function remove(DirectiveInterface $directive): void
     {
         if ($directive instanceof UserAgentDirective) {
             parent::remove($directive);
@@ -27,10 +24,9 @@ class UserAgentDirectiveList extends DirectiveList
     }
 
     /**
-     *
      * @return string[]
      */
-    public function getValues()
+    public function getValues(): array
     {
         $userAgents = array();
         $userAgentDirectives = $this->getDirectives();
@@ -43,10 +39,9 @@ class UserAgentDirectiveList extends DirectiveList
     }
 
     /**
-     *
      * @return UserAgentDirective[]
      */
-    public function getDirectives()
+    public function getDirectives(): array
     {
         $userAgents = parent::getDirectives();
 
@@ -57,12 +52,7 @@ class UserAgentDirectiveList extends DirectiveList
         return $userAgents;
     }
 
-    /**
-     * @param DirectiveInterface $directive
-     *
-     * @return bool
-     */
-    public function contains(DirectiveInterface $directive)
+    public function contains(DirectiveInterface $directive): bool
     {
         if ($directive instanceof UserAgentDirective) {
             return parent::contains($directive);
@@ -71,12 +61,7 @@ class UserAgentDirectiveList extends DirectiveList
         return false;
     }
 
-    /**
-     * @param string $userAgentString
-     *
-     * @return bool
-     */
-    public function match($userAgentString)
+    public function match(string $userAgentString): ?string
     {
         foreach ($this->getValues() as $userAgentIdentifier) {
             if ($userAgentIdentifier === UserAgentDirective::DEFAULT_USER_AGENT) {

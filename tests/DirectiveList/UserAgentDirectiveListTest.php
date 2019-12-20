@@ -1,19 +1,20 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\DirectiveList;
+declare(strict_types=1);
+
+namespace webignition\RobotsTxt\Tests\DirectiveList;
 
 use webignition\RobotsTxt\Directive\UserAgentDirective;
-use webignition\Tests\RobotsTxt\BaseTest;
 use webignition\RobotsTxt\DirectiveList\UserAgentDirectiveList;
 
-class UserAgentDirectiveListTest extends BaseTest
+class UserAgentDirectiveListTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var UserAgentDirectiveList
      */
     private $userAgentDirectiveList;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->userAgentDirectiveList = new UserAgentDirectiveList();
     }

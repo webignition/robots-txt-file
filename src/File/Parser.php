@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\File;
 
 use webignition\RobotsTxt\Directive\DirectiveInterface;
@@ -22,16 +25,16 @@ class Parser
     /**
      * Unmodified source of given robots.txt file
      *
-     * @var string
+     * @var string|null
      */
     private $source = null;
 
     /**
      * Lines from source
      *
-     * @var array
+     * @var string[]
      */
-    private $sourceLines = array();
+    private $sourceLines = [];
 
     /**
      * Number of lines in source file
@@ -49,7 +52,7 @@ class Parser
 
     /**
      *
-     * @var File
+     * @var File|null
      */
     private $file = null;
 
@@ -69,33 +72,26 @@ class Parser
 
     /**
      *
-     * @var Record
+     * @var Record|null
      */
     private $currentRecord = null;
 
     /**
-     *
-     * @var array
+     * @var array<string, bool>
      */
     private $nonGroupFieldNames = array(
         DirectiveInterface::TYPE_SITEMAP => true
     );
 
     /**
-     *
      * @param string $source
      */
-    public function setSource($source)
+    public function setSource(string $source): void
     {
         $this->source = $this->prepareSource($source);
     }
 
-    /**
-     *
-     * @param string $source
-     * @return string
-     */
-    private function prepareSource($source)
+    private function prepareSource(string $source): string
     {
         $source = trim($source);
 
@@ -106,11 +102,7 @@ class Parser
         return $source;
     }
 
-    /**
-     *
-     * @return File
-     */
-    public function getFile()
+    public function getFile(): File
     {
         if (is_null($this->file)) {
             $this->file = new File();
@@ -120,7 +112,7 @@ class Parser
         return $this->file;
     }
 
-    private function parse()
+    private function parse(): void
     {
         $this->currentState = self::STARTING_STATE;
         $this->sourceLines = explode("\n", trim($this->source));
@@ -135,7 +127,7 @@ class Parser
         }
     }
 
-    private function parseCurrentLine()
+    private function parseCurrentLine(): void
     {
         switch ($this->currentState) {
             case self::STATE_UNKNOWN:
@@ -197,49 +189,29 @@ class Parser
         }
     }
 
-    /**
-     *
-     * @return string
-     */
-    private function getCurrentLine()
+    private function getCurrentLine(): string
     {
         return isset($this->sourceLines[$this->sourceLineIndex])
             ? trim($this->sourceLines[$this->sourceLineIndex])
             : '';
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    private function hasCurrentRecord()
+    private function hasCurrentRecord(): bool
     {
         return !is_null($this->currentRecord);
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    private function isCurrentLineBlank()
+    private function isCurrentLineBlank(): bool
     {
         return $this->getCurrentLine() == '';
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    private function isCurrentLineAComment()
+    private function isCurrentLineAComment(): bool
     {
         return substr($this->getCurrentLine(), 0, 1) == self::COMMENT_START_CHARACTER;
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    private function isCurrentLineADirective()
+    private function isCurrentLineADirective(): bool
     {
         if ($this->isCurrentLineBlank()) {
             return false;
@@ -258,11 +230,7 @@ class Parser
         return true;
     }
 
-    /**
-     *
-     * @return boolean
-     */
-    private function isCurrentLineANonGroupDirective()
+    private function isCurrentLineANonGroupDirective(): bool
     {
         if (!$this->isCurrentLineADirective()) {
             return false;
@@ -277,13 +245,13 @@ class Parser
         return array_key_exists($directive->getField(), $this->nonGroupFieldNames);
     }
 
-    private function deriveStateFromCurrentLine()
+    private function deriveStateFromCurrentLine(): void
     {
         if (!$this->isCurrentLineADirective()) {
             $this->sourceLineIndex++;
             $this->currentState = self::STATE_UNKNOWN;
 
-            return null;
+            return;
         }
 
         $directive = DirectiveFactory::create($this->getCurrentLine());
@@ -291,11 +259,11 @@ class Parser
         if (!is_null($directive) && $directive->isType(DirectiveInterface::TYPE_USER_AGENT)) {
             $this->currentState = self::STATE_STARTING_RECORD;
 
-            return null;
+            return;
         }
 
         $this->currentState = self::STATE_ADDING_TO_FILE;
 
-        return null;
+        return;
     }
 }

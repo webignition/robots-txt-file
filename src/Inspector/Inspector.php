@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Inspector;
 
 use webignition\RobotsTxt\Directive\DirectiveInterface;
@@ -21,28 +24,18 @@ class Inspector
      */
     private $userAgent;
 
-    /**
-     * @param File $file
-     * @param string $userAgent
-     */
-    public function __construct(File $file, $userAgent = '*')
+    public function __construct(File $file, string $userAgent = '*')
     {
         $this->file = $file;
         $this->setUserAgent($userAgent);
     }
 
-    /**
-     * @param string $userAgent
-     */
-    public function setUserAgent($userAgent = '*')
+    public function setUserAgent(string $userAgent = '*'): void
     {
         $this->userAgent = trim(mb_strtolower($userAgent));
     }
 
-    /**
-     * @return DirectiveList
-     */
-    public function getDirectives()
+    public function getDirectives(): DirectiveList
     {
         $isDefaultUserAgent = $this->userAgent === UserAgentDirective::DEFAULT_USER_AGENT;
         $defaultUserAgentDirectives = $this->getDirectivesForDefaultUserAgent();
@@ -91,7 +84,7 @@ class Inspector
      *
      * @return bool
      */
-    public function isAllowed($urlPath)
+    public function isAllowed(string $urlPath): bool
     {
         $matchingDisallowDirectives = $this->getMatchingAllowDisallowDirectivePaths(
             $urlPath,
@@ -133,13 +126,11 @@ class Inspector
      *
      * @return string
      */
-    private function getLongestPath($paths)
+    private function getLongestPath(array $paths): string
     {
-        return array_reduce($paths, function ($a, $b) {
-            return strlen($a) > strlen($b) ? $a : $b;
+        return array_reduce($paths, function (?string $a, string $b) {
+            return strlen((string) $a) > strlen((string) $b) ? $a : $b;
         });
-
-//        return max(array_map('strlen', $paths));
     }
 
     /**
@@ -148,7 +139,7 @@ class Inspector
      *
      * @return string[]
      */
-    private function getMatchingAllowDisallowDirectivePaths($urlPath, $type)
+    private function getMatchingAllowDisallowDirectivePaths(string $urlPath, string $type): array
     {
         $matchingDirectives = [];
         $directives = $this->getDirectives();
@@ -169,10 +160,7 @@ class Inspector
         return $matchingDirectives;
     }
 
-    /**
-     * @return DirectiveList|null
-     */
-    private function getDirectivesForDefaultUserAgent()
+    private function getDirectivesForDefaultUserAgent(): DirectiveList
     {
         $defaultUserAgentDirective = new UserAgentDirective(UserAgentDirective::DEFAULT_USER_AGENT);
 
@@ -190,7 +178,7 @@ class Inspector
      *
      * @return string
      */
-    private function findBestUserAgentStringToUserAgentIdentifierMatch($userAgentIdentifiers)
+    private function findBestUserAgentStringToUserAgentIdentifierMatch(array $userAgentIdentifiers): string
     {
         $scores = array();
         $longestUserAgentIdentifier = '';

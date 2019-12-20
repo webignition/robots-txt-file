@@ -1,15 +1,16 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\File;
+declare(strict_types=1);
+
+namespace webignition\RobotsTxt\Tests\File;
 
 use webignition\RobotsTxt\Directive\Directive;
 use webignition\RobotsTxt\File\File;
 use webignition\RobotsTxt\Inspector\Inspector;
 use webignition\RobotsTxt\Record\Record;
 use webignition\RobotsTxt\Directive\UserAgentDirective;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class GetDirectivesTest extends BaseTest
+class GetDirectivesTest extends \PHPUnit\Framework\TestCase
 {
     const FIELD_ALLOW = 'allow';
     const FIELD_DISALLOW = 'disallow';
@@ -30,18 +31,15 @@ class GetDirectivesTest extends BaseTest
      */
     protected $file;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->file = new File();
     }
 
     /**
-     * @dataProvider testGetDirectivesForDefaultFileDataProvider
-     *
-     * @param $userAgentString
-     * @param $expectedDirectives
+     * @dataProvider getDirectivesForDefaultFileDataProvider
      */
-    public function testGetDirectivesForDefaultFile($userAgentString, $expectedDirectives)
+    public function testGetDirectivesForDefaultFile(string $userAgentString, string $expectedDirectives)
     {
         $this->createDefaultFile();
         $inspector = new Inspector($this->file);
@@ -49,14 +47,11 @@ class GetDirectivesTest extends BaseTest
 
         $this->assertEquals(
             $expectedDirectives,
-            (string)$inspector->getDirectives($userAgentString)
+            (string) $inspector->getDirectives()
         );
     }
 
-    /**
-     * @return array
-     */
-    public function testGetDirectivesForDefaultFileDataProvider()
+    public function getDirectivesForDefaultFileDataProvider(): array
     {
         return [
             'googlebot-lowercase' => [
@@ -166,7 +161,7 @@ class GetDirectivesTest extends BaseTest
     /**
      * @return string[]
      */
-    private function getExpectedAllAgentsDirectives()
+    private function getExpectedAllAgentsDirectives(): array
     {
         $expectedDirectives = [];
 
@@ -179,7 +174,7 @@ class GetDirectivesTest extends BaseTest
     /**
      * @return string[]
      */
-    private function getExpectedGooglebotDirectives()
+    private function getExpectedGooglebotDirectives(): array
     {
         $expectedDirectives = [];
 
@@ -192,7 +187,7 @@ class GetDirectivesTest extends BaseTest
     /**
      * @return string[]
      */
-    private function getExpectedGooglebotNewsDirectives()
+    private function getExpectedGooglebotNewsDirectives(): array
     {
         $expectedDirectives = [];
 
@@ -205,7 +200,7 @@ class GetDirectivesTest extends BaseTest
     /**
      * @return string[]
      */
-    private function getExpectedBingbotSlurpDirectives()
+    private function getExpectedBingbotSlurpDirectives(): array
     {
         $expectedDirectives = [];
 
@@ -215,12 +210,7 @@ class GetDirectivesTest extends BaseTest
         return $expectedDirectives;
     }
 
-    /**
-     * @param string $fixtureIdentifier
-     *
-     * @return string
-     */
-    private function getUserAgentStringFixture($fixtureIdentifier)
+    private function getUserAgentStringFixture(string $fixtureIdentifier): string
     {
         if (empty($this->userAgentStringFixtures)) {
             $path = __DIR__ . '/../fixtures/user-agent-strings.json';

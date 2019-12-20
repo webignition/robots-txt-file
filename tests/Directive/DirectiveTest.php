@@ -1,30 +1,24 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\Directive;
+declare(strict_types=1);
+
+namespace webignition\RobotsTxt\Tests\Directive;
 
 use webignition\RobotsTxt\Directive\Directive;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class DirectiveTest extends BaseTest
+class DirectiveTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider castToStringDataProvider
-     *
-     * @param string $field
-     * @param string $value
-     * @param string $expectedString
      */
-    public function testCastToString($field, $value, $expectedString)
+    public function testCastToString(string $field, string $value, string $expectedString)
     {
         $directive = new Directive($field, $value);
 
         $this->assertEquals($expectedString, (string)$directive);
     }
 
-    /**
-     * @return array
-     */
-    public function castToStringDataProvider()
+    public function castToStringDataProvider(): array
     {
         return [
             [
@@ -52,21 +46,15 @@ class DirectiveTest extends BaseTest
 
     /**
      * @dataProvider isTypeDataProvider
-     *
-     * @param string $field
-     * @param string $expectedFieldType
      */
-    public function testIsType($field, $expectedFieldType)
+    public function testIsType(string $field, string $expectedFieldType)
     {
         $directive = new Directive($field, 'foo');
 
         $this->assertTrue($directive->isType($expectedFieldType));
     }
 
-    /**
-     * @return array
-     */
-    public function isTypeDataProvider()
+    public function isTypeDataProvider(): array
     {
         return [
             'generic field 1' => [

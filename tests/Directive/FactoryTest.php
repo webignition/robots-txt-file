@@ -1,22 +1,21 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\Factory;
+declare(strict_types=1);
+
+namespace webignition\RobotsTxt\Tests\Directive;
 
 use webignition\RobotsTxt\Directive\Factory;
 use webignition\RobotsTxt\Directive\UserAgentDirective;
-use webignition\Tests\RobotsTxt\BaseTest;
 
-class FactoryTest extends BaseTest
+class FactoryTest extends \PHPUnit\Framework\TestCase
 {
     const FIELD_USER_AGENT_DIRECTIVE = 'user-agent';
     const FIELD_DISALLOW_DIRECTIVE = 'disallow';
 
     /**
      * @dataProvider invalidDirectiveStringDataProvider
-     *
-     * @param string $directiveString
      */
-    public function testCreateFromInvalidDirectiveString($directiveString)
+    public function testCreateFromInvalidDirectiveString(string $directiveString)
     {
         $this->assertNull(Factory::create($directiveString));
     }
@@ -41,11 +40,8 @@ class FactoryTest extends BaseTest
 
     /**
      * @dataProvider userAgentDirectiveDataProvider
-     *
-     * @param string $directiveString
-     * @param string $expectedValue
      */
-    public function testCreateUserAgentDirective($directiveString, $expectedValue)
+    public function testCreateUserAgentDirective(string $directiveString, string $expectedValue)
     {
         $directive = Factory::create($directiveString);
         $this->assertInstanceOf(UserAgentDirective::class, $directive);
@@ -54,10 +50,7 @@ class FactoryTest extends BaseTest
         $this->assertEquals($expectedValue, (string)$directive->getValue());
     }
 
-    /**
-     * @return array
-     */
-    public function userAgentDirectiveDataProvider()
+    public function userAgentDirectiveDataProvider(): array
     {
         return [
             [
@@ -74,19 +67,15 @@ class FactoryTest extends BaseTest
 
     /**
      * @dataProvider disallowDirectiveDataProvider
-     *
-     * @param string $directiveString
-     * @param string $expectedValue
      */
-    public function testCreateDisallowDirective($directiveString, $expectedValue)
+    public function testCreateDisallowDirective(string $directiveString, string $expectedValue)
     {
         $directive = Factory::create($directiveString);
+
+        $this->assertSame($expectedValue, $directive->getValue()->get());
     }
 
-    /**
-     * @return array
-     */
-    public function disallowDirectiveDataProvider()
+    public function disallowDirectiveDataProvider(): array
     {
         return [
             [

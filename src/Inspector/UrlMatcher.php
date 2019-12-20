@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace webignition\RobotsTxt\Inspector;
 
 use webignition\RobotsTxt\Directive\DirectiveInterface;
@@ -16,13 +19,7 @@ class UrlMatcher
     const MUST_END_WITH_WILDCARD = '$';
     const URL_ENCODED_SLASH = '%2f';
 
-    /**
-     * @param DirectiveInterface $directive
-     * @param string $urlPath
-     *
-     * @return bool
-     */
-    public function matches(DirectiveInterface $directive, $urlPath)
+    public function matches(DirectiveInterface $directive, string $urlPath): bool
     {
         $decodedDirectivePath = $this->decodeUrlPath((string)$directive->getValue());
 
@@ -41,7 +38,7 @@ class UrlMatcher
      *
      * @return string
      */
-    private function decodeUrlPath($urlPath)
+    private function decodeUrlPath(string $urlPath): string
     {
         $urlPath = str_replace(strtoupper(self::URL_ENCODED_SLASH), self::URL_ENCODED_SLASH, $urlPath);
         $urlPathParts = explode(self::URL_ENCODED_SLASH, $urlPath);
@@ -60,7 +57,7 @@ class UrlMatcher
      *
      * @return string
      */
-    private function createRegex($directiveUrlPath)
+    private function createRegex(string $directiveUrlPath): string
     {
         $hasMustEndWithWildcard = substr($directiveUrlPath, -1) === self::MUST_END_WITH_WILDCARD;
         if ($hasMustEndWithWildcard) {

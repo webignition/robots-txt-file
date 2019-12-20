@@ -1,19 +1,20 @@
 <?php
 
-namespace webignition\Tests\RobotsTxt\DirectiveList;
+declare(strict_types=1);
+
+namespace webignition\RobotsTxt\Tests\DirectiveList;
 
 use webignition\RobotsTxt\Directive\Directive;
-use webignition\Tests\RobotsTxt\BaseTest;
 use webignition\RobotsTxt\DirectiveList\DirectiveList;
 
-class DirectiveListTest extends BaseTest
+class DirectiveListTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var DirectiveList
      */
     private $directiveList;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->directiveList = new DirectiveList();
     }
@@ -105,11 +106,11 @@ class DirectiveListTest extends BaseTest
     /**
      * @dataProvider getByFieldDataProvider
      *
-     * @param array $directives
+     * @param array<string, string> $directives
      * @param string $field
      * @param string $expectedDirectiveListString
      */
-    public function testGetByField($directives, $field, $expectedDirectiveListString)
+    public function testGetByField(array $directives, string $field, string $expectedDirectiveListString)
     {
         foreach ($directives as $directive) {
             $this->directiveList->add(new Directive($directive['field'], $directive['value']));
@@ -121,10 +122,7 @@ class DirectiveListTest extends BaseTest
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getByFieldDataProvider()
+    public function getByFieldDataProvider(): array
     {
         return [
             'none for empty list' => [
