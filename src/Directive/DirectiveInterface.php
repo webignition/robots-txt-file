@@ -6,13 +6,11 @@ namespace webignition\RobotsTxt\Directive;
 
 interface DirectiveInterface
 {
-    const FIELD_VALUE_SEPARATOR = ':';
-
-    const TYPE_UNKNOWN = 'unknown';
-    const TYPE_USER_AGENT = 'user-agent';
-    const TYPE_DISALLOW = 'disallow';
-    const TYPE_ALLOW = 'allow';
-    const TYPE_SITEMAP = 'sitemap';
+    public const FIELD_VALUE_SEPARATOR = ':';
+    public const TYPE_USER_AGENT = 'user-agent';
+    public const TYPE_DISALLOW = 'disallow';
+    public const TYPE_ALLOW = 'allow';
+    public const TYPE_SITEMAP = 'sitemap';
 
     public function getField(): string;
     public function getValue(): Value;

@@ -9,8 +9,7 @@ namespace webignition\RobotsTxt\Directive;
  */
 class Factory
 {
-    const FIELD_DISALLOW = 'disallow';
-    const FIELD_USER_AGENT = 'user-agent';
+    public const FIELD_USER_AGENT = 'user-agent';
 
     public static function create(string $directiveString): ?DirectiveInterface
     {

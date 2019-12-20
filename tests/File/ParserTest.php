@@ -49,7 +49,7 @@ class ParserTest extends \PHPUnit\Framework\TestCase
 
         $inspector->setUserAgent('googlebot-image');
         $this->assertEquals(
-            'disallow:/*/ivc/*'."\n".'disallow:/users/flair/',
+            'disallow:/*/ivc/*' . "\n" . 'disallow:/users/flair/',
             (string)$inspector->getDirectives()
         );
         $this->assertEquals(
